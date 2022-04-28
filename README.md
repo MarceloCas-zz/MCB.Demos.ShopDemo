@@ -32,11 +32,6 @@
 - [@MarceloCas](https://www.linkedin.com/in/marcelocastelobranco/)
 
 
-## Features
-
-- Domain entities implementation
-
-
 ## Used stack
 
 **Platform:** .NET 6
