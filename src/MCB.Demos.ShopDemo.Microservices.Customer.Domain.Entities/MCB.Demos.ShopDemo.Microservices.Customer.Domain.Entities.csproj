@@ -9,4 +9,8 @@
 		<Company>MCB</Company>
 	</PropertyGroup>
 
+	<ItemGroup>
+	  <PackageReference Include="MCB.Core.Domain.Entities" Version="0.6.0-alpha" />
+	</ItemGroup>
+
 </Project>

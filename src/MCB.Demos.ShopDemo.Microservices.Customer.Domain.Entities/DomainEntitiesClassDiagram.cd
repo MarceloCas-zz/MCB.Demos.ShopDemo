@@ -1,0 +1,63 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1" MembersFormat="NameAndType">
+  <Class Name="MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Customer">
+    <Position X="2" Y="3" Width="3.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAEAQAAAAABAAAAAEAAQAAAAAAABAAAAAQEAAAAg=</HashCode>
+      <FileName>Customer.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="CustomerAddressInfo" />
+    </ShowAsAssociation>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.CustomerAddress">
+    <Position X="7.25" Y="7.75" Width="3.5" />
+    <TypeIdentifier>
+      <HashCode>AEAAASAQAAAAAACAAAAAAAAAAIAAAABAAAQAAEIAAAA=</HashCode>
+      <FileName>CustomerAddress.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="CustomerAddressType" />
+      <Property Name="AddressValueObject" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.CustomerAddressInfo">
+    <Position X="7.25" Y="2.75" Width="3.75" />
+    <AssociationLine Name="DefaultShippingAddress" Type="MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.CustomerAddress">
+      <MemberNameLabel ManuallyPlaced="true">
+        <Position X="0.142" Y="0.63" />
+      </MemberNameLabel>
+    </AssociationLine>
+    <AssociationLine Name="CustomerAddressCollection" Type="MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.CustomerAddress">
+      <MemberNameLabel ManuallyPlaced="true">
+        <Position X="-3.993" Y="0.662" />
+      </MemberNameLabel>
+    </AssociationLine>
+    <TypeIdentifier>
+      <HashCode>EAAAAAEQCAAAIAIBAAAAEAAAAIAAAABCAAAAAAEAABE=</HashCode>
+      <FileName>CustomerAddressInfo.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="DefaultShippingAddress" />
+    </ShowAsAssociation>
+    <ShowAsCollectionAssociation>
+      <Property Name="CustomerAddressCollection" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Struct Name="MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.ValueObjects.AddressValueObject">
+    <Position X="8.25" Y="11" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAIAEAAAAAAAAIAAAABAAIABAAAAAA=</HashCode>
+      <FileName>ValueObjects\AddressValueObject.cs</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Enum Name="MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Enums.CustomerAddressType">
+    <Position X="3.75" Y="8" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AKAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Enums\CustomerAddressType.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>
