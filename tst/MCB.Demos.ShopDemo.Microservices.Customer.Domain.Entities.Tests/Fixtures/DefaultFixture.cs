@@ -56,8 +56,8 @@ namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Tests.Fixtur
             Guid? existingTenantId = null,
             CustomerAddressType? existingCustomerAdressType = null,
             AddressValueObject? existingCustomerAddress = null,
-            string? existingExecutionUser = null,
-            string? existingSourcePlatform = null
+            string existingExecutionUser = null,
+            string existingSourcePlatform = null
         )
         {
             return new CustomerAddress().RegisterNew(
