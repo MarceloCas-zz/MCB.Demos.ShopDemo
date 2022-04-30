@@ -37,12 +37,9 @@ namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities
             // Validate
             // TODO: Add validation
 
-            // Process
-            SetName(firstName, lastName);
-            RegisterNewInternal<Customer>(tenantId, executionUser, sourcePlatform);
-
-            // Return
-            return this;
+            // Process and Return
+            return SetName(firstName, lastName)
+                .RegisterNewInternal<Customer>(tenantId, executionUser, sourcePlatform);
         }
         public Customer ChangeName(
             string firstName, 
@@ -54,12 +51,22 @@ namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities
             // Validate
             // TODO: Add validation
 
-            // Process
-            SetName(firstName, lastName);
-            RegisterModificationInternal<Customer>(executionUser, sourcePlatform);
+            // Process and Return
+            return SetName(firstName, lastName)
+                .RegisterModificationInternal<Customer>(executionUser, sourcePlatform);
+        }
+        public Customer ChangeBirthDate(
+            DateOnly birthDate,
+            string executionUser,
+            string sourcePlatform
+        )
+        {
+            // Validate
+            // TODO: Add validation
 
-            // Return
-            return this;
+            // Process and Return
+            return SetBirthDate(birthDate)
+                .RegisterModificationInternal<Customer>(executionUser, sourcePlatform);
         }
 
         // Protected Abstract Methods
@@ -70,6 +77,12 @@ namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities
         {
             FirstName = firstName;
             LastName = lastName;
+
+            return this;
+        }
+        private Customer SetBirthDate(DateOnly birthDate)
+        {
+            BirthDate = birthDate;
 
             return this;
         }

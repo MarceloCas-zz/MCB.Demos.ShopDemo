@@ -2,7 +2,6 @@
 {
     public enum CustomerAddressType
     {
-        Undefinied = 0,
         HomeAddress = 1,
         BusinessAddress = 2
     }
