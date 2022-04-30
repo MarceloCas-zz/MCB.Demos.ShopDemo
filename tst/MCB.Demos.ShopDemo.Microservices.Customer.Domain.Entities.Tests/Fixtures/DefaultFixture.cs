@@ -1,4 +1,7 @@
-﻿using MCB.Tests.Fixtures;
+﻿using MCB.Core.Infra.CrossCutting.Enums;
+using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Enums;
+using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.ValueObjects;
+using MCB.Tests.Fixtures;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using Xunit;
@@ -23,14 +26,47 @@ namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Tests.Fixtur
         // Constructors
         public DefaultFixture()
         {
-            TenantId = Guid.Parse("{DC09FAEC-F5C5-49F1-82EE-9856B3D7D288}");
-            ExecutionUser = "marcelo.castelo@outlook.com";
-            SourcePlatform = "UnitTest";
+            TenantId = GenerateNewTenantId();
+            ExecutionUser = GenerateNewExecutionUser();
+            SourcePlatform = GenerateNewSourcePlatform();
         }
 
+        // Protected Methods
         protected override void ConfigureServices(ServiceCollection services)
         {
 
+        }
+
+        // Public Methods
+        public static Guid GenerateNewTenantId() => Guid.NewGuid();
+        public static string GenerateNewExecutionUser() => $"{nameof(ExecutionUser)} {Guid.NewGuid()}";
+        public static string GenerateNewSourcePlatform() => $"{nameof(SourcePlatform)} {Guid.NewGuid()}";
+        public static AddressValueObject GenerateNewAddressValueObject()
+        {
+            return new AddressValueObject(
+                street: $"{nameof(AddressValueObject.Street)} {Guid.NewGuid()}",
+                number: $"{nameof(AddressValueObject.Number)} {Guid.NewGuid()}",
+                city: $"{nameof(AddressValueObject.City)} {Guid.NewGuid()}",
+                state: $"{nameof(AddressValueObject.State)} {Guid.NewGuid()}",
+                country: $"{nameof(AddressValueObject.Country)} {Guid.NewGuid()}",
+                zipCode: $"{nameof(AddressValueObject.ZipCode)} {Guid.NewGuid()}"
+            );
+        }
+        public static CustomerAddress GenerateNewCustomerAddress(
+            Guid? existingTenantId = null,
+            CustomerAddressType? existingCustomerAdressType = null,
+            AddressValueObject? existingCustomerAddress = null,
+            string? existingExecutionUser = null,
+            string? existingSourcePlatform = null
+        )
+        {
+            return new CustomerAddress().RegisterNew(
+                tenantId: existingTenantId ?? GenerateNewTenantId(),
+                customerAddressType: existingCustomerAdressType ?? EnumUtils.GetRandomEnumValue<CustomerAddressType>(),
+                addressValueObject: existingCustomerAddress ?? GenerateNewAddressValueObject(),
+                executionUser: existingExecutionUser ?? GenerateNewExecutionUser(),
+                sourcePlatform: existingSourcePlatform ?? GenerateNewSourcePlatform()
+            );
         }
     }
 }

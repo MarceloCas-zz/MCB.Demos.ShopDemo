@@ -4,7 +4,6 @@ using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Tests.Fixtures;
 using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.ValueObjects;
 using MCB.Tests;
 using System;
-using System.Collections.Generic;
 using Xunit;
 using Xunit.Abstractions;
 
@@ -40,32 +39,18 @@ namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Tests
         [Fact]
         public void CustomerAddress_Should_RegisterNew()
         {
-            // Arrange
-            var street = "dummy street";
-            var number = "dummy number";
-            var city = "dummy city";
-            var state = "dummy state";
-            var country = "dummy country";
-            var zipCode = "dummy zipCode";
-
             foreach (var customerAddressType in Enum.GetValues<CustomerAddressType>())
             {
-                var addressValueObject = new AddressValueObject(
-                    street,
-                    number,
-                    city,
-                    state,
-                    country,
-                    zipCode
-                );
+                // Arrange
+                var addressValueObject = DefaultFixture.GenerateNewAddressValueObject();
 
                 // Act
-                var customerAddress = new CustomerAddress().RegisterNew(
-                    _fixture.TenantId,
-                    customerAddressType,
-                    addressValueObject,
-                    _fixture.ExecutionUser,
-                    _fixture.SourcePlatform
+                var customerAddress = DefaultFixture.GenerateNewCustomerAddress(
+                    existingTenantId: _fixture.TenantId,
+                    existingCustomerAdressType: customerAddressType,
+                    existingCustomerAddress: addressValueObject,
+                    existingExecutionUser: _fixture.ExecutionUser,
+                    existingSourcePlatform: _fixture.SourcePlatform
                 );
 
                 // Assert
