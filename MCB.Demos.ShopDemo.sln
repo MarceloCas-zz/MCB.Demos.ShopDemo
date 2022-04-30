@@ -37,7 +37,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MCB.Demos.ShopDemo.Microser
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MCB.Demos.ShopDemo.Microservices.Customer.Services.Grpc", "src\MCB.Demos.ShopDemo.Microservices.Customer.Services.Grpc\MCB.Demos.ShopDemo.Microservices.Customer.Services.Grpc.csproj", "{43C21744-61E9-4A05-A8F8-FED09EAB30CE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MCB.Demos.ShopDemo.Microservices.Customer.Services.Grpc.IoC", "src\MCB.Demos.ShopDemo.Microservices.Customer.Services.Grpc.IoC\MCB.Demos.ShopDemo.Microservices.Customer.Services.Grpc.IoC.csproj", "{2CC245D4-0C20-41AA-820B-D2EC86AF4108}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MCB.Demos.ShopDemo.Microservices.Customer.Services.Grpc.IoC", "src\MCB.Demos.ShopDemo.Microservices.Customer.Services.Grpc.IoC\MCB.Demos.ShopDemo.Microservices.Customer.Services.Grpc.IoC.csproj", "{2CC245D4-0C20-41AA-820B-D2EC86AF4108}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{CAD3B53E-101F-4CA4-999A-437C2A19CFF6}"
 EndProject
@@ -49,7 +49,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "1 - Customers", "1 - Custom
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "3 - Domain", "3 - Domain", "{FBBEF82B-2169-4A07-85B3-A15AE557B61C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MCB.Demos.ShopDemo.Microservices.Customer.Domain.Test", "tst\MCB.Demos.ShopDemo.Microservices.Customer.Domain.Test\MCB.Demos.ShopDemo.Microservices.Customer.Domain.Test.csproj", "{8E873D16-A7A0-4BAA-A550-432C1D303A1E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Tests", "tst\MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Tests\MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Tests.csproj", "{1EAE239F-C3B0-4E17-B747-EF0ECB30CCE1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -85,10 +85,10 @@ Global
 		{2CC245D4-0C20-41AA-820B-D2EC86AF4108}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2CC245D4-0C20-41AA-820B-D2EC86AF4108}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2CC245D4-0C20-41AA-820B-D2EC86AF4108}.Release|Any CPU.Build.0 = Release|Any CPU
-		{8E873D16-A7A0-4BAA-A550-432C1D303A1E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{8E873D16-A7A0-4BAA-A550-432C1D303A1E}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{8E873D16-A7A0-4BAA-A550-432C1D303A1E}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{8E873D16-A7A0-4BAA-A550-432C1D303A1E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1EAE239F-C3B0-4E17-B747-EF0ECB30CCE1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1EAE239F-C3B0-4E17-B747-EF0ECB30CCE1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1EAE239F-C3B0-4E17-B747-EF0ECB30CCE1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1EAE239F-C3B0-4E17-B747-EF0ECB30CCE1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -115,7 +115,7 @@ Global
 		{9B7E40AB-5559-410F-8107-BE1222F5ADFF} = {AE643A8E-D9DA-4822-93DF-38D337EED588}
 		{5AF3B052-EF1C-4605-9AB9-1C1CD4E05C28} = {9B7E40AB-5559-410F-8107-BE1222F5ADFF}
 		{FBBEF82B-2169-4A07-85B3-A15AE557B61C} = {5AF3B052-EF1C-4605-9AB9-1C1CD4E05C28}
-		{8E873D16-A7A0-4BAA-A550-432C1D303A1E} = {FBBEF82B-2169-4A07-85B3-A15AE557B61C}
+		{1EAE239F-C3B0-4E17-B747-EF0ECB30CCE1} = {FBBEF82B-2169-4A07-85B3-A15AE557B61C}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {5CF09C14-628A-4AF4-B8B4-FC82C15634EE}
