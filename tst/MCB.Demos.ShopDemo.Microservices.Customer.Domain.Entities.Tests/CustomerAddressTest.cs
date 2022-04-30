@@ -1,4 +1,5 @@
 using FluentAssertions;
+using MCB.Core.Infra.CrossCutting.DateTime;
 using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Enums;
 using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Tests.Fixtures;
 using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.ValueObjects;
@@ -59,14 +60,14 @@ namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Tests
 
                 customerAddress.AuditableInfo.Should().NotBeNull();
                 customerAddress.AuditableInfo.CreatedAt.Should().BeAfter(default);
-                customerAddress.AuditableInfo.CreatedAt.Should().BeBefore(DateTimeOffset.UtcNow);
+                customerAddress.AuditableInfo.CreatedAt.Should().Be(DateTimeProvider.GetDate());
                 customerAddress.AuditableInfo.CreatedBy.Should().Be(_fixture.ExecutionUser);
                 customerAddress.AuditableInfo.UpdatedAt.Should().BeNull();
                 customerAddress.AuditableInfo.UpdatedBy.Should().BeNull();
                 customerAddress.AuditableInfo.SourcePlatform.Should().Be(_fixture.SourcePlatform);
 
                 customerAddress.RegistryVersion.Should().BeAfter(default);
-                customerAddress.RegistryVersion.Should().BeBefore(DateTimeOffset.UtcNow);
+                customerAddress.RegistryVersion.Should().Be(DateTimeProvider.GetDate());
 
                 customerAddress.CustomerAddressType.Should().Be(customerAddressType);
                 customerAddress.AddressValueObject.Should().Be(addressValueObject);
