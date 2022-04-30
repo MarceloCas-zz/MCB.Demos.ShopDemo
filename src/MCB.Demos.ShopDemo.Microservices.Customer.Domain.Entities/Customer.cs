@@ -8,7 +8,7 @@ namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities
         IAggregationRoot
     {
         // Fields
-        private CustomerAddressInfo _customerAddressInfo = new();
+        private readonly CustomerAddressInfo _customerAddressInfo = new();
 
         // Properties
         public string FirstName { get; private set; }
