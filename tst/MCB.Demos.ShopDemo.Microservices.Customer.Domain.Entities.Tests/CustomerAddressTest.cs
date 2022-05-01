@@ -222,5 +222,32 @@ namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Tests
             customerAddress.CustomerAddressType.Should().NotBe(initialCustomerAddressType);
             customerAddress.CustomerAddressType.Should().Be(newCustomerAddressType);
         }
+
+        [Fact]
+        public void CustomerAddress_Should_DeepClone()
+        {
+            // Arrange
+            var customerAddress = DefaultFixture.GenerateNewCustomerAddress();
+
+            // Act
+            var clonedCustomerAddress = customerAddress.DeepClone();
+
+            // Assert
+            customerAddress.Should().NotBeSameAs(clonedCustomerAddress);
+
+            customerAddress.Id.Should().Be(clonedCustomerAddress.Id);
+            customerAddress.TenantId.Should().Be(clonedCustomerAddress.TenantId);
+
+            customerAddress.AuditableInfo.Should().NotBeSameAs(clonedCustomerAddress.AuditableInfo);
+            customerAddress.AuditableInfo.Should().Be(clonedCustomerAddress.AuditableInfo);
+            customerAddress.AuditableInfo.SourcePlatform.Should().Be(clonedCustomerAddress.AuditableInfo.SourcePlatform);
+
+            customerAddress.RegistryVersion.Should().Be(clonedCustomerAddress.RegistryVersion);
+
+            customerAddress.AddressValueObject.Should().NotBeSameAs(clonedCustomerAddress.AddressValueObject);
+            customerAddress.AddressValueObject.Should().Be(clonedCustomerAddress.AddressValueObject);
+
+            customerAddress.CustomerAddressType.Should().Be(clonedCustomerAddress.CustomerAddressType);
+        }
     }
 }
