@@ -68,6 +68,24 @@ namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Tests.Fixtur
                 sourcePlatform: existingSourcePlatform ?? GenerateNewSourcePlatform()
             );
         }
+        public static bool CompareTwoCustomerAddressValues(
+            CustomerAddress leftCustomerAddress,
+            CustomerAddress rightCustomerAddress
+        )
+        {
+            if (leftCustomerAddress is null && rightCustomerAddress is null)
+                return true;
+            if (leftCustomerAddress is null || rightCustomerAddress is null)
+                return false;
+
+            return leftCustomerAddress.Id == rightCustomerAddress.Id
+                && leftCustomerAddress.TenantId == rightCustomerAddress.TenantId
+                && leftCustomerAddress.AuditableInfo.Equals(rightCustomerAddress.AuditableInfo)
+                && leftCustomerAddress.RegistryVersion == rightCustomerAddress.RegistryVersion
+                && leftCustomerAddress.AddressValueObject.Equals(rightCustomerAddress.AddressValueObject)
+                && leftCustomerAddress.CustomerAddressType == rightCustomerAddress.CustomerAddressType
+                ;
+        }
         public static CustomerAddressInfo GenerateNewCustomerAddressInfo(
             Guid? existingTenantId = null,
             string existingExecutionUser = null,

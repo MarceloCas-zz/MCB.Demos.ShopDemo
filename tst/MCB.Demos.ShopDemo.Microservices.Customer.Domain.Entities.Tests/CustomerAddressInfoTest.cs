@@ -61,5 +61,29 @@ namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Tests
             customerAddressInfo.RegistryVersion.Should().BeAfter(default);
             customerAddressInfo.RegistryVersion.Should().Be(DateTimeProvider.GetDate());
         }
+
+        [Fact]
+        public void CustomerAddressInfo_Should_ChangeDefaultShippingAddress()
+        {
+            // Arrange
+            var customerAddressInfo = DefaultFixture.GenerateNewCustomerAddressInfo(
+                existingTenantId: _fixture.TenantId,
+                existingExecutionUser: _fixture.ExecutionUser,
+                existingSourcePlatform: _fixture.SourcePlatform
+            );
+            var customerAddress = DefaultFixture.GenerateNewCustomerAddress();
+
+            // Act
+            customerAddressInfo.ChangeDefaultShippingAddress(
+                customerAddress,
+                _fixture.ExecutionUser,
+                _fixture.SourcePlatform
+            );
+
+            // Assert
+            customerAddressInfo.DefaultShippingAddress.Should().NotBeNull();
+            customerAddressInfo.DefaultShippingAddress.Should().NotBeSameAs(customerAddress);
+            DefaultFixture.CompareTwoCustomerAddressValues(customerAddressInfo.DefaultShippingAddress, customerAddress).Should().BeTrue();
+        }
     }
 }
