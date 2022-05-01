@@ -35,5 +35,31 @@ namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Tests
             customerAddressInfo.CustomerAddressCollection.Should().HaveCount(0);
             customerAddressInfo.DefaultShippingAddress.Should().BeNull();
         }
+
+        [Fact]
+        public void CustomerAddressInfo_Should_RegisterNew()
+        {
+            // Arrange and Act
+            var customerAddressInfo = DefaultFixture.GenerateNewCustomerAddressInfo(
+                existingTenantId: _fixture.TenantId,
+                existingExecutionUser: _fixture.ExecutionUser,
+                existingSourcePlatform: _fixture.SourcePlatform
+            );
+
+            // Assert
+            customerAddressInfo.Id.Should().NotBe(Guid.Empty);
+            customerAddressInfo.TenantId.Should().Be(_fixture.TenantId);
+
+            customerAddressInfo.AuditableInfo.Should().NotBeNull();
+            customerAddressInfo.AuditableInfo.CreatedAt.Should().BeAfter(default);
+            customerAddressInfo.AuditableInfo.CreatedAt.Should().Be(DateTimeProvider.GetDate());
+            customerAddressInfo.AuditableInfo.CreatedBy.Should().Be(_fixture.ExecutionUser);
+            customerAddressInfo.AuditableInfo.UpdatedAt.Should().BeNull();
+            customerAddressInfo.AuditableInfo.UpdatedBy.Should().BeNull();
+            customerAddressInfo.AuditableInfo.SourcePlatform.Should().Be(_fixture.SourcePlatform);
+
+            customerAddressInfo.RegistryVersion.Should().BeAfter(default);
+            customerAddressInfo.RegistryVersion.Should().Be(DateTimeProvider.GetDate());
+        }
     }
 }
