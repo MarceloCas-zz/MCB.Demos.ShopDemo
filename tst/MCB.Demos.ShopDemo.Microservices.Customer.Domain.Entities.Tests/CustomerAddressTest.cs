@@ -176,7 +176,7 @@ namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Tests
             // Arrange
             var originalGetDataFuncion = DateTimeProvider.GetDateCustomFunction;
             DateTimeProvider.GetDateCustomFunction = () => originalGetDataFuncion().AddDays(-1);
-            var customerAddress = DefaultFixture.GenerateNewCustomerAddress(existingCustomerAddress: DefaultFixture.GenerateNewAddressValueObject());
+            var customerAddress = DefaultFixture.GenerateNewCustomerAddress(existingCustomerAddress: DefaultFixture.GenerateNewAddressValueObject(), existingCustomerAdressType: CustomerAddressType.HomeAddress);
             DateTimeProvider.GetDateCustomFunction = originalGetDataFuncion;
 
             var newCustomerAddress = DefaultFixture.GenerateNewAddressValueObject();
