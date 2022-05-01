@@ -68,5 +68,17 @@ namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Tests.Fixtur
                 sourcePlatform: existingSourcePlatform ?? GenerateNewSourcePlatform()
             );
         }
+        public static CustomerAddressInfo GenerateNewCustomerAddressInfo(
+            Guid? existingTenantId = null,
+            string existingExecutionUser = null,
+            string existingSourcePlatform = null
+        )
+        {
+            return new CustomerAddressInfo().RegisterNew(
+                tenantId: existingTenantId ?? GenerateNewTenantId(),
+                executionUser: existingExecutionUser ?? GenerateNewExecutionUser(),
+                sourcePlatform: existingSourcePlatform ?? GenerateNewSourcePlatform()
+            );
+        }
     }
 }
