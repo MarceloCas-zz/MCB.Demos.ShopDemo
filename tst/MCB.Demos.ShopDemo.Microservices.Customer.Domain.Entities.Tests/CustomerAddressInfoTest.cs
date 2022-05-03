@@ -52,12 +52,14 @@ namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Tests
         public void CustomerAddressInfo_Should_ChangeDefaultShippingAddress()
         {
             // Arrange
+            var customerAddress = DefaultFixture.GenerateNewCustomerAddress();
             var customerAddressInfo = DefaultFixture.GenerateNewCustomerAddressInfo(
                 existingTenantId: _fixture.TenantId,
                 existingExecutionUser: _fixture.ExecutionUser,
                 existingSourcePlatform: _fixture.SourcePlatform
             );
-            var customerAddress = DefaultFixture.GenerateNewCustomerAddress();
+            var clonedCustomerAddressInfoAfterRegisterNew = customerAddressInfo.DeepClone();
+            GenerateNewDateForDateTimeProvider();
 
             // Act
             customerAddressInfo.ChangeDefaultShippingAddress(
@@ -70,6 +72,7 @@ namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Tests
             customerAddressInfo.DefaultShippingAddress.Should().NotBeNull();
             customerAddressInfo.DefaultShippingAddress.Should().NotBeSameAs(customerAddress);
             DefaultFixture.CompareTwoCustomerAddressValues(customerAddressInfo.DefaultShippingAddress, customerAddress).Should().BeTrue();
+            ValidateAfterRegisterModification(clonedCustomerAddressInfoAfterRegisterNew, customerAddressInfo, _fixture.ExecutionUser, _fixture.SourcePlatform);
         }
 
         [Fact]
@@ -87,7 +90,8 @@ namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Tests
                 _fixture.ExecutionUser,
                 _fixture.SourcePlatform
             );
-            var initialDefaultShippingAddress = customerAddressInfo.DefaultShippingAddress;
+            var clonedCustomerAddressInfoAfterRegisterNew = customerAddressInfo.DeepClone();
+            GenerateNewDateForDateTimeProvider();
 
             // Act
             customerAddressInfo.ClearDefaultShippingAddress(
@@ -96,9 +100,8 @@ namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Tests
             );
 
             // Assert
-            customerAddressInfo.DefaultShippingAddress.Should().NotBeNull();
-            customerAddressInfo.DefaultShippingAddress.Should().NotBeSameAs(customerAddress);
-            DefaultFixture.CompareTwoCustomerAddressValues(customerAddressInfo.DefaultShippingAddress, customerAddress).Should().BeTrue();
+            customerAddressInfo.DefaultShippingAddress.Should().BeNull();
+            ValidateAfterRegisterModification(clonedCustomerAddressInfoAfterRegisterNew, customerAddressInfo, _fixture.ExecutionUser, _fixture.SourcePlatform);
         }
     }
 }
