@@ -1,5 +1,7 @@
 ﻿using MCB.Core.Domain.Entities;
 using MCB.Core.Domain.Entities.Abstractions;
+using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Enums;
+using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.ValueObjects;
 
 namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities
 {
@@ -67,6 +69,72 @@ namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities
             // Process and Return
             return SetBirthDate(birthDate)
                 .RegisterModificationInternal<Customer>(executionUser, sourcePlatform);
+        }
+
+        public Customer ChangeDefaultShippingAddress(CustomerAddress customerAddress, string executionUser, string sourcePlatform)
+        {
+            // Validate
+            // TODO: Add validation
+
+            // Process
+            _customerAddressInfo.ChangeDefaultShippingAddress(customerAddress, executionUser, sourcePlatform);
+            RegisterModificationInternal<Customer>(executionUser, sourcePlatform);
+
+            // Return
+            return this;
+        }
+        public Customer ClearDefaultShippingAddress(string executionUser, string sourcePlatform)
+        {
+            // Validate
+            // TODO: Add validation
+
+            // Process
+            _customerAddressInfo.ClearDefaultShippingAddress(executionUser, sourcePlatform);
+            RegisterModificationInternal<Customer>(executionUser, sourcePlatform);
+
+            // Return
+            return this;
+        }
+
+        public Customer AddNewCustomerAddress(CustomerAddressType customerAddressType, AddressValueObject addressValueObject, string executionUser, string sourcePlatform)
+        {
+            // Validate
+            // TODO: Add validation
+
+            // Process
+            _customerAddressInfo.AddNewCustomerAddress(customerAddressType, addressValueObject, executionUser, sourcePlatform);
+            RegisterModificationInternal<Customer>(executionUser, sourcePlatform);
+
+            // Return
+            return this;
+        }
+        public Customer RemoveCustomerAddress(Guid customerAddressId, string executionUser, string sourcePlatform)
+        {
+            // Validate
+            // TODO: Add validation
+
+            // Process
+            _customerAddressInfo.RemoveCustomerAddress(customerAddressId, executionUser, sourcePlatform);
+            RegisterModificationInternal<Customer>(executionUser, sourcePlatform);
+
+            // Return
+            return this;
+        }
+        public Customer ChangeCustomerAddress(Guid customerAddressId, CustomerAddressType customerAddressType, AddressValueObject addressValueObject, string executionUser, string sourcePlatform)
+        {
+            var customerAddress = _customerAddressInfo.CustomerAddressCollection.First(q => q.Id == customerAddressId);
+
+            // Validate
+            // TODO: Add validation
+            if (customerAddress == null)
+                throw new InvalidOperationException();
+
+            // Process
+            _customerAddressInfo.ChangeCustomerAddress(customerAddressId, customerAddressType, addressValueObject, executionUser, sourcePlatform);
+            RegisterModificationInternal<Customer>(executionUser, sourcePlatform);
+
+            // Return
+            return this;
         }
 
         // Protected Abstract Methods
