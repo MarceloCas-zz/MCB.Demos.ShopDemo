@@ -71,7 +71,7 @@ namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities
             // Return
             return this;
         }
-        public CustomerAddressInfo ChangeCustomerAddressInfo(Guid customerAddressId, CustomerAddressType customerAddressType, AddressValueObject addressValueObject, string executionUser, string sourcePlatform)
+        public CustomerAddressInfo ChangeCustomerAddress(Guid customerAddressId, CustomerAddressType customerAddressType, AddressValueObject addressValueObject, string executionUser, string sourcePlatform)
         {
             var customerAddress = _customerAddressCollection.First(q => q.Id == customerAddressId);
 
