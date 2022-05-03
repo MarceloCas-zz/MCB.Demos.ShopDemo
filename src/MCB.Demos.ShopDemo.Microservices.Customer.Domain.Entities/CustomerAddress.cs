@@ -50,6 +50,7 @@ namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities
                 .SetAddress(addressValueObject)
                 .RegisterModificationInternal<CustomerAddress>(executionUser, sourcePlatform);
         }
+
         public CustomerAddress DeepClone()
         {
             // Process and Return

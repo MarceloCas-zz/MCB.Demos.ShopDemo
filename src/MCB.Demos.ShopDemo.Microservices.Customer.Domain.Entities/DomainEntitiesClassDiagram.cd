@@ -3,7 +3,7 @@
   <Class Name="MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Customer">
     <Position X="2" Y="3" Width="3.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAEAQAAAAABAAAAAEAAQAAAAAAABAAAAAQEAAAAg=</HashCode>
+      <HashCode>AAAAAEAQAAAAABABAAAEAAQAABAAAABCAAQAQEEAAA0=</HashCode>
       <FileName>Customer.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
@@ -24,18 +24,18 @@
   </Class>
   <Class Name="MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.CustomerAddressInfo">
     <Position X="7.25" Y="2.75" Width="3.75" />
-    <AssociationLine Name="DefaultShippingAddress" Type="MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.CustomerAddress">
-      <MemberNameLabel ManuallyPlaced="true">
-        <Position X="0.142" Y="0.63" />
-      </MemberNameLabel>
-    </AssociationLine>
     <AssociationLine Name="CustomerAddressCollection" Type="MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.CustomerAddress">
       <MemberNameLabel ManuallyPlaced="true">
-        <Position X="-3.993" Y="0.662" />
+        <Position X="-4.792" Y="0.194" />
+      </MemberNameLabel>
+    </AssociationLine>
+    <AssociationLine Name="DefaultShippingAddress" Type="MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.CustomerAddress">
+      <MemberNameLabel ManuallyPlaced="true">
+        <Position X="1.161" Y="0.63" />
       </MemberNameLabel>
     </AssociationLine>
     <TypeIdentifier>
-      <HashCode>EAAAAAEQCAAAIAIBAAAAEAAAAIAAAABCAAAAAAEAABE=</HashCode>
+      <HashCode>EAAAAAEQCAAAIAIBAAAAAAAAAJAAAABCAAAAAAEAABE=</HashCode>
       <FileName>CustomerAddressInfo.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
@@ -55,7 +55,7 @@
   <Enum Name="MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Enums.CustomerAddressType">
     <Position X="3.75" Y="8" Width="1.75" />
     <TypeIdentifier>
-      <HashCode>AKAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AIAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Enums\CustomerAddressType.cs</FileName>
     </TypeIdentifier>
   </Enum>
