@@ -10,7 +10,7 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-	  <PackageReference Include="MCB.Core.Domain.Entities" Version="0.9.0-alpha" />
+	  <PackageReference Include="MCB.Core.Domain.Entities" Version="0.10.0-alpha" />
 	  <PackageReference Include="MCB.Core.Infra.CrossCutting" Version="0.4.0-alpha" />
 	</ItemGroup>
 

@@ -18,29 +18,12 @@ namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Tests.Fixtur
     public class DefaultFixture
         : FixtureBase
     {
-        // Properties
-        public Guid TenantId { get; }
-        public string ExecutionUser { get; }
-        public string SourcePlatform { get; }
-
-        // Constructors
-        public DefaultFixture()
-        {
-            TenantId = GenerateNewTenantId();
-            ExecutionUser = GenerateNewExecutionUser();
-            SourcePlatform = GenerateNewSourcePlatform();
-        }
-
         // Protected Methods
         protected override void ConfigureServices(ServiceCollection services)
         {
 
         }
 
-        // Public Methods
-        public static Guid GenerateNewTenantId() => Guid.NewGuid();
-        public static string GenerateNewExecutionUser() => $"{nameof(ExecutionUser)} {Guid.NewGuid()}";
-        public static string GenerateNewSourcePlatform() => $"{nameof(SourcePlatform)} {Guid.NewGuid()}";
         public static AddressValueObject GenerateNewAddressValueObject()
         {
             return new AddressValueObject(

@@ -1,8 +1,6 @@
 ﻿using FluentAssertions;
-using MCB.Core.Infra.CrossCutting.DateTime;
 using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Tests.Fixtures;
 using MCB.Tests;
-using System;
 using Xunit;
 using Xunit.Abstractions;
 
@@ -47,19 +45,7 @@ namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Tests
             );
 
             // Assert
-            customerAddressInfo.Id.Should().NotBe(Guid.Empty);
-            customerAddressInfo.TenantId.Should().Be(_fixture.TenantId);
-
-            customerAddressInfo.AuditableInfo.Should().NotBeNull();
-            customerAddressInfo.AuditableInfo.CreatedAt.Should().BeAfter(default);
-            customerAddressInfo.AuditableInfo.CreatedAt.Should().Be(DateTimeProvider.GetDate());
-            customerAddressInfo.AuditableInfo.CreatedBy.Should().Be(_fixture.ExecutionUser);
-            customerAddressInfo.AuditableInfo.UpdatedAt.Should().BeNull();
-            customerAddressInfo.AuditableInfo.UpdatedBy.Should().BeNull();
-            customerAddressInfo.AuditableInfo.SourcePlatform.Should().Be(_fixture.SourcePlatform);
-
-            customerAddressInfo.RegistryVersion.Should().BeAfter(default);
-            customerAddressInfo.RegistryVersion.Should().Be(DateTimeProvider.GetDate());
+            ValidateAfterRegisterNew(customerAddressInfo, _fixture.ExecutionUser, _fixture.SourcePlatform);
         }
 
         [Fact]
@@ -76,6 +62,35 @@ namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Tests
             // Act
             customerAddressInfo.ChangeDefaultShippingAddress(
                 customerAddress,
+                _fixture.ExecutionUser,
+                _fixture.SourcePlatform
+            );
+
+            // Assert
+            customerAddressInfo.DefaultShippingAddress.Should().NotBeNull();
+            customerAddressInfo.DefaultShippingAddress.Should().NotBeSameAs(customerAddress);
+            DefaultFixture.CompareTwoCustomerAddressValues(customerAddressInfo.DefaultShippingAddress, customerAddress).Should().BeTrue();
+        }
+
+        [Fact]
+        public void CustomerAddressInfo_Should_ClearDefaultShippingAddress()
+        {
+            // Arrange
+            var customerAddressInfo = DefaultFixture.GenerateNewCustomerAddressInfo(
+                existingTenantId: _fixture.TenantId,
+                existingExecutionUser: _fixture.ExecutionUser,
+                existingSourcePlatform: _fixture.SourcePlatform
+            );
+            var customerAddress = DefaultFixture.GenerateNewCustomerAddress();
+            customerAddressInfo.ChangeDefaultShippingAddress(
+                customerAddress,
+                _fixture.ExecutionUser,
+                _fixture.SourcePlatform
+            );
+            var initialDefaultShippingAddress = customerAddressInfo.DefaultShippingAddress;
+
+            // Act
+            customerAddressInfo.ClearDefaultShippingAddress(
                 _fixture.ExecutionUser,
                 _fixture.SourcePlatform
             );
