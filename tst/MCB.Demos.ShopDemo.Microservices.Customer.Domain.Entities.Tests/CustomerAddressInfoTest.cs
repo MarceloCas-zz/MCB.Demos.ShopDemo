@@ -1,6 +1,8 @@
 ﻿using FluentAssertions;
+using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Enums;
 using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Tests.Fixtures;
 using MCB.Tests;
+using System.Linq;
 using Xunit;
 using Xunit.Abstractions;
 
@@ -101,6 +103,92 @@ namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Tests
 
             // Assert
             customerAddressInfo.DefaultShippingAddress.Should().BeNull();
+            ValidateAfterRegisterModification(clonedCustomerAddressInfoAfterRegisterNew, customerAddressInfo, _fixture.ExecutionUser, _fixture.SourcePlatform);
+        }
+
+        [Fact]
+        public void CustomerAddressInfo_Should_AddNewCustomerAddress()
+        {
+            // Arrange
+            var customerAddressInfo = DefaultFixture.GenerateNewCustomerAddressInfo(
+                existingTenantId: _fixture.TenantId,
+                existingExecutionUser: _fixture.ExecutionUser,
+                existingSourcePlatform: _fixture.SourcePlatform
+            );
+            var clonedCustomerAddressInfoAfterRegisterNew = customerAddressInfo.DeepClone();
+            GenerateNewDateForDateTimeProvider();
+
+            var customerAddressType = CustomerAddressType.HomeAddress;
+            var addressValueObject = DefaultFixture.GenerateNewAddressValueObject();
+
+            // Act
+            customerAddressInfo.AddNewCustomerAddress(
+                customerAddressType,
+                addressValueObject,
+                _fixture.ExecutionUser,
+                _fixture.SourcePlatform
+            );
+
+            // Assert
+            customerAddressInfo.CustomerAddressCollection.Should().NotBeNull();
+            customerAddressInfo.CustomerAddressCollection.Should().HaveCount(1);
+            
+            var customerAddressArray = customerAddressInfo.CustomerAddressCollection.ToArray();
+            customerAddressArray[0].CustomerAddressType.Should().Be(customerAddressType);
+            customerAddressArray[0].AddressValueObject.Should().NotBeSameAs(addressValueObject);
+            customerAddressArray[0].AddressValueObject.Should().Be(addressValueObject);
+            ValidateAfterRegisterNew(customerAddressArray[0], _fixture.ExecutionUser, _fixture.SourcePlatform);
+
+            customerAddressInfo.CustomerAddressCollection.Should().NotBeSameAs(customerAddressInfo.CustomerAddressCollection);
+
+            ValidateAfterRegisterModification(clonedCustomerAddressInfoAfterRegisterNew, customerAddressInfo, _fixture.ExecutionUser, _fixture.SourcePlatform);
+        }
+
+        [Fact]
+        public void CustomerAddressInfo_Should_RemoveCustomerAddress()
+        {
+            // Arrange
+            var customerAddressInfo = DefaultFixture.GenerateNewCustomerAddressInfo(
+                existingTenantId: _fixture.TenantId,
+                existingExecutionUser: _fixture.ExecutionUser,
+                existingSourcePlatform: _fixture.SourcePlatform
+            );
+            GenerateNewDateForDateTimeProvider();
+
+            customerAddressInfo.AddNewCustomerAddress(
+                customerAddressType: CustomerAddressType.HomeAddress,
+                addressValueObject: DefaultFixture.GenerateNewAddressValueObject(),
+                _fixture.ExecutionUser,
+                _fixture.SourcePlatform
+            );
+            GenerateNewDateForDateTimeProvider();
+
+            customerAddressInfo.AddNewCustomerAddress(
+                customerAddressType: CustomerAddressType.BusinessAddress,
+                addressValueObject: DefaultFixture.GenerateNewAddressValueObject(),
+                _fixture.ExecutionUser,
+                _fixture.SourcePlatform
+            );
+            GenerateNewDateForDateTimeProvider();
+
+            var clonedCustomerAddressInfoAfterRegisterNew = customerAddressInfo.DeepClone();
+
+            // Act
+            customerAddressInfo.RemoveCustomerAddress(
+                customerAddressInfo.CustomerAddressCollection.First().Id,
+                _fixture.ExecutionUser,
+                _fixture.SourcePlatform
+            );
+
+            // Assert
+            customerAddressInfo.CustomerAddressCollection.Should().NotBeNull();
+            customerAddressInfo.CustomerAddressCollection.Should().HaveCount(1);
+
+            var customerAddressArray = customerAddressInfo.CustomerAddressCollection.ToArray();
+            customerAddressArray[0].CustomerAddressType.Should().Be(CustomerAddressType.BusinessAddress);
+
+            customerAddressInfo.CustomerAddressCollection.Should().NotBeSameAs(customerAddressInfo.CustomerAddressCollection);
+
             ValidateAfterRegisterModification(clonedCustomerAddressInfoAfterRegisterNew, customerAddressInfo, _fixture.ExecutionUser, _fixture.SourcePlatform);
         }
     }
