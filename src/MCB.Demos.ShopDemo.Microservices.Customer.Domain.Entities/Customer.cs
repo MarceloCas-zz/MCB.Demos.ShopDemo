@@ -73,17 +73,17 @@ namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities
                 .RegisterModificationInternal<Customer>(executionUser, sourcePlatform);
         }
 
-        public Customer ChangeDefaultShippingAddress(CustomerAddress customerAddress, string executionUser, string sourcePlatform)
+        public CustomerAddress ChangeDefaultShippingAddress(CustomerAddress customerAddress, string executionUser, string sourcePlatform)
         {
             // Validate
             // TODO: Add validation
 
             // Process
-            _customerAddressInfo.ChangeDefaultShippingAddress(customerAddress, executionUser, sourcePlatform);
+            var newDefaultShippingAddress = _customerAddressInfo.ChangeDefaultShippingAddress(customerAddress, executionUser, sourcePlatform);
             RegisterModificationInternal<Customer>(executionUser, sourcePlatform);
 
             // Return
-            return this;
+            return newDefaultShippingAddress;
         }
         public Customer ClearDefaultShippingAddress(string executionUser, string sourcePlatform)
         {
@@ -98,31 +98,31 @@ namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities
             return this;
         }
 
-        public Customer AddNewCustomerAddress(CustomerAddressType customerAddressType, AddressValueObject addressValueObject, string executionUser, string sourcePlatform)
+        public CustomerAddress AddNewCustomerAddress(CustomerAddressType customerAddressType, AddressValueObject addressValueObject, string executionUser, string sourcePlatform)
         {
             // Validate
             // TODO: Add validation
 
             // Process
-            _customerAddressInfo.AddNewCustomerAddress(customerAddressType, addressValueObject, executionUser, sourcePlatform);
+            var addedCustomerAddress = _customerAddressInfo.AddNewCustomerAddress(customerAddressType, addressValueObject, executionUser, sourcePlatform);
             RegisterModificationInternal<Customer>(executionUser, sourcePlatform);
 
             // Return
-            return this;
+            return addedCustomerAddress;
         }
-        public Customer RemoveCustomerAddress(Guid customerAddressId, string executionUser, string sourcePlatform)
+        public CustomerAddress? RemoveCustomerAddress(Guid customerAddressId, string executionUser, string sourcePlatform)
         {
             // Validate
             // TODO: Add validation
 
             // Process
-            _customerAddressInfo.RemoveCustomerAddress(customerAddressId, executionUser, sourcePlatform);
+            var removedCustomerAddress = _customerAddressInfo.RemoveCustomerAddress(customerAddressId, executionUser, sourcePlatform);
             RegisterModificationInternal<Customer>(executionUser, sourcePlatform);
 
             // Return
-            return this;
+            return removedCustomerAddress;
         }
-        public Customer ChangeCustomerAddress(Guid customerAddressId, CustomerAddressType customerAddressType, AddressValueObject addressValueObject, string executionUser, string sourcePlatform)
+        public CustomerAddress? ChangeCustomerAddress(Guid customerAddressId, CustomerAddressType customerAddressType, AddressValueObject addressValueObject, string executionUser, string sourcePlatform)
         {
             var customerAddress = _customerAddressInfo.CustomerAddressCollection.First(q => q.Id == customerAddressId);
 
@@ -132,11 +132,11 @@ namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities
                 throw new InvalidOperationException();
 
             // Process
-            _customerAddressInfo.ChangeCustomerAddress(customerAddressId, customerAddressType, addressValueObject, executionUser, sourcePlatform);
+            var changedCustomerAddress = _customerAddressInfo.ChangeCustomerAddress(customerAddressId, customerAddressType, addressValueObject, executionUser, sourcePlatform);
             RegisterModificationInternal<Customer>(executionUser, sourcePlatform);
 
             // Return
-            return this;
+            return changedCustomerAddress;
         }
 
         public Customer DeepClone()

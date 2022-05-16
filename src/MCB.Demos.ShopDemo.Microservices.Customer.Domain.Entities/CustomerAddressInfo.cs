@@ -24,14 +24,16 @@ namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities
             // Process and Return
             return RegisterNewInternal<CustomerAddressInfo>(tenantId, executionUser, sourcePlatform);
         }
-        public CustomerAddressInfo ChangeDefaultShippingAddress(CustomerAddress customerAddress, string executionUser, string sourcePlatform)
+        public CustomerAddress ChangeDefaultShippingAddress(CustomerAddress customerAddress, string executionUser, string sourcePlatform)
         {
             // Validate
             // TODO: Add validation
 
             // Process and Return
-            return SetDefaultShippingAddress(customerAddress)
+            SetDefaultShippingAddress(customerAddress)
                 .RegisterModificationInternal<CustomerAddressInfo>(executionUser, sourcePlatform);
+
+            return customerAddress;
         }
         public CustomerAddressInfo ClearDefaultShippingAddress(string executionUser, string sourcePlatform)
         {
@@ -43,49 +45,54 @@ namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities
                 .RegisterModificationInternal<CustomerAddressInfo>(executionUser, sourcePlatform);
         }
 
-        public CustomerAddressInfo AddNewCustomerAddress(CustomerAddressType customerAddressType, AddressValueObject addressValueObject, string executionUser, string sourcePlatform)
+        public CustomerAddress AddNewCustomerAddress(CustomerAddressType customerAddressType, AddressValueObject addressValueObject, string executionUser, string sourcePlatform)
         {
             // Validate
             // TODO: Add validation
 
             // Process
+            var customerAddress = new CustomerAddress().RegisterNew(TenantId, customerAddressType, addressValueObject, executionUser, sourcePlatform);
             _customerAddressCollection.Add(
-                new CustomerAddress().RegisterNew(TenantId, customerAddressType, addressValueObject, executionUser, sourcePlatform)
+                customerAddress
             );
             RegisterModificationInternal<CustomerAddressInfo>(executionUser, sourcePlatform);
 
             // Return
-            return this;
+            return customerAddress;
         }
-        public CustomerAddressInfo RemoveCustomerAddress(Guid customerAddressId, string executionUser, string sourcePlatform)
+        public CustomerAddress? RemoveCustomerAddress(Guid customerAddressId, string executionUser, string sourcePlatform)
         {
             // Validate
             // TODO: Add validation
 
             // Process
+            var customerAddress = _customerAddressCollection.FirstOrDefault(q => q.Id == customerAddressId);
+            if (customerAddress is null)
+                return null;
+
             _customerAddressCollection.Remove(
-                _customerAddressCollection.First(q => q.Id == customerAddressId)
+                customerAddress
             );
             RegisterModificationInternal<CustomerAddressInfo>(executionUser, sourcePlatform);
 
             // Return
-            return this;
+            return customerAddress;
         }
-        public CustomerAddressInfo ChangeCustomerAddress(Guid customerAddressId, CustomerAddressType customerAddressType, AddressValueObject addressValueObject, string executionUser, string sourcePlatform)
+        public CustomerAddress? ChangeCustomerAddress(Guid customerAddressId, CustomerAddressType customerAddressType, AddressValueObject addressValueObject, string executionUser, string sourcePlatform)
         {
             var customerAddress = _customerAddressCollection.FirstOrDefault(q => q.Id == customerAddressId);
 
             // Validate
             // TODO: Add validation
             if (customerAddress == null)
-                throw new InvalidOperationException();
+                return null;
 
             // Process
             customerAddress.ChangeFullAddressInfo(customerAddressType, addressValueObject, executionUser, sourcePlatform);
             RegisterModificationInternal<CustomerAddressInfo>(executionUser, sourcePlatform);
 
             // Return
-            return this;
+            return customerAddress;
         }
 
         public CustomerAddressInfo DeepClone()
