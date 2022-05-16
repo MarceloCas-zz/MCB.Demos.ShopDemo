@@ -129,7 +129,7 @@ namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities
             // Validate
             // TODO: Add validation
             if (customerAddress == null)
-                throw new InvalidOperationException();
+                return null;
 
             // Process
             var changedCustomerAddress = _customerAddressInfo.ChangeCustomerAddress(customerAddressId, customerAddressType, addressValueObject, executionUser, sourcePlatform);
