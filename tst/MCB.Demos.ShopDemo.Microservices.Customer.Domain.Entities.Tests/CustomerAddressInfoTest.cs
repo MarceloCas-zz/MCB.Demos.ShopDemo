@@ -250,7 +250,6 @@ namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Tests
         public void CustomerAddressInfo_Should_Not_ChangeCustomerAddress_When_Id_Not_Found()
         {
             // Arrange
-            var hasRaisedInvalidOperationException = false;
             var customerAddressInfo = DefaultFixture.GenerateNewCustomerAddressInfo(
                 existingTenantId: _fixture.TenantId,
                 existingExecutionUser: _fixture.ExecutionUser,
@@ -276,23 +275,16 @@ namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Tests
 
 
             // Act
-            try
-            {
-                customerAddressInfo.ChangeCustomerAddress(
-                    Guid.NewGuid(),
-                    CustomerAddressType.HomeAddress,
-                    DefaultFixture.GenerateNewAddressValueObject(),
-                    _fixture.ExecutionUser,
-                    _fixture.SourcePlatform
-                );
-            }
-            catch (InvalidOperationException)
-            {
-                hasRaisedInvalidOperationException = true;
-            }
+            var changedCustomerAddress = customerAddressInfo.ChangeCustomerAddress(
+                Guid.NewGuid(),
+                CustomerAddressType.HomeAddress,
+                DefaultFixture.GenerateNewAddressValueObject(),
+                _fixture.ExecutionUser,
+                _fixture.SourcePlatform
+            );
 
             // Assert
-            hasRaisedInvalidOperationException.Should().BeTrue();
+            changedCustomerAddress.Should().BeNull();
         }
     }
 }
