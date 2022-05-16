@@ -310,5 +310,37 @@ namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Tests
         }
 
 
+        [Fact]
+        public void Customer_Not_Should_ChangeCustomerAddress_When_Id_Not_Existing()
+        {
+            // Arrange
+            var executionUser = _fixture.ExecutionUser;
+            var sourcePlatform = _fixture.SourcePlatform;
+            var customerAddressType = CustomerAddressType.BusinessAddress;
+
+            var customer = DefaultFixture.GenerateNewCustomer();
+
+            customer.AddNewCustomerAddress(
+                CustomerAddressType.BusinessAddress,
+                DefaultFixture.GenerateNewAddressValueObject(), 
+                executionUser, 
+                sourcePlatform
+            );
+
+            GenerateNewDateForDateTimeProvider();
+
+            // Act
+            var changedCustomerAddress = customer.ChangeCustomerAddress(
+                Guid.NewGuid(),
+                customerAddressType,
+                DefaultFixture.GenerateNewAddressValueObject(),
+                executionUser,
+                sourcePlatform
+            );
+
+            // Assert
+            changedCustomerAddress.Should().BeNull();
+        }
+
     }
 }
