@@ -124,7 +124,7 @@ namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities
         }
         public CustomerAddress? ChangeCustomerAddress(Guid customerAddressId, CustomerAddressType customerAddressType, AddressValueObject addressValueObject, string executionUser, string sourcePlatform)
         {
-            var customerAddress = _customerAddressInfo.CustomerAddressCollection.First(q => q.Id == customerAddressId);
+            var customerAddress = _customerAddressInfo.CustomerAddressCollection.FirstOrDefault(q => q.Id == customerAddressId);
 
             // Validate
             // TODO: Add validation
