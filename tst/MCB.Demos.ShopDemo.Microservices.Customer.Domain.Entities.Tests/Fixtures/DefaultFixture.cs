@@ -1,4 +1,5 @@
-﻿using MCB.Core.Infra.CrossCutting.Enums;
+﻿using MCB.Core.Infra.CrossCutting.DateTime;
+using MCB.Core.Infra.CrossCutting.Enums;
 using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Enums;
 using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.ValueObjects;
 using MCB.Tests.Fixtures;
@@ -79,6 +80,24 @@ namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Tests.Fixtur
                 tenantId: existingTenantId ?? GenerateNewTenantId(),
                 executionUser: existingExecutionUser ?? GenerateNewExecutionUser(),
                 sourcePlatform: existingSourcePlatform ?? GenerateNewSourcePlatform()
+            );
+        }
+        public static Customer GenerateNewCustomer(
+            Guid? existingTenantId = null,
+            string existingFirstName = null,
+            string existingLastName = null,
+            DateOnly? existingBirthDate = null,
+            string existingExecutionUser = null,
+            string existingSourcePlatform = null
+        )
+        {
+            return new Customer().RegisterNew(
+                existingTenantId ?? GenerateNewTenantId(),
+                existingFirstName ?? Guid.NewGuid().ToString(),
+                existingLastName ?? Guid.NewGuid().ToString(),
+                existingBirthDate ?? DateOnly.FromDateTime(DateTimeProvider.GetDate().DateTime),
+                existingExecutionUser ?? GenerateNewExecutionUser(),
+                existingSourcePlatform ?? GenerateNewSourcePlatform()
             );
         }
     }
