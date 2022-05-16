@@ -150,5 +150,33 @@ namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Tests
             originalDefaultShippingAddress.Should().BeNull();
             originalDefaultShippingAddress.Should().NotBeSameAs(customer.CustomerAddressInfo.DefaultShippingAddress);
         }
+
+        [Fact]
+        public void Customer_Should_ClearDefaultShippingAddress()
+        {
+            // Arrange
+            var customer = DefaultFixture.GenerateNewCustomer();
+            var customerBeforeModification = customer.DeepClone();
+            GenerateNewDateForDateTimeProvider();
+
+            var newShippingAddress = DefaultFixture.GenerateNewCustomerAddress();
+            var executionUser = _fixture.ExecutionUser;
+            var sourcePlatform = _fixture.SourcePlatform;
+
+            customer.ChangeDefaultShippingAddress(
+                newShippingAddress,
+                executionUser,
+                sourcePlatform
+            );
+            var originalDefaultShippingAddress = customer.CustomerAddressInfo?.DefaultShippingAddress;
+
+            // Act
+            customer.ClearDefaultShippingAddress(executionUser, sourcePlatform);
+
+            // Assert
+            ValidateAfterRegisterModification(customerBeforeModification, customer, executionUser, sourcePlatform);
+            originalDefaultShippingAddress.Should().NotBe(customer.CustomerAddressInfo.DefaultShippingAddress);
+            customer.CustomerAddressInfo.DefaultShippingAddress.Should().BeNull();
+        }
     }
 }
