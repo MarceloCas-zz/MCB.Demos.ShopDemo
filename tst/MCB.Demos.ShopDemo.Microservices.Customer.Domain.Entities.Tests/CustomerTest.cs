@@ -118,5 +118,37 @@ namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Tests
             ValidateAfterRegisterModification(customerBeforeModification, customer, executionUser, sourcePlatform);
             customer.BirthDate.Should().Be(birthDate);
         }
+
+        [Fact]
+        public void Customer_Should_ChangeDefaultShippingAddress()
+        {
+            // Arrange
+            var customer = DefaultFixture.GenerateNewCustomer();
+            var customerBeforeModification = customer.DeepClone();
+            GenerateNewDateForDateTimeProvider();
+
+            var newShippingAddress = DefaultFixture.GenerateNewCustomerAddress();
+            var executionUser = _fixture.ExecutionUser;
+            var sourcePlatform = _fixture.SourcePlatform;
+            var originalCustomerAddress = customer.CustomerAddressInfo.DeepClone();
+
+            var originalDefaultShippingAddress = customer.CustomerAddressInfo?.DefaultShippingAddress;
+
+            // Act
+            customer.ChangeDefaultShippingAddress(
+                newShippingAddress,
+                executionUser,
+                sourcePlatform
+            );
+
+            // Assert
+            ValidateAfterRegisterModification(customerBeforeModification, customer, executionUser, sourcePlatform);
+
+            customer.CustomerAddressInfo.Should().NotBeSameAs(customer.CustomerAddressInfo);
+            originalCustomerAddress.Should().NotBeSameAs(customer.CustomerAddressInfo);
+
+            originalDefaultShippingAddress.Should().BeNull();
+            originalDefaultShippingAddress.Should().NotBeSameAs(customer.CustomerAddressInfo.DefaultShippingAddress);
+        }
     }
 }
