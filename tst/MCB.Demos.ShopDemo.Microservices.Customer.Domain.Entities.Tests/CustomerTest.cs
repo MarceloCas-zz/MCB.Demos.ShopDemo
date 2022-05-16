@@ -69,5 +69,31 @@ namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Tests
             customer.LastName.Should().Be(lastName);
             customer.BirthDate.Should().Be(birthDate);
         }
+
+        [Fact]
+        public void Customer_Should_ChangeName()
+        {
+            // Arrange
+            var customer = DefaultFixture.GenerateNewCustomer();
+            var customerBeforeModification = customer.DeepClone();
+            GenerateNewDateForDateTimeProvider();
+            var firstName = "Marcelo";
+            var lastName = "Castelo Branco";
+            var executionUser = _fixture.ExecutionUser;
+            var sourcePlatform = _fixture.SourcePlatform;
+
+            // Act
+            customer.ChangeName(
+                firstName,
+                lastName,
+                executionUser,
+                sourcePlatform
+            );
+
+            // Assert
+            ValidateAfterRegisterModification(customerBeforeModification, customer, executionUser, sourcePlatform);
+            customer.FirstName.Should().Be(firstName);
+            customer.LastName.Should().Be(lastName);
+        }
     }
 }
