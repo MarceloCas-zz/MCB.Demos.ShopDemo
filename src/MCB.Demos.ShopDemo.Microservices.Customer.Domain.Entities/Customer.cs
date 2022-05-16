@@ -10,7 +10,7 @@ namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities
         IAggregationRoot
     {
         // Fields
-        private readonly CustomerAddressInfo _customerAddressInfo = new();
+        private CustomerAddressInfo _customerAddressInfo = new();
 
         // Properties
         public string FirstName { get; private set; }
@@ -139,6 +139,15 @@ namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities
             return this;
         }
 
+        public Customer DeepClone()
+        {
+            // Process and Return
+            return DeepCloneInternal<Customer>()
+                .SetName(FirstName, LastName)
+                .SetBirthDate(BirthDate)
+                .SetCustomerAddressInfo(CustomerAddressInfo);
+        }
+
         // Protected Abstract Methods
         protected override DomainEntityBase CreateInstanceForCloneInternal() => new Customer();
 
@@ -154,6 +163,11 @@ namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities
         {
             BirthDate = birthDate;
 
+            return this;
+        }
+        private Customer SetCustomerAddressInfo(CustomerAddressInfo customerAddressInfo)
+        {
+            _customerAddressInfo = customerAddressInfo;
             return this;
         }
     }
