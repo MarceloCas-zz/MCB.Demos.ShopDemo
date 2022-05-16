@@ -211,5 +211,49 @@ namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Tests
                 addedCustomerAddress
             ).Should().BeTrue();
         }
+
+
+        [Fact]
+        public void Customer_Should_RemoveCustomerAddress()
+        {
+            // Arrange
+            var executionUser = _fixture.ExecutionUser;
+            var sourcePlatform = _fixture.SourcePlatform;
+
+            var customer = DefaultFixture.GenerateNewCustomer();
+            var customerBeforeModification = customer.DeepClone();
+
+            var newCustomerAddressValueObject1 = DefaultFixture.GenerateNewAddressValueObject();
+            var newCustomerAddressValueObject2 = DefaultFixture.GenerateNewAddressValueObject();
+
+            customer.AddNewCustomerAddress(CustomerAddressType.BusinessAddress, newCustomerAddressValueObject1, executionUser, sourcePlatform);
+            customer.AddNewCustomerAddress(CustomerAddressType.BusinessAddress, newCustomerAddressValueObject2, executionUser, sourcePlatform);
+
+            var customerAddressToRemove = customer.CustomerAddressInfo.CustomerAddressCollection.First();
+
+            GenerateNewDateForDateTimeProvider();
+
+            // Act
+            var removedCustomerAddress = customer.RemoveCustomerAddress(
+                customerAddressToRemove.Id, 
+                executionUser, 
+                sourcePlatform
+            );  
+
+            // Assert
+            ValidateAfterRegisterModification(customerBeforeModification, customer, executionUser, sourcePlatform);
+
+            customer.CustomerAddressInfo.CustomerAddressCollection.Should().NotBeNull();
+            customer.CustomerAddressInfo.CustomerAddressCollection.Should().HaveCount(1);
+
+            DefaultFixture.CompareTwoCustomerAddressValues(
+                customerAddressToRemove,
+                removedCustomerAddress
+            ).Should().BeTrue();
+            DefaultFixture.CompareTwoCustomerAddressValues(
+                removedCustomerAddress,
+                customer.CustomerAddressInfo.CustomerAddressCollection.First()
+            ).Should().BeFalse();
+        }
     }
 }
