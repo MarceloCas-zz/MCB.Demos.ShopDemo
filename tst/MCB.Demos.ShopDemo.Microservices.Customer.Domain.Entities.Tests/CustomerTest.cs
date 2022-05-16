@@ -212,7 +212,6 @@ namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Tests
             ).Should().BeTrue();
         }
 
-
         [Fact]
         public void Customer_Should_RemoveCustomerAddress()
         {
@@ -255,5 +254,61 @@ namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Tests
                 customer.CustomerAddressInfo.CustomerAddressCollection.First()
             ).Should().BeFalse();
         }
+
+        [Fact]
+        public void Customer_Should_ChangeCustomerAddress()
+        {
+            // Arrange
+            var executionUser = _fixture.ExecutionUser;
+            var sourcePlatform = _fixture.SourcePlatform;
+            var customerAddressType = CustomerAddressType.BusinessAddress;
+
+            var customer = DefaultFixture.GenerateNewCustomer();
+            var customerBeforeModification = customer.DeepClone();
+
+            var newCustomerAddressValueObject1 = DefaultFixture.GenerateNewAddressValueObject();
+            var newCustomerAddressValueObject2 = DefaultFixture.GenerateNewAddressValueObject();
+            var addressValueObjectToChange = DefaultFixture.GenerateNewAddressValueObject();
+
+            customer.AddNewCustomerAddress(CustomerAddressType.BusinessAddress, newCustomerAddressValueObject1, executionUser, sourcePlatform);
+            customer.AddNewCustomerAddress(CustomerAddressType.BusinessAddress, newCustomerAddressValueObject2, executionUser, sourcePlatform);
+
+            var firstCustomerAddress = customer.CustomerAddressInfo.CustomerAddressCollection.First().DeepClone();
+            var customerAddressToChange = customer.CustomerAddressInfo.CustomerAddressCollection.Last();
+            var customerAddressBeforeChange = customerAddressToChange.DeepClone();
+
+            GenerateNewDateForDateTimeProvider();
+
+            // Act
+            var changedCustomerAddress = customer.ChangeCustomerAddress(
+                customerAddressToChange.Id,
+                customerAddressType,
+                addressValueObjectToChange,
+                executionUser,
+                sourcePlatform
+            );
+
+            // Assert
+            ValidateAfterRegisterModification(customerBeforeModification, customer, executionUser, sourcePlatform);
+
+            customer.CustomerAddressInfo.CustomerAddressCollection.Should().NotBeNull();
+            customer.CustomerAddressInfo.CustomerAddressCollection.Should().HaveCount(2);
+
+            DefaultFixture.CompareTwoCustomerAddressValues(
+                firstCustomerAddress,
+                customer.CustomerAddressInfo.CustomerAddressCollection.First()
+            ).Should().BeTrue();
+            customer.CustomerAddressInfo.CustomerAddressCollection.Where(q => q.Id == changedCustomerAddress.Id).Should().HaveCount(1);
+
+            DefaultFixture.CompareTwoCustomerAddressValues(
+                customerAddressBeforeChange,
+                customer.CustomerAddressInfo.CustomerAddressCollection.First(q => q.Id == changedCustomerAddress.Id)
+            ).Should().BeFalse();
+
+            changedCustomerAddress.CustomerAddressType.Should().Be(customerAddressType);
+            changedCustomerAddress.AddressValueObject.Should().Be(addressValueObjectToChange);
+        }
+
+
     }
 }
