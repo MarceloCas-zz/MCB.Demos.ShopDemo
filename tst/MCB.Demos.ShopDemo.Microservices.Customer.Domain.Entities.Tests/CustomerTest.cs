@@ -1,4 +1,5 @@
 ﻿using FluentAssertions;
+using MCB.Core.Infra.CrossCutting.DateTime;
 using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Tests.Fixtures;
 using MCB.Tests;
 using System;
@@ -38,6 +39,35 @@ namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Tests
             customer.LastName.Should().BeNullOrEmpty();
             customer.BirthDate.Should().Be(default);
             customer.CustomerAddressInfo.Should().NotBeNull();
+        }
+
+        [Fact]
+        public void Customer_Should_RegisterNew()
+        {
+            // Arrange
+            var tenantId = _fixture.TenantId;
+            var firstName = "Marcelo";
+            var lastName = "Castelo Branco";
+            var birthDate = DateOnly.FromDateTime(DateTimeProvider.GetDate().DateTime);
+            var executionUser = _fixture.ExecutionUser;
+            var sourcePlatform = _fixture.SourcePlatform;
+
+            // Act
+            var customer = new Customer().RegisterNew(
+                tenantId,
+                firstName,
+                lastName,
+                birthDate,
+                executionUser,
+                sourcePlatform
+            );
+
+            // Assert
+            ValidateAfterRegisterNew(customer, executionUser, sourcePlatform);
+            customer.TenantId.Should().Be(tenantId);
+            customer.FirstName.Should().Be(firstName);
+            customer.LastName.Should().Be(lastName);
+            customer.BirthDate.Should().Be(birthDate);
         }
     }
 }

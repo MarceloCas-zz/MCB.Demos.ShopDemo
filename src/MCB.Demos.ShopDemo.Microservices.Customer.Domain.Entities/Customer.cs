@@ -32,6 +32,7 @@ namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities
             Guid tenantId,
             string firstName,
             string lastName,
+            DateOnly birthDate,
             string executionUser,
             string sourcePlatform
         )
@@ -41,6 +42,7 @@ namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities
 
             // Process and Return
             return SetName(firstName, lastName)
+                .SetBirthDate(birthDate)
                 .RegisterNewInternal<Customer>(tenantId, executionUser, sourcePlatform);
         }
         public Customer ChangeName(
