@@ -194,6 +194,36 @@ namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Tests
         }
 
         [Fact]
+        public void CustomerAddressInfo_Should_Not_RemoveCustomerAddress()
+        {
+            // Arrange
+            var customerAddressInfo = DefaultFixture.GenerateNewCustomerAddressInfo(
+                existingTenantId: _fixture.TenantId,
+                existingExecutionUser: _fixture.ExecutionUser,
+                existingSourcePlatform: _fixture.SourcePlatform
+            );
+            GenerateNewDateForDateTimeProvider();
+
+            customerAddressInfo.AddNewCustomerAddress(
+                customerAddressType: CustomerAddressType.HomeAddress,
+                addressValueObject: DefaultFixture.GenerateNewAddressValueObject(),
+                _fixture.ExecutionUser,
+                _fixture.SourcePlatform
+            );
+            GenerateNewDateForDateTimeProvider();
+
+            // Act
+            var removedCustomerAddress = customerAddressInfo.RemoveCustomerAddress(
+                Guid.NewGuid(),
+                _fixture.ExecutionUser,
+                _fixture.SourcePlatform
+            );
+
+            // Assert
+            removedCustomerAddress.Should().BeNull();
+        }
+
+        [Fact]
         public void CustomerAddressInfo_Should_ChangeCustomerAddress()
         {
             // Arrange
