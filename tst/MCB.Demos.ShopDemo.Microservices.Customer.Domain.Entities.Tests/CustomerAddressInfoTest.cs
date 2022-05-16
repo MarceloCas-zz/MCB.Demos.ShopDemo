@@ -2,6 +2,7 @@
 using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Enums;
 using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Tests.Fixtures;
 using MCB.Tests;
+using System;
 using System.Linq;
 using Xunit;
 using Xunit.Abstractions;
@@ -243,6 +244,55 @@ namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Tests
             ValidateAfterRegisterModification(clonedCustomerAddressAfterFirstModification, customerAddressArray[1], _fixture.ExecutionUser, _fixture.SourcePlatform);
 
             ValidateAfterRegisterModification(clonedCustomerAddressInfoAfterRegisterNew, customerAddressInfo, _fixture.ExecutionUser, _fixture.SourcePlatform);
+        }
+
+        [Fact]
+        public void CustomerAddressInfo_Should_Not_ChangeCustomerAddress_When_Id_Not_Found()
+        {
+            // Arrange
+            var hasRaisedInvalidOperationException = false;
+            var customerAddressInfo = DefaultFixture.GenerateNewCustomerAddressInfo(
+                existingTenantId: _fixture.TenantId,
+                existingExecutionUser: _fixture.ExecutionUser,
+                existingSourcePlatform: _fixture.SourcePlatform
+            );
+            GenerateNewDateForDateTimeProvider();
+
+            customerAddressInfo.AddNewCustomerAddress(
+                customerAddressType: CustomerAddressType.HomeAddress,
+                addressValueObject: DefaultFixture.GenerateNewAddressValueObject(),
+                _fixture.ExecutionUser,
+                _fixture.SourcePlatform
+            );
+            GenerateNewDateForDateTimeProvider();
+
+            customerAddressInfo.AddNewCustomerAddress(
+                customerAddressType: CustomerAddressType.BusinessAddress,
+                addressValueObject: DefaultFixture.GenerateNewAddressValueObject(),
+                _fixture.ExecutionUser,
+                _fixture.SourcePlatform
+            );
+            GenerateNewDateForDateTimeProvider();
+
+
+            // Act
+            try
+            {
+                customerAddressInfo.ChangeCustomerAddress(
+                    Guid.NewGuid(),
+                    CustomerAddressType.HomeAddress,
+                    DefaultFixture.GenerateNewAddressValueObject(),
+                    _fixture.ExecutionUser,
+                    _fixture.SourcePlatform
+                );
+            }
+            catch (InvalidOperationException)
+            {
+                hasRaisedInvalidOperationException = true;
+            }
+
+            // Assert
+            hasRaisedInvalidOperationException.Should().BeTrue();
         }
     }
 }
