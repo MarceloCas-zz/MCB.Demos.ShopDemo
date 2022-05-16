@@ -1,12 +1,10 @@
 ﻿using FluentAssertions;
 using MCB.Core.Infra.CrossCutting.DateTime;
+using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Enums;
 using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Tests.Fixtures;
 using MCB.Tests;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Xunit;
 using Xunit.Abstractions;
 
@@ -135,7 +133,7 @@ namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Tests
             var originalDefaultShippingAddress = customer.CustomerAddressInfo?.DefaultShippingAddress;
 
             // Act
-            customer.ChangeDefaultShippingAddress(
+            var newDefaultShippingAddress = customer.ChangeDefaultShippingAddress(
                 newShippingAddress,
                 executionUser,
                 sourcePlatform
@@ -149,6 +147,10 @@ namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Tests
 
             originalDefaultShippingAddress.Should().BeNull();
             originalDefaultShippingAddress.Should().NotBeSameAs(customer.CustomerAddressInfo.DefaultShippingAddress);
+            DefaultFixture.CompareTwoCustomerAddressValues(
+                newDefaultShippingAddress,
+                customer.CustomerAddressInfo.DefaultShippingAddress
+            ).Should().BeTrue();
         }
 
         [Fact]
@@ -177,6 +179,37 @@ namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Tests
             ValidateAfterRegisterModification(customerBeforeModification, customer, executionUser, sourcePlatform);
             originalDefaultShippingAddress.Should().NotBe(customer.CustomerAddressInfo.DefaultShippingAddress);
             customer.CustomerAddressInfo.DefaultShippingAddress.Should().BeNull();
+        }
+
+        [Fact]
+        public void Customer_Should_AddNewCustomerAddress()
+        {
+            // Arrange
+            var customer = DefaultFixture.GenerateNewCustomer();
+            var customerBeforeModification = customer.DeepClone();
+            GenerateNewDateForDateTimeProvider();
+
+            var customerAddressType = CustomerAddressType.BusinessAddress;
+            var addressValueObject = DefaultFixture.GenerateNewAddressValueObject();
+            var executionUser = _fixture.ExecutionUser;
+            var sourcePlatform = _fixture.SourcePlatform;
+
+            // Act
+            var addedCustomerAddress = customer.AddNewCustomerAddress(
+                customerAddressType,
+                addressValueObject,
+                executionUser,
+                sourcePlatform
+            );
+
+            // Assert
+            ValidateAfterRegisterModification(customerBeforeModification, customer, executionUser, sourcePlatform);
+            customer.CustomerAddressInfo.CustomerAddressCollection.Should().NotBeNull();
+            customer.CustomerAddressInfo.CustomerAddressCollection.Should().HaveCount(1);
+            DefaultFixture.CompareTwoCustomerAddressValues(
+                customer.CustomerAddressInfo.CustomerAddressCollection.First(),
+                addedCustomerAddress
+            ).Should().BeTrue();
         }
     }
 }
