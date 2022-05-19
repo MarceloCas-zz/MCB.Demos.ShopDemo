@@ -1,6 +1,7 @@
 ﻿using MCB.Core.Infra.CrossCutting.DateTime;
 using MCB.Core.Infra.CrossCutting.Enums;
-using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Enums;
+using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Customers;
+using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Customers.Enums;
 using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.ValueObjects;
 using MCB.Tests.Fixtures;
 using Microsoft.Extensions.DependencyInjection;
@@ -82,7 +83,7 @@ namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Tests.Fixtur
                 sourcePlatform: existingSourcePlatform ?? GenerateNewSourcePlatform()
             );
         }
-        public static Customer GenerateNewCustomer(
+        public static Customers.Customer GenerateNewCustomer(
             Guid? existingTenantId = null,
             string existingFirstName = null,
             string existingLastName = null,
@@ -91,13 +92,15 @@ namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Tests.Fixtur
             string existingSourcePlatform = null
         )
         {
-            return new Customer().RegisterNew(
-                existingTenantId ?? GenerateNewTenantId(),
-                existingFirstName ?? Guid.NewGuid().ToString(),
-                existingLastName ?? Guid.NewGuid().ToString(),
-                existingBirthDate ?? DateOnly.FromDateTime(DateTimeProvider.GetDate().DateTime),
-                existingExecutionUser ?? GenerateNewExecutionUser(),
-                existingSourcePlatform ?? GenerateNewSourcePlatform()
+            return new Customers.Customer().RegisterNew(
+                new Customers.Inputs.RegisterNewCustomerInput(
+                    existingTenantId ?? GenerateNewTenantId(),
+                    existingFirstName ?? Guid.NewGuid().ToString(),
+                    existingLastName ?? Guid.NewGuid().ToString(),
+                    existingBirthDate ?? DateOnly.FromDateTime(DateTimeProvider.GetDate().DateTime),
+                    existingExecutionUser ?? GenerateNewExecutionUser(),
+                    existingSourcePlatform ?? GenerateNewSourcePlatform()
+                )
             );
         }
     }

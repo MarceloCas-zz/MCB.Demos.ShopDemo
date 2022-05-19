@@ -1,8 +1,8 @@
 ﻿using MCB.Core.Domain.Entities;
-using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Enums;
+using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Customers.Enums;
 using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.ValueObjects;
 
-namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities
+namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Customers
 {
     public class CustomerAddress
         : DomainEntityBase

@@ -1,15 +1,18 @@
 ﻿using MCB.Core.Domain.Entities;
 using MCB.Core.Domain.Entities.Abstractions;
-using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Enums;
+using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Customers.Enums;
+using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Customers.Inputs;
+using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Customers.Validators;
 using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.ValueObjects;
 
-namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities
+namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Customers
 {
     public class Customer
         : DomainEntityBase,
         IAggregationRoot
     {
         // Fields
+        private static CustomerRegisterNewInputValidator _customerRegisterNewInputValidator = new();
         private CustomerAddressInfo _customerAddressInfo = new();
 
         // Properties
@@ -28,25 +31,18 @@ namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities
         }
 
         // Public Methods
-        public Customer RegisterNew(
-            Guid tenantId,
-            string firstName,
-            string lastName,
-            DateOnly birthDate,
-            string executionUser,
-            string sourcePlatform
-        )
+        public Customer RegisterNew(RegisterNewCustomerInput input)
         {
             // Validate
-            // TODO: Add validation
+            var validationResult = _customerRegisterNewInputValidator.Validate(input);
 
             // Process and Return
-            return SetName(firstName, lastName)
-                .SetBirthDate(birthDate)
-                .RegisterNewInternal<Customer>(tenantId, executionUser, sourcePlatform);
+            return SetName(input.FirstName, input.LastName)
+                .SetBirthDate(input.BirthDate)
+                .RegisterNewInternal<Customer>(input.TenantId, input.ExecutionUser, input.SourcePlatform);
         }
         public Customer ChangeName(
-            string firstName, 
+            string firstName,
             string lastName,
             string executionUser,
             string sourcePlatform
@@ -110,7 +106,7 @@ namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities
             // Return
             return addedCustomerAddress;
         }
-        public CustomerAddress? RemoveCustomerAddress(Guid customerAddressId, string executionUser, string sourcePlatform)
+        public CustomerAddress RemoveCustomerAddress(Guid customerAddressId, string executionUser, string sourcePlatform)
         {
             // Validate
             // TODO: Add validation
@@ -122,7 +118,7 @@ namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities
             // Return
             return removedCustomerAddress;
         }
-        public CustomerAddress? ChangeCustomerAddress(Guid customerAddressId, CustomerAddressType customerAddressType, AddressValueObject addressValueObject, string executionUser, string sourcePlatform)
+        public CustomerAddress ChangeCustomerAddress(Guid customerAddressId, CustomerAddressType customerAddressType, AddressValueObject addressValueObject, string executionUser, string sourcePlatform)
         {
             var customerAddress = _customerAddressInfo.CustomerAddressCollection.FirstOrDefault(q => q.Id == customerAddressId);
 

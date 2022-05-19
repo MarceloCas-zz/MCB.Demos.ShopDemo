@@ -3,8 +3,8 @@
 	<PropertyGroup>
 		<TargetFramework>net6.0</TargetFramework>
 		<ImplicitUsings>enable</ImplicitUsings>
-		<Nullable>enable</Nullable>
-		<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+		<Nullable>disable</Nullable>
+		<GeneratePackageOnBuild>False</GeneratePackageOnBuild>
 		<Authors>Marcelo Castelo Branco</Authors>
 		<Company>MCB</Company>
 	</PropertyGroup>

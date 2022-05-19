@@ -1,6 +1,7 @@
 ﻿using FluentAssertions;
 using MCB.Core.Infra.CrossCutting.DateTime;
-using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Enums;
+using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Customers.Enums;
+using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Customers.Inputs;
 using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Tests.Fixtures;
 using MCB.Tests;
 using System;
@@ -30,7 +31,7 @@ namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Tests
         public void Customer_Should_Correctly_Instanciated()
         {
             // Arrange and Act
-            var customer = new Customer();
+            var customer = new Customers.Customer();
 
             // Assert
             customer.FirstName.Should().BeNullOrEmpty();
@@ -51,13 +52,15 @@ namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Tests
             var sourcePlatform = _fixture.SourcePlatform;
 
             // Act
-            var customer = new Customer().RegisterNew(
-                tenantId,
-                firstName,
-                lastName,
-                birthDate,
-                executionUser,
-                sourcePlatform
+            var customer = new Customers.Customer().RegisterNew(
+                new RegisterNewCustomerInput(
+                    tenantId,
+                    firstName,
+                    lastName,
+                    birthDate,
+                    executionUser,
+                    sourcePlatform
+                )
             );
 
             // Assert

@@ -1,19 +1,19 @@
 ﻿using MCB.Core.Domain.Entities;
-using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Enums;
+using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Customers.Enums;
 using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.ValueObjects;
 
-namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities
+namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Customers
 {
     public class CustomerAddressInfo
         : DomainEntityBase
     {
         // Fields
         private readonly List<CustomerAddress> _customerAddressCollection = new();
-        private CustomerAddress? _defaultShippingAddress;
+        private CustomerAddress _defaultShippingAddress;
 
         // Properties
         public IEnumerable<CustomerAddress> CustomerAddressCollection => _customerAddressCollection.Select(q => q.DeepClone());
-        public CustomerAddress? DefaultShippingAddress => _defaultShippingAddress?.DeepClone();
+        public CustomerAddress DefaultShippingAddress => _defaultShippingAddress?.DeepClone();
 
         // Public Methods
         public CustomerAddressInfo RegisterNew(Guid tenantId, string executionUser, string sourcePlatform)
@@ -60,7 +60,7 @@ namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities
             // Return
             return customerAddress;
         }
-        public CustomerAddress? RemoveCustomerAddress(Guid customerAddressId, string executionUser, string sourcePlatform)
+        public CustomerAddress RemoveCustomerAddress(Guid customerAddressId, string executionUser, string sourcePlatform)
         {
             // Validate
             // TODO: Add validation
@@ -78,7 +78,7 @@ namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities
             // Return
             return customerAddress;
         }
-        public CustomerAddress? ChangeCustomerAddress(Guid customerAddressId, CustomerAddressType customerAddressType, AddressValueObject addressValueObject, string executionUser, string sourcePlatform)
+        public CustomerAddress ChangeCustomerAddress(Guid customerAddressId, CustomerAddressType customerAddressType, AddressValueObject addressValueObject, string executionUser, string sourcePlatform)
         {
             var customerAddress = _customerAddressCollection.FirstOrDefault(q => q.Id == customerAddressId);
 
@@ -121,7 +121,7 @@ namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities
             // Return
             return this;
         }
-        private CustomerAddressInfo SetDefaultShippingAddress(CustomerAddress? customerAddress)
+        private CustomerAddressInfo SetDefaultShippingAddress(CustomerAddress customerAddress)
         {
             _defaultShippingAddress = customerAddress;
             return this;
