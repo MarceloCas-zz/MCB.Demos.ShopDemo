@@ -1,42 +1,42 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1" MembersFormat="NameAndType">
-  <Class Name="MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Customer">
-    <Position X="2" Y="3" Width="3.5" />
+  <Class Name="MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Customers.Customer">
+    <Position X="14" Y="5.5" Width="5" />
     <TypeIdentifier>
-      <HashCode>AAAAAEAQAAAAABABAAAEAAQAABAAAABCAAQAQEEAAA0=</HashCode>
-      <FileName>Customer.cs</FileName>
+      <HashCode>AAAAAEARAAAAABABAAAEAAQAAJAAAABCAAQgQEEAAA0=</HashCode>
+      <FileName>Customers\Customer.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
       <Property Name="CustomerAddressInfo" />
     </ShowAsAssociation>
     <Lollipop Position="0.2" />
   </Class>
-  <Class Name="MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.CustomerAddress">
-    <Position X="7.25" Y="7.75" Width="3.5" />
+  <Class Name="MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Customers.CustomerAddress">
+    <Position X="22.5" Y="10.5" Width="3.5" />
     <TypeIdentifier>
       <HashCode>AEAAASAQAAAAAACAAAAAAAAAAIAAAABAAAQAAEIAAAA=</HashCode>
-      <FileName>CustomerAddress.cs</FileName>
+      <FileName>Customers\CustomerAddress.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
-      <Property Name="CustomerAddressType" />
       <Property Name="AddressValueObject" />
+      <Property Name="CustomerAddressType" />
     </ShowAsAssociation>
   </Class>
-  <Class Name="MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.CustomerAddressInfo">
-    <Position X="7.25" Y="2.75" Width="3.75" />
-    <AssociationLine Name="CustomerAddressCollection" Type="MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.CustomerAddress">
+  <Class Name="MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Customers.CustomerAddressInfo">
+    <Position X="22" Y="5.75" Width="3.75" />
+    <AssociationLine Name="CustomerAddressCollection" Type="MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Customers.CustomerAddress">
       <MemberNameLabel ManuallyPlaced="true">
-        <Position X="-4.792" Y="0.194" />
+        <Position X="0.083" Y="0.429" />
       </MemberNameLabel>
     </AssociationLine>
-    <AssociationLine Name="DefaultShippingAddress" Type="MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.CustomerAddress">
+    <AssociationLine Name="DefaultShippingAddress" Type="MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Customers.CustomerAddress">
       <MemberNameLabel ManuallyPlaced="true">
-        <Position X="1.161" Y="0.63" />
+        <Position X="-1.762" Y="0.455" />
       </MemberNameLabel>
     </AssociationLine>
     <TypeIdentifier>
       <HashCode>EAAAAAEQCAAAIAIBAAAAAAAAAJAAAABCAAAAAAEAABE=</HashCode>
-      <FileName>CustomerAddressInfo.cs</FileName>
+      <FileName>Customers\CustomerAddressInfo.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
       <Property Name="DefaultShippingAddress" />
@@ -46,17 +46,17 @@
     </ShowAsCollectionAssociation>
   </Class>
   <Struct Name="MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.ValueObjects.AddressValueObject">
-    <Position X="8.25" Y="11" Width="1.75" />
+    <Position X="19.25" Y="10.5" Width="1.75" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAIAEAAAAAAAAIAAAABAAIABAAAAAA=</HashCode>
       <FileName>ValueObjects\AddressValueObject.cs</FileName>
     </TypeIdentifier>
   </Struct>
-  <Enum Name="MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Enums.CustomerAddressType">
-    <Position X="3.75" Y="8" Width="1.75" />
+  <Enum Name="MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Customers.Enums.CustomerAddressType">
+    <Position X="27.75" Y="11.25" Width="1.75" />
     <TypeIdentifier>
       <HashCode>AIAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>Enums\CustomerAddressType.cs</FileName>
+      <FileName>Customers\Enums\CustomerAddressType.cs</FileName>
     </TypeIdentifier>
   </Enum>
   <Font Name="Segoe UI" Size="9" />
