@@ -1,11 +1,10 @@
-﻿using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Inputs.Base;
+﻿using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Base.Inputs;
 
 namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Customers.Inputs
 {
     public record RegisterNewCustomerInput
         : InputBase
     {
-        public Guid TenantId { get; }
         public string FirstName { get; }
         public string LastName { get; }
         public DateOnly BirthDate { get; }
@@ -17,9 +16,8 @@ namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Customers.In
             DateOnly birthDate,
             string executionUser,
             string sourcePlatform
-        ) : base(executionUser, sourcePlatform)
+        ) : base(tenantId, executionUser, sourcePlatform)
         {
-            TenantId = tenantId;
             FirstName = firstName;
             LastName = lastName;
             BirthDate = birthDate;

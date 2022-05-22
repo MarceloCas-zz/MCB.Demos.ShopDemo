@@ -8,7 +8,7 @@ using System;
 using Xunit;
 using Xunit.Abstractions;
 
-namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Tests
+namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Tests.CustomersTests
 {
     [Collection(nameof(DefaultFixture))]
     public class CustomerAddressTest

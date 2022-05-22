@@ -1,17 +1,14 @@
 ﻿using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Customers.Inputs;
-using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Inputs.Base.Validators;
 using FluentValidation;
+using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Base.Inputs.Validators;
+using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Customers.Validators.Interfaces;
 
 namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Customers.Validators
 {
-    public class CustomerRegisterNewInputValidator
-        : InputBaseValidator<RegisterNewCustomerInput>
+    public class CustomerRegisterNewInputShouldBeValidValidator
+        : InputBaseValidator<RegisterNewCustomerInput>,
+        ICustomerRegisterNewInputShouldBeValidValidator
     {
-        // TenantId
-        public static readonly string CustomerShouldHaveTenantIdErrorCode = nameof(CustomerShouldHaveTenantIdErrorCode);
-        public static readonly string CustomerShouldHaveTenantIdMessage = nameof(CustomerShouldHaveTenantIdMessage);
-        public static readonly Severity CustomerShouldHaveTenantIdSeverity = Severity.Error;
-
         // FirstName
         public static readonly string CustomerShouldHaveFirstNameErrorCode = nameof(CustomerShouldHaveFirstNameErrorCode);
         public static readonly string CustomerShouldHaveFirstNameMessage = nameof(CustomerShouldHaveFirstNameMessage);
@@ -38,12 +35,6 @@ namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Customers.Va
         // Configure
         protected override void ConfigureFluentValidationConcreteValidatorInternal(FluentValidationValidatorWrapper fluentValidationValidatorWrapper)
         {
-            fluentValidationValidatorWrapper.RuleFor(input => input.TenantId)
-                .Must(tenantId => tenantId != Guid.Empty)
-                .WithErrorCode(CustomerShouldHaveTenantIdErrorCode)
-                .WithMessage(CustomerShouldHaveTenantIdMessage)
-                .WithSeverity(CustomerShouldHaveTenantIdSeverity);
-
             fluentValidationValidatorWrapper.RuleFor(input => input.FirstName)
                 .NotEmpty()
                 .WithErrorCode(CustomerShouldHaveFirstNameErrorCode)

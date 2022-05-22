@@ -1,5 +1,5 @@
-﻿using MCB.Core.Domain.Entities;
-using MCB.Core.Domain.Entities.Abstractions;
+﻿using MCB.Core.Domain.Entities.Abstractions;
+using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Base;
 using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Customers.Enums;
 using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Customers.Inputs;
 using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Customers.Validators;
@@ -12,7 +12,7 @@ namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Customers
         IAggregationRoot
     {
         // Fields
-        private static CustomerRegisterNewInputValidator _customerRegisterNewInputValidator = new();
+        private static CustomerRegisterNewInputShouldBeValidValidator _customerRegisterNewInputValidator = new();
         private CustomerAddressInfo _customerAddressInfo = new();
 
         // Properties
@@ -34,7 +34,8 @@ namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Customers
         public Customer RegisterNew(RegisterNewCustomerInput input)
         {
             // Validate
-            var validationResult = _customerRegisterNewInputValidator.Validate(input);
+            if (!Validate<Customer>(() => _customerRegisterNewInputValidator.Validate(input)))
+                return this;
 
             // Process and Return
             return SetName(input.FirstName, input.LastName)

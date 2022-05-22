@@ -8,7 +8,7 @@ using System.Linq;
 using Xunit;
 using Xunit.Abstractions;
 
-namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Tests
+namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Tests.CustomersTests
 {
     [Collection(nameof(DefaultFixture))]
     public class CustomerAddressInfoTest
@@ -134,7 +134,7 @@ namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Tests
             // Assert
             customerAddressInfo.CustomerAddressCollection.Should().NotBeNull();
             customerAddressInfo.CustomerAddressCollection.Should().HaveCount(1);
-            
+
             var customerAddressArray = customerAddressInfo.CustomerAddressCollection.ToArray();
             customerAddressArray[0].CustomerAddressType.Should().Be(customerAddressType);
             customerAddressArray[0].AddressValueObject.Should().NotBeSameAs(addressValueObject);

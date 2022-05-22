@@ -9,7 +9,7 @@ using System.Linq;
 using Xunit;
 using Xunit.Abstractions;
 
-namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Tests
+namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Tests.CustomersTests
 {
     [Collection(nameof(DefaultFixture))]
     public class CustomerTest
@@ -237,10 +237,10 @@ namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Tests
 
             // Act
             var removedCustomerAddress = customer.RemoveCustomerAddress(
-                customerAddressToRemove.Id, 
-                executionUser, 
+                customerAddressToRemove.Id,
+                executionUser,
                 sourcePlatform
-            );  
+            );
 
             // Assert
             ValidateAfterRegisterModification(customerBeforeModification, customer, executionUser, sourcePlatform);
@@ -325,8 +325,8 @@ namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Tests
 
             customer.AddNewCustomerAddress(
                 CustomerAddressType.BusinessAddress,
-                DefaultFixture.GenerateNewAddressValueObject(), 
-                executionUser, 
+                DefaultFixture.GenerateNewAddressValueObject(),
+                executionUser,
                 sourcePlatform
             );
 
