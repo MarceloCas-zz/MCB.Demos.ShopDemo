@@ -34,13 +34,14 @@ namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Tests.BaseTe
             var customer = new Customer();
 
             // Act
-            customer.Validate();
+            var isValid = customer.Validate();
 
             // Assert
             customer.ValidationInfo.Should().NotBeNull();
             customer.ValidationInfo.HasValidationMessage.Should().BeTrue();
             customer.ValidationInfo.HasError.Should().BeTrue();
-            customer.ValidationInfo.IsValid.Should().BeFalse();
+            isValid.Should().BeFalse();
+            customer.ValidationInfo.IsValid.Should().Be(isValid);
             customer.ValidationInfo.ValidationMessageCollection.Should().NotBeNull();
             customer.ValidationInfo.ValidationMessageCollection.Should().HaveCount(3);
 
@@ -78,9 +79,9 @@ namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Tests.BaseTe
             protected override Core.Domain.Entities.DomainEntityBase CreateInstanceForCloneInternal() => new Customer();
 
             // Public Methods
-            public void Validate()
+            public bool Validate()
             {
-                Validate<Customer>(() =>
+                return Validate<Customer>(() =>
                     new ValidationResult(
                         new List<ValidationMessage> { 
                             new ValidationMessage(
