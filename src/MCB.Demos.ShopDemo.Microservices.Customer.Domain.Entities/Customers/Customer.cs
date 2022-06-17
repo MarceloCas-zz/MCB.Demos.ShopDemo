@@ -42,19 +42,14 @@ namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Customers
                 .SetBirthDate(input.BirthDate)
                 .RegisterNewInternal<Customer>(input.TenantId, input.ExecutionUser, input.SourcePlatform);
         }
-        public Customer ChangeName(
-            string firstName,
-            string lastName,
-            string executionUser,
-            string sourcePlatform
-        )
+        public Customer ChangeCustomerName(RegisterNewCustomerInput input)
         {
             // Validate
             // TODO: Add validation
 
             // Process and Return
-            return SetName(firstName, lastName)
-                .RegisterModificationInternal<Customer>(executionUser, sourcePlatform);
+            return SetName(input.FirstName, input.LastName)
+                .RegisterModificationInternal<Customer>(input.ExecutionUser, input.SourcePlatform);
         }
         public Customer ChangeBirthDate(
             DateOnly birthDate,
