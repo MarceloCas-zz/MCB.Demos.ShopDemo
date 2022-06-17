@@ -31,7 +31,7 @@ namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Customers
         }
 
         // Public Methods
-        public Customer RegisterNew(RegisterNewCustomerInput input)
+        public Customer RegisterNewCustomer(RegisterNewCustomerInput input)
         {
             // Validate
             if (!Validate<Customer>(() => _customerRegisterNewInputValidator.Validate(input)))

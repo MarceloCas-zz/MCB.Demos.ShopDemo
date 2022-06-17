@@ -52,7 +52,7 @@ namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Tests.Custom
             var sourcePlatform = _fixture.SourcePlatform;
 
             // Act
-            var customer = new Customers.Customer().RegisterNew(
+            var customer = new Customers.Customer().RegisterNewCustomer(
                 new RegisterNewCustomerInput(
                     tenantId,
                     firstName,

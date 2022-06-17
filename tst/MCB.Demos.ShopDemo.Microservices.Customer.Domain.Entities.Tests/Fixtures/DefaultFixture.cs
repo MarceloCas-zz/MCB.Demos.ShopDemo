@@ -92,7 +92,7 @@ namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Tests.Fixtur
             string existingSourcePlatform = null
         )
         {
-            return new Customers.Customer().RegisterNew(
+            return new Customers.Customer().RegisterNewCustomer(
                 new Customers.Inputs.RegisterNewCustomerInput(
                     existingTenantId ?? GenerateNewTenantId(),
                     existingFirstName ?? Guid.NewGuid().ToString(),
