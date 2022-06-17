@@ -78,6 +78,8 @@ namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Tests.Custom
             var customer = DefaultFixture.GenerateNewCustomer();
             var customerBeforeModification = customer.DeepClone();
             GenerateNewDateForDateTimeProvider();
+
+            var tenantId = Guid.NewGuid();
             var firstName = "Marcelo";
             var lastName = "Castelo Branco";
             var executionUser = _fixture.ExecutionUser;
@@ -85,10 +87,13 @@ namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Tests.Custom
 
             // Act
             customer.ChangeCustomerName(
-                firstName,
-                lastName,
-                executionUser,
-                sourcePlatform
+                new ChangeCustomerNameInput(
+                    tenantId,
+                    firstName,
+                    lastName,
+                    executionUser,
+                    sourcePlatform
+                )
             );
 
             // Assert
