@@ -1,7 +1,7 @@
 ﻿using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Customers.Inputs;
 using FluentValidation;
-using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Base.Inputs.Validators;
 using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Customers.Validators.Interfaces;
+using MCB.Core.Domain.Entities.Inputs.Validators;
 
 namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Customers.Validators
 {
