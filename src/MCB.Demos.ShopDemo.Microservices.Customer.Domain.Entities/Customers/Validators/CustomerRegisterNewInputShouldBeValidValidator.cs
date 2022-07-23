@@ -1,7 +1,8 @@
 ﻿using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Customers.Inputs;
 using FluentValidation;
 using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Customers.Validators.Interfaces;
-using MCB.Core.Domain.Entities.Inputs.Validators;
+using MCB.Core.Domain.Entities.DomainEntitiesBase.Validators;
+using MCB.Core.Domain.Entities.Abstractions.Specifications.Interfaces;
 
 namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Customers.Validators
 {
@@ -31,6 +32,14 @@ namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Customers.Va
         public static readonly string CustomerShouldHaveBirthDateErrorCode = nameof(CustomerShouldHaveBirthDateErrorCode);
         public static readonly string CustomerShouldHaveBirthDateMessage = nameof(CustomerShouldHaveBirthDateMessage);
         public static readonly Severity CustomerShouldHaveBirthDateSeverity = Severity.Error;
+
+        // Constructors
+        public CustomerRegisterNewInputShouldBeValidValidator(
+            IDomainEntitySpecifications domainEntitySpecifications
+        ) : base(domainEntitySpecifications)
+        {
+
+        }
 
         // Configure
         protected override void ConfigureFluentValidationConcreteValidatorInternal(FluentValidationValidatorWrapper fluentValidationValidatorWrapper)

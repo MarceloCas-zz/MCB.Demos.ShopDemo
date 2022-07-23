@@ -2,6 +2,7 @@
 using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Base;
 using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Customers.Enums;
 using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Customers.Inputs;
+using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Customers.Specifications;
 using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Customers.Validators;
 using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.ValueObjects;
 
@@ -11,8 +12,10 @@ namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Customers
         : DomainEntityBase,
         IAggregationRoot
     {
+        // Static Fields
+        private static readonly CustomerRegisterNewInputShouldBeValidValidator _customerRegisterNewInputValidator = new(new CustomerSpecifications());
+
         // Fields
-        private static CustomerRegisterNewInputShouldBeValidValidator _customerRegisterNewInputValidator = new();
         private CustomerAddressInfo _customerAddressInfo = new();
 
         // Properties
