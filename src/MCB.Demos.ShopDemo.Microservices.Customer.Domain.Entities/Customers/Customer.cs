@@ -23,11 +23,11 @@ namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Customers
         public CustomerAddressInfo CustomerAddressInfo => _customerAddressInfo.DeepClone();
 
         // Validators
-        private readonly ICustomerRegisterNewInputShouldBeValidValidator _customerRegisterNewInputShouldBeValidValidator;
+        private readonly IRegisterNewCustomerInputShouldBeValidValidator _customerRegisterNewInputShouldBeValidValidator;
 
         // Constructors
         public Customer(
-            ICustomerRegisterNewInputShouldBeValidValidator customerRegisterNewInputShouldBeValidValidator
+            IRegisterNewCustomerInputShouldBeValidValidator customerRegisterNewInputShouldBeValidValidator
         )
         {
             FirstName = string.Empty;
@@ -147,7 +147,8 @@ namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Customers
         }
 
         // Protected Abstract Methods
-        protected override DomainEntityBase CreateInstanceForCloneInternal() => new Customer();
+        protected override DomainEntityBase CreateInstanceForCloneInternal() =>
+            new Customer(_customerRegisterNewInputShouldBeValidValidator);
 
         // Private Methods
         private Customer SetName(string firstName, string lastName)

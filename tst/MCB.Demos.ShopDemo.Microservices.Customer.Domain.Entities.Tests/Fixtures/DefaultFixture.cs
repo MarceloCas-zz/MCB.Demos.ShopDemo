@@ -2,6 +2,8 @@
 using MCB.Core.Infra.CrossCutting.Enums;
 using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Customers;
 using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Customers.Enums;
+using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Customers.Specifications;
+using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Customers.Validators;
 using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.ValueObjects;
 using MCB.Tests.Fixtures;
 using Microsoft.Extensions.DependencyInjection;
@@ -92,7 +94,7 @@ namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Tests.Fixtur
             string existingSourcePlatform = null
         )
         {
-            return new Customers.Customer().RegisterNewCustomer(
+            return new Customers.Customer(new RegisterNewCustomerInputShouldBeValidValidator(new CustomerSpecifications())).RegisterNewCustomer(
                 new Customers.Inputs.RegisterNewCustomerInput(
                     existingTenantId ?? GenerateNewTenantId(),
                     existingFirstName ?? Guid.NewGuid().ToString(),

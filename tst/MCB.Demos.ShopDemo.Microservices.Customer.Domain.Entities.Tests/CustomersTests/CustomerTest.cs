@@ -2,6 +2,8 @@
 using MCB.Core.Infra.CrossCutting.DateTime;
 using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Customers.Enums;
 using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Customers.Inputs;
+using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Customers.Specifications;
+using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Customers.Validators;
 using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Tests.Fixtures;
 using MCB.Tests;
 using System;
@@ -31,7 +33,7 @@ namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Tests.Custom
         public void Customer_Should_Correctly_Instanciated()
         {
             // Arrange and Act
-            var customer = new Customers.Customer();
+            var customer = new Customers.Customer(new RegisterNewCustomerInputShouldBeValidValidator(new CustomerSpecifications()));
 
             // Assert
             customer.FirstName.Should().BeNullOrEmpty();
@@ -52,7 +54,7 @@ namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Tests.Custom
             var sourcePlatform = _fixture.SourcePlatform;
 
             // Act
-            var customer = new Customers.Customer().RegisterNewCustomer(
+            var customer = new Customers.Customer(new RegisterNewCustomerInputShouldBeValidValidator(new CustomerSpecifications())).RegisterNewCustomer(
                 new RegisterNewCustomerInput(
                     tenantId,
                     firstName,
