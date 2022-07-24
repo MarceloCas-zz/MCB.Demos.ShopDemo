@@ -109,14 +109,14 @@ namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Customers
             // Return
             return addedCustomerAddress;
         }
-        public CustomerAddress RemoveCustomerAddress(Guid customerAddressId, string executionUser, string sourcePlatform)
+        public CustomerAddress RemoveCustomerAddress(RemoveCustomerAddressInput input)
         {
             // Validate
             // TODO: Add validation
 
             // Process
-            var removedCustomerAddress = _customerAddressInfo.RemoveCustomerAddress(customerAddressId, executionUser, sourcePlatform);
-            RegisterModificationInternal<Customer>(executionUser, sourcePlatform);
+            var removedCustomerAddress = _customerAddressInfo.RemoveCustomerAddress(input.CustomerAddressId, input.ExecutionUser, input.SourcePlatform);
+            RegisterModificationInternal<Customer>(input.ExecutionUser, input.SourcePlatform);
 
             // Return
             return removedCustomerAddress;

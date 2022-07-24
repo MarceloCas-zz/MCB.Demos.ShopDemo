@@ -264,11 +264,12 @@ namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Tests.Custom
             GenerateNewDateForDateTimeProvider();
 
             // Act
-            var removedCustomerAddress = customer.RemoveCustomerAddress(
+            var removedCustomerAddress = customer.RemoveCustomerAddress(new RemoveCustomerAddressInput(
+                tenantId,
                 customerAddressToRemove.Id,
                 executionUser,
                 sourcePlatform
-            );
+            ));
 
             // Assert
             ValidateAfterRegisterModification(customerBeforeModification, customer, executionUser, sourcePlatform);
