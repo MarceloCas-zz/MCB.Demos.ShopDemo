@@ -355,7 +355,6 @@ namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Tests.Custom
             changedCustomerAddress.AddressValueObject.Should().Be(addressValueObjectToChange);
         }
 
-
         [Fact]
         public void Customer_Not_Should_ChangeCustomerAddress_When_Id_Not_Existing()
         {
@@ -390,6 +389,5 @@ namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Tests.Custom
             // Assert
             changedCustomerAddress.Should().BeNull();
         }
-
     }
 }
