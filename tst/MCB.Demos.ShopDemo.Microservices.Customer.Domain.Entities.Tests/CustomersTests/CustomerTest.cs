@@ -325,13 +325,14 @@ namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Tests.Custom
             GenerateNewDateForDateTimeProvider();
 
             // Act
-            var changedCustomerAddress = customer.ChangeCustomerAddress(
+            var changedCustomerAddress = customer.ChangeCustomerAddress(new ChangeCustomerAddressInput(
+                tenantId,
                 customerAddressToChange.Id,
                 customerAddressType,
                 addressValueObjectToChange,
                 executionUser,
                 sourcePlatform
-            );
+            ));
 
             // Assert
             ValidateAfterRegisterModification(customerBeforeModification, customer, executionUser, sourcePlatform);
@@ -377,13 +378,14 @@ namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Tests.Custom
             GenerateNewDateForDateTimeProvider();
 
             // Act
-            var changedCustomerAddress = customer.ChangeCustomerAddress(
+            var changedCustomerAddress = customer.ChangeCustomerAddress(new ChangeCustomerAddressInput(
+                tenantId,
                 Guid.NewGuid(),
                 customerAddressType,
                 DefaultFixture.GenerateNewAddressValueObject(),
                 executionUser,
                 sourcePlatform
-            );
+            ));
 
             // Assert
             changedCustomerAddress.Should().BeNull();

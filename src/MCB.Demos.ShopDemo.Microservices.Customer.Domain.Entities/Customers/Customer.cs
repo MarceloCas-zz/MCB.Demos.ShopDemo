@@ -121,9 +121,9 @@ namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Customers
             // Return
             return removedCustomerAddress;
         }
-        public CustomerAddress ChangeCustomerAddress(Guid customerAddressId, CustomerAddressType customerAddressType, AddressValueObject addressValueObject, string executionUser, string sourcePlatform)
+        public CustomerAddress ChangeCustomerAddress(ChangeCustomerAddressInput input)
         {
-            var customerAddress = _customerAddressInfo.CustomerAddressCollection.FirstOrDefault(q => q.Id == customerAddressId);
+            var customerAddress = _customerAddressInfo.CustomerAddressCollection.FirstOrDefault(q => q.Id == input.CustomerAddressId);
 
             // Validate
             // TODO: Add validation
@@ -131,8 +131,14 @@ namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Customers
                 return null;
 
             // Process
-            var changedCustomerAddress = _customerAddressInfo.ChangeCustomerAddress(customerAddressId, customerAddressType, addressValueObject, executionUser, sourcePlatform);
-            RegisterModificationInternal<Customer>(executionUser, sourcePlatform);
+            var changedCustomerAddress = _customerAddressInfo.ChangeCustomerAddress(
+                input.CustomerAddressId, 
+                input.CustomerAddressType, 
+                input.AddressValueObject, 
+                input.ExecutionUser,
+                input.SourcePlatform
+            );
+            RegisterModificationInternal<Customer>(input.ExecutionUser, input.SourcePlatform);
 
             // Return
             return changedCustomerAddress;
