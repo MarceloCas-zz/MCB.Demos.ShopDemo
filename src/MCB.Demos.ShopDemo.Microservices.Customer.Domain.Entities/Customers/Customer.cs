@@ -2,8 +2,7 @@
 using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Base;
 using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Customers.Enums;
 using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Customers.Inputs;
-using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Customers.Specifications;
-using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Customers.Validators;
+using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Customers.Validators.Interfaces;
 using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.ValueObjects;
 
 namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Customers
@@ -12,9 +11,6 @@ namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Customers
         : DomainEntityBase,
         IAggregationRoot
     {
-        // Static Fields
-        private static readonly CustomerRegisterNewInputShouldBeValidValidator _customerRegisterNewInputValidator = new(new CustomerSpecifications());
-
         // Fields
         private CustomerAddressInfo _customerAddressInfo = new();
 
@@ -26,18 +22,25 @@ namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Customers
         // Navigation Properties
         public CustomerAddressInfo CustomerAddressInfo => _customerAddressInfo.DeepClone();
 
+        // Validators
+        private readonly ICustomerRegisterNewInputShouldBeValidValidator _customerRegisterNewInputShouldBeValidValidator;
+
         // Constructors
-        public Customer()
+        public Customer(
+            ICustomerRegisterNewInputShouldBeValidValidator customerRegisterNewInputShouldBeValidValidator
+        )
         {
             FirstName = string.Empty;
             LastName = string.Empty;
+
+            _customerRegisterNewInputShouldBeValidValidator = customerRegisterNewInputShouldBeValidValidator;
         }
 
         // Public Methods
         public Customer RegisterNewCustomer(RegisterNewCustomerInput input)
         {
             // Validate
-            if (!Validate<Customer>(() => _customerRegisterNewInputValidator.Validate(input)))
+            if (!Validate<Customer>(() => _customerRegisterNewInputShouldBeValidValidator.Validate(input)))
                 return this;
 
             // Process and Return
