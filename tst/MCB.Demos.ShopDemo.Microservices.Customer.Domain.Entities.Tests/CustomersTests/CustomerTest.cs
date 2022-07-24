@@ -36,7 +36,7 @@ namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Tests.Custom
             var customer = new Customers.Customer(
                 new RegisterNewCustomerInputShouldBeValidValidator(new CustomerSpecifications()),
                 new ChangeCustomerNameInputShouldBeValidValidator(new CustomerSpecifications()),
-                new ChangeBirthDateInputShouldBeValidValidator(new CustomerSpecifications()),
+                new ChangeCustomerBirthDateInputShouldBeValidValidator(new CustomerSpecifications()),
                 new AddNewCustomerAddressInputShouldBeValidValidator(new CustomerAddressSpecifications())
             );
 
@@ -62,7 +62,7 @@ namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Tests.Custom
             var customer = new Customers.Customer(
                     new RegisterNewCustomerInputShouldBeValidValidator(new CustomerSpecifications()),
                     new ChangeCustomerNameInputShouldBeValidValidator(new CustomerSpecifications()),
-                    new ChangeBirthDateInputShouldBeValidValidator(new CustomerSpecifications()),
+                    new ChangeCustomerBirthDateInputShouldBeValidValidator(new CustomerSpecifications()),
                     new AddNewCustomerAddressInputShouldBeValidValidator(new CustomerAddressSpecifications())
                 ).RegisterNewCustomer(
                     new RegisterNewCustomerInput(
@@ -127,7 +127,7 @@ namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Tests.Custom
             var sourcePlatform = _fixture.SourcePlatform;
 
             // Act
-            customer.ChangeBirthDate(new ChangeBirthDateInput(
+            customer.ChangeBirthDate(new ChangeCustomerBirthDateInput(
                 tenantId,
                 birthDate,
                 executionUser,
@@ -156,7 +156,7 @@ namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Tests.Custom
             var originalDefaultShippingAddress = customer.CustomerAddressInfo?.DefaultShippingAddress;
 
             // Act
-            var newDefaultShippingAddress = customer.ChangeDefaultShippingAddress(new ChangeDefaultShippingAddressInput(
+            var newDefaultShippingAddress = customer.ChangeDefaultShippingAddress(new ChangeCustomerDefaultShippingAddressInput(
                 tenantId,
                 newShippingAddress,
                 executionUser,
@@ -190,7 +190,7 @@ namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Tests.Custom
             var executionUser = _fixture.ExecutionUser;
             var sourcePlatform = _fixture.SourcePlatform;
 
-            customer.ChangeDefaultShippingAddress(new ChangeDefaultShippingAddressInput(
+            customer.ChangeDefaultShippingAddress(new ChangeCustomerDefaultShippingAddressInput(
                 tenantId,
                 newShippingAddress,
                 executionUser,
@@ -199,7 +199,7 @@ namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Tests.Custom
             var originalDefaultShippingAddress = customer.CustomerAddressInfo?.DefaultShippingAddress;
 
             // Act
-            customer.ClearDefaultShippingAddress(new ClearDefaultShippingAddressInput(tenantId, executionUser, sourcePlatform));
+            customer.ClearDefaultShippingAddress(new ClearCustomerDefaultShippingAddressInput(tenantId, executionUser, sourcePlatform));
 
             // Assert
             ValidateAfterRegisterModification(customerBeforeModification, customer, executionUser, sourcePlatform);

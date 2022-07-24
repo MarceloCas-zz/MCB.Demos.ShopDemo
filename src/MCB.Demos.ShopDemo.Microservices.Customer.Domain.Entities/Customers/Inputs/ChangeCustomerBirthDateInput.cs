@@ -2,19 +2,19 @@
 
 namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Customers.Inputs
 {
-    public record ChangeDefaultShippingAddressInput
+    public record ChangeCustomerBirthDateInput
         : InputBase
     {
-        public CustomerAddress CustomerAddress { get; }
+        public DateOnly BirthDate { get; }
 
-        public ChangeDefaultShippingAddressInput(
+        public ChangeCustomerBirthDateInput(
             Guid tenantId,
-            CustomerAddress customerAddress,
+            DateOnly birthDate,
             string executionUser,
             string sourcePlatform
         ) : base(tenantId, executionUser, sourcePlatform)
         {
-            CustomerAddress = customerAddress;
+            BirthDate = birthDate;
         }
     }
 }

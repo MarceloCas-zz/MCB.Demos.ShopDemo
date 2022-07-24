@@ -2,10 +2,10 @@
 
 namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Customers.Inputs
 {
-    public record ClearDefaultShippingAddressInput 
+    public record ClearCustomerDefaultShippingAddressInput 
         : InputBase
     {
-        public ClearDefaultShippingAddressInput(
+        public ClearCustomerDefaultShippingAddressInput(
             Guid tenantId,
             string executionUser,
             string sourcePlatform

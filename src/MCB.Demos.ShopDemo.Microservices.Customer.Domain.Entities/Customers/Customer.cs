@@ -21,25 +21,25 @@ namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Customers
         public CustomerAddressInfo CustomerAddressInfo => _customerAddressInfo.DeepClone();
 
         // Validators
-        private readonly IRegisterNewCustomerInputShouldBeValidValidator _customerRegisterNewInputShouldBeValidValidator;
+        private readonly IRegisterNewCustomerInputShouldBeValidValidator _customerCustomerRegisterNewInputShouldBeValidValidator;
         private readonly IChangeCustomerNameInputShouldBeValidValidator _changeCustomerNameInputShouldBeValidValidator;
-        private readonly IChangeBirthDateInputShouldBeValidValidator _changeBirthDateInputShouldBeValidValidator;
+        private readonly IChangeCustomerBirthDateInputShouldBeValidValidator _changeCustomerBirthDateInputShouldBeValidValidator;
         private readonly IAddNewCustomerAddressInputShouldBeValidValidator _addNewCustomerAddressInputShouldBeValidValidator;
 
         // Constructors
         public Customer(
             IRegisterNewCustomerInputShouldBeValidValidator customerRegisterNewInputShouldBeValidValidator,
             IChangeCustomerNameInputShouldBeValidValidator changeCustomerNameInputShouldBeValidValidator,
-            IChangeBirthDateInputShouldBeValidValidator changeBirthDateInputShouldBeValidValidator,
+            IChangeCustomerBirthDateInputShouldBeValidValidator changeCustomerBirthDateInputShouldBeValidValidator,
             IAddNewCustomerAddressInputShouldBeValidValidator addNewCustomerAddressInputShouldBeValidValidator
         )
         {
             FirstName = string.Empty;
             LastName = string.Empty;
 
-            _customerRegisterNewInputShouldBeValidValidator = customerRegisterNewInputShouldBeValidValidator;
+            _customerCustomerRegisterNewInputShouldBeValidValidator = customerRegisterNewInputShouldBeValidValidator;
             _changeCustomerNameInputShouldBeValidValidator = changeCustomerNameInputShouldBeValidValidator;
-            _changeBirthDateInputShouldBeValidValidator = changeBirthDateInputShouldBeValidValidator;
+            _changeCustomerBirthDateInputShouldBeValidValidator = changeCustomerBirthDateInputShouldBeValidValidator;
             _addNewCustomerAddressInputShouldBeValidValidator = addNewCustomerAddressInputShouldBeValidValidator;
         }
 
@@ -47,7 +47,7 @@ namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Customers
         public Customer RegisterNewCustomer(RegisterNewCustomerInput input)
         {
             // Validate
-            if (!Validate(() => _customerRegisterNewInputShouldBeValidValidator.Validate(input)))
+            if (!Validate(() => _customerCustomerRegisterNewInputShouldBeValidValidator.Validate(input)))
                 return this;
 
             // Process and Return
@@ -65,10 +65,10 @@ namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Customers
             return SetName(input.FirstName, input.LastName)
                 .RegisterModificationInternal<Customer>(input.ExecutionUser, input.SourcePlatform);
         }
-        public Customer ChangeBirthDate(ChangeBirthDateInput input)
+        public Customer ChangeBirthDate(ChangeCustomerBirthDateInput input)
         {
             // Validate
-            if (!Validate(() => _changeBirthDateInputShouldBeValidValidator.Validate(input)))
+            if (!Validate(() => _changeCustomerBirthDateInputShouldBeValidValidator.Validate(input)))
                 return this;
 
             // Process and Return
@@ -76,7 +76,7 @@ namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Customers
                 .RegisterModificationInternal<Customer>(input.ExecutionUser, input.SourcePlatform);
         }
 
-        public CustomerAddress ChangeDefaultShippingAddress(ChangeDefaultShippingAddressInput input)
+        public CustomerAddress ChangeDefaultShippingAddress(ChangeCustomerDefaultShippingAddressInput input)
         {
             // Validate
             // TODO: Add validation
@@ -88,7 +88,7 @@ namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Customers
             // Return
             return newDefaultShippingAddress;
         }
-        public Customer ClearDefaultShippingAddress(ClearDefaultShippingAddressInput input)
+        public Customer ClearDefaultShippingAddress(ClearCustomerDefaultShippingAddressInput input)
         {
             // Validate
             // TODO: Add validation
@@ -166,9 +166,9 @@ namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Customers
         // Protected Abstract Methods
         protected override DomainEntityBase CreateInstanceForCloneInternal() =>
             new Customer(
-                _customerRegisterNewInputShouldBeValidValidator,
+                _customerCustomerRegisterNewInputShouldBeValidValidator,
                 _changeCustomerNameInputShouldBeValidValidator,
-                _changeBirthDateInputShouldBeValidValidator,
+                _changeCustomerBirthDateInputShouldBeValidValidator,
                 _addNewCustomerAddressInputShouldBeValidValidator
             );
 

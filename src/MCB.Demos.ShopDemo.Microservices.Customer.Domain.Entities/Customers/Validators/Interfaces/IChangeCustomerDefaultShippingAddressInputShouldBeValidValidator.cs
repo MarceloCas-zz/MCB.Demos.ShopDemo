@@ -3,8 +3,8 @@ using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Customers.Inputs
 
 namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Customers.Validators.Interfaces
 {
-    public interface IClearDefaultShippingAddressInputShouldBeValidValidator
-        : IValidator<ClearDefaultShippingAddressInput>
+    public interface IChangeCustomerDefaultShippingAddressInputShouldBeValidValidator
+        : IValidator<ChangeCustomerDefaultShippingAddressInput>
     {
     }
 }

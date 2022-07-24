@@ -97,7 +97,7 @@ namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Tests.Fixtur
             return new Customers.Customer(
                     new RegisterNewCustomerInputShouldBeValidValidator(new CustomerSpecifications()),
                     new ChangeCustomerNameInputShouldBeValidValidator(new CustomerSpecifications()),
-                    new ChangeBirthDateInputShouldBeValidValidator(new CustomerSpecifications()),
+                    new ChangeCustomerBirthDateInputShouldBeValidValidator(new CustomerSpecifications()),
                     new AddNewCustomerAddressInputShouldBeValidValidator(new CustomerAddressSpecifications())
                 ).RegisterNewCustomer(
                     new Customers.Inputs.RegisterNewCustomerInput(

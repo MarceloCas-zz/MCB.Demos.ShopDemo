@@ -7,15 +7,15 @@ using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Customers.Valida
 
 namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Customers.Validators
 {
-    public class ChangeBirthDateInputShouldBeValidValidator
-        : InputBaseValidator<ChangeBirthDateInput>,
-        IChangeBirthDateInputShouldBeValidValidator
+    public class ChangeCustomerBirthDateInputShouldBeValidValidator
+        : InputBaseValidator<ChangeCustomerBirthDateInput>,
+        IChangeCustomerBirthDateInputShouldBeValidValidator
     {
         // Fields
         private readonly ICustomerSpecifications _customerSpecifications;
 
         // Constructors
-        public ChangeBirthDateInputShouldBeValidValidator(
+        public ChangeCustomerBirthDateInputShouldBeValidValidator(
             ICustomerSpecifications customerSpecifications
         ) : base()
         {
@@ -23,7 +23,7 @@ namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Customers.Va
         }
 
         // Configure
-        protected override void ConfigureFluentValidationConcreteValidatorInternal(ValidatorBase<ChangeBirthDateInput>.FluentValidationValidatorWrapper fluentValidationValidatorWrapper)
+        protected override void ConfigureFluentValidationConcreteValidatorInternal(ValidatorBase<ChangeCustomerBirthDateInput>.FluentValidationValidatorWrapper fluentValidationValidatorWrapper)
         {
             fluentValidationValidatorWrapper.RuleFor(input => input.BirthDate)
                 .Must(birthDate => _customerSpecifications.CustomerShouldHaveBirthDate(birthDate))
