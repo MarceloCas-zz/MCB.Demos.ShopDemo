@@ -189,7 +189,7 @@ namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Tests.Custom
             var originalDefaultShippingAddress = customer.CustomerAddressInfo?.DefaultShippingAddress;
 
             // Act
-            customer.ClearDefaultShippingAddress(executionUser, sourcePlatform);
+            customer.ClearDefaultShippingAddress(new ClearDefaultShippingAddressInput(tenantId, executionUser, sourcePlatform));
 
             // Assert
             ValidateAfterRegisterModification(customerBeforeModification, customer, executionUser, sourcePlatform);

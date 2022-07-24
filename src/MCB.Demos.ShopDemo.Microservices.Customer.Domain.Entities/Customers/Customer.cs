@@ -79,14 +79,14 @@ namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Customers
             // Return
             return newDefaultShippingAddress;
         }
-        public Customer ClearDefaultShippingAddress(string executionUser, string sourcePlatform)
+        public Customer ClearDefaultShippingAddress(ClearDefaultShippingAddressInput input)
         {
             // Validate
             // TODO: Add validation
 
             // Process
-            _customerAddressInfo.ClearDefaultShippingAddress(executionUser, sourcePlatform);
-            RegisterModificationInternal<Customer>(executionUser, sourcePlatform);
+            _customerAddressInfo.ClearDefaultShippingAddress(input.ExecutionUser, input.SourcePlatform);
+            RegisterModificationInternal<Customer>(input.ExecutionUser, input.SourcePlatform);
 
             // Return
             return this;
