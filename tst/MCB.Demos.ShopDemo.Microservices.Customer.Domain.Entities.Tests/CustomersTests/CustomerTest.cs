@@ -201,6 +201,7 @@ namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Tests.Custom
         public void Customer_Should_AddNewCustomerAddress()
         {
             // Arrange
+            var tenantId = DefaultFixture.GenerateNewTenantId();
             var customer = DefaultFixture.GenerateNewCustomer();
             var customerBeforeModification = customer.DeepClone();
             GenerateNewDateForDateTimeProvider();
@@ -211,12 +212,13 @@ namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Tests.Custom
             var sourcePlatform = _fixture.SourcePlatform;
 
             // Act
-            var addedCustomerAddress = customer.AddNewCustomerAddress(
+            var addedCustomerAddress = customer.AddNewCustomerAddress(new AddNewCustomerAddressInput(
+                tenantId,
                 customerAddressType,
                 addressValueObject,
                 executionUser,
                 sourcePlatform
-            );
+            ));
 
             // Assert
             ValidateAfterRegisterModification(customerBeforeModification, customer, executionUser, sourcePlatform);
@@ -232,6 +234,7 @@ namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Tests.Custom
         public void Customer_Should_RemoveCustomerAddress()
         {
             // Arrange
+            var tenantId = DefaultFixture.GenerateNewTenantId();
             var executionUser = _fixture.ExecutionUser;
             var sourcePlatform = _fixture.SourcePlatform;
 
@@ -241,8 +244,20 @@ namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Tests.Custom
             var newCustomerAddressValueObject1 = DefaultFixture.GenerateNewAddressValueObject();
             var newCustomerAddressValueObject2 = DefaultFixture.GenerateNewAddressValueObject();
 
-            customer.AddNewCustomerAddress(CustomerAddressType.BusinessAddress, newCustomerAddressValueObject1, executionUser, sourcePlatform);
-            customer.AddNewCustomerAddress(CustomerAddressType.BusinessAddress, newCustomerAddressValueObject2, executionUser, sourcePlatform);
+            customer.AddNewCustomerAddress(new AddNewCustomerAddressInput(
+                tenantId,
+                CustomerAddressType.BusinessAddress, 
+                newCustomerAddressValueObject1, 
+                executionUser, 
+                sourcePlatform
+            ));
+            customer.AddNewCustomerAddress(new AddNewCustomerAddressInput(
+                tenantId,
+                CustomerAddressType.BusinessAddress, 
+                newCustomerAddressValueObject2, 
+                executionUser, 
+                sourcePlatform
+            ));
 
             var customerAddressToRemove = customer.CustomerAddressInfo.CustomerAddressCollection.First();
 
@@ -275,6 +290,7 @@ namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Tests.Custom
         public void Customer_Should_ChangeCustomerAddress()
         {
             // Arrange
+            var tenantId = DefaultFixture.GenerateNewTenantId();
             var executionUser = _fixture.ExecutionUser;
             var sourcePlatform = _fixture.SourcePlatform;
             var customerAddressType = CustomerAddressType.BusinessAddress;
@@ -286,8 +302,20 @@ namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Tests.Custom
             var newCustomerAddressValueObject2 = DefaultFixture.GenerateNewAddressValueObject();
             var addressValueObjectToChange = DefaultFixture.GenerateNewAddressValueObject();
 
-            customer.AddNewCustomerAddress(CustomerAddressType.BusinessAddress, newCustomerAddressValueObject1, executionUser, sourcePlatform);
-            customer.AddNewCustomerAddress(CustomerAddressType.BusinessAddress, newCustomerAddressValueObject2, executionUser, sourcePlatform);
+            customer.AddNewCustomerAddress(new AddNewCustomerAddressInput(
+                tenantId,
+                CustomerAddressType.BusinessAddress, 
+                newCustomerAddressValueObject1, 
+                executionUser, 
+                sourcePlatform
+            ));
+            customer.AddNewCustomerAddress(new AddNewCustomerAddressInput(
+                tenantId,
+                CustomerAddressType.BusinessAddress, 
+                newCustomerAddressValueObject2, 
+                executionUser, 
+                sourcePlatform
+            ));
 
             var firstCustomerAddress = customer.CustomerAddressInfo.CustomerAddressCollection.First().DeepClone();
             var customerAddressToChange = customer.CustomerAddressInfo.CustomerAddressCollection.Last();
@@ -330,18 +358,20 @@ namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Tests.Custom
         public void Customer_Not_Should_ChangeCustomerAddress_When_Id_Not_Existing()
         {
             // Arrange
+            var tenantId = DefaultFixture.GenerateNewTenantId();
             var executionUser = _fixture.ExecutionUser;
             var sourcePlatform = _fixture.SourcePlatform;
             var customerAddressType = CustomerAddressType.BusinessAddress;
 
             var customer = DefaultFixture.GenerateNewCustomer();
 
-            customer.AddNewCustomerAddress(
+            customer.AddNewCustomerAddress(new AddNewCustomerAddressInput(
+                tenantId,
                 CustomerAddressType.BusinessAddress,
                 DefaultFixture.GenerateNewAddressValueObject(),
                 executionUser,
                 sourcePlatform
-            );
+            ));
 
             GenerateNewDateForDateTimeProvider();
 

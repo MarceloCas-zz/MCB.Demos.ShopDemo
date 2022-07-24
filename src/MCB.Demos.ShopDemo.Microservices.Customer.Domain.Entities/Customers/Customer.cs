@@ -92,14 +92,19 @@ namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Customers
             return this;
         }
 
-        public CustomerAddress AddNewCustomerAddress(CustomerAddressType customerAddressType, AddressValueObject addressValueObject, string executionUser, string sourcePlatform)
+        public CustomerAddress AddNewCustomerAddress(AddNewCustomerAddressInput input)
         {
             // Validate
             // TODO: Add validation
 
             // Process
-            var addedCustomerAddress = _customerAddressInfo.AddNewCustomerAddress(customerAddressType, addressValueObject, executionUser, sourcePlatform);
-            RegisterModificationInternal<Customer>(executionUser, sourcePlatform);
+            var addedCustomerAddress = _customerAddressInfo.AddNewCustomerAddress(
+                input.CustomerAddressType, 
+                input.AddressValueObject, 
+                input.ExecutionUser, 
+                input.SourcePlatform
+            );
+            RegisterModificationInternal<Customer>(input.ExecutionUser, input.SourcePlatform);
 
             // Return
             return addedCustomerAddress;
