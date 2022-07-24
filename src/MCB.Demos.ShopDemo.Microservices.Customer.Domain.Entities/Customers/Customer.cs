@@ -44,7 +44,7 @@ namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Customers
         public Customer RegisterNewCustomer(RegisterNewCustomerInput input)
         {
             // Validate
-            if (!Validate<Customer>(() => _customerRegisterNewInputShouldBeValidValidator.Validate(input)))
+            if (!Validate(() => _customerRegisterNewInputShouldBeValidValidator.Validate(input)))
                 return this;
 
             // Process and Return
@@ -64,7 +64,8 @@ namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Customers
         public Customer ChangeBirthDate(ChangeBirthDateInput input)
         {
             // Validate
-            // TODO: Add validation
+            if (!Validate(() => _changeBirthDateInputShouldBeValidValidator.Validate(input)))
+                return this;
 
             // Process and Return
             return SetBirthDate(input.BirthDate)
@@ -99,7 +100,8 @@ namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Customers
         public CustomerAddress AddNewCustomerAddress(AddNewCustomerAddressInput input)
         {
             // Validate
-            // TODO: Add validation
+            if (!Validate(() => _addNewCustomerAddressInputShouldBeValidValidator.Validate(input)))
+                return default;
 
             // Process
             var addedCustomerAddress = _customerAddressInfo.AddNewCustomerAddress(
