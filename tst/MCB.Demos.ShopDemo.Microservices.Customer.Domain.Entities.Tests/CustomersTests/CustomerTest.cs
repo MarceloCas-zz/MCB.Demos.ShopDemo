@@ -33,7 +33,10 @@ namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Tests.Custom
         public void Customer_Should_Correctly_Instanciated()
         {
             // Arrange and Act
-            var customer = new Customers.Customer(new RegisterNewCustomerInputShouldBeValidValidator(new CustomerSpecifications()));
+            var customer = new Customers.Customer(
+                new RegisterNewCustomerInputShouldBeValidValidator(new CustomerSpecifications()),
+                new AddNewCustomerAddressInputShouldBeValidValidator(new CustomerAddressSpecifications())
+            );
 
             // Assert
             customer.FirstName.Should().BeNullOrEmpty();
@@ -54,16 +57,19 @@ namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Tests.Custom
             var sourcePlatform = _fixture.SourcePlatform;
 
             // Act
-            var customer = new Customers.Customer(new RegisterNewCustomerInputShouldBeValidValidator(new CustomerSpecifications())).RegisterNewCustomer(
-                new RegisterNewCustomerInput(
-                    tenantId,
-                    firstName,
-                    lastName,
-                    birthDate,
-                    executionUser,
-                    sourcePlatform
-                )
-            );
+            var customer = new Customers.Customer(
+                    new RegisterNewCustomerInputShouldBeValidValidator(new CustomerSpecifications()),
+                    new AddNewCustomerAddressInputShouldBeValidValidator(new CustomerAddressSpecifications())
+                ).RegisterNewCustomer(
+                    new RegisterNewCustomerInput(
+                        tenantId,
+                        firstName,
+                        lastName,
+                        birthDate,
+                        executionUser,
+                        sourcePlatform
+                    )
+                );
 
             // Assert
             ValidateAfterRegisterNew(customer, executionUser, sourcePlatform);

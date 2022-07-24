@@ -22,16 +22,19 @@ namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Customers
 
         // Validators
         private readonly IRegisterNewCustomerInputShouldBeValidValidator _customerRegisterNewInputShouldBeValidValidator;
+        private readonly IAddNewCustomerAddressInputShouldBeValidValidator _addNewCustomerAddressInputShouldBeValidValidator;
 
         // Constructors
         public Customer(
-            IRegisterNewCustomerInputShouldBeValidValidator customerRegisterNewInputShouldBeValidValidator
+            IRegisterNewCustomerInputShouldBeValidValidator customerRegisterNewInputShouldBeValidValidator,
+            IAddNewCustomerAddressInputShouldBeValidValidator addNewCustomerAddressInputShouldBeValidValidator
         )
         {
             FirstName = string.Empty;
             LastName = string.Empty;
 
             _customerRegisterNewInputShouldBeValidValidator = customerRegisterNewInputShouldBeValidValidator;
+            _addNewCustomerAddressInputShouldBeValidValidator = addNewCustomerAddressInputShouldBeValidValidator;
         }
 
         // Public Methods
@@ -153,7 +156,10 @@ namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Customers
 
         // Protected Abstract Methods
         protected override DomainEntityBase CreateInstanceForCloneInternal() =>
-            new Customer(_customerRegisterNewInputShouldBeValidValidator);
+            new Customer(
+                _customerRegisterNewInputShouldBeValidValidator,
+                _addNewCustomerAddressInputShouldBeValidValidator
+            );
 
         // Private Methods
         private Customer SetName(string firstName, string lastName)

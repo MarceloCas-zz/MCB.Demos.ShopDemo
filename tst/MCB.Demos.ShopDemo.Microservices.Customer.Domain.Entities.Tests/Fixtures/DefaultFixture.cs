@@ -94,16 +94,19 @@ namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Tests.Fixtur
             string existingSourcePlatform = null
         )
         {
-            return new Customers.Customer(new RegisterNewCustomerInputShouldBeValidValidator(new CustomerSpecifications())).RegisterNewCustomer(
-                new Customers.Inputs.RegisterNewCustomerInput(
-                    existingTenantId ?? GenerateNewTenantId(),
-                    existingFirstName ?? Guid.NewGuid().ToString(),
-                    existingLastName ?? Guid.NewGuid().ToString(),
-                    existingBirthDate ?? DateOnly.FromDateTime(DateTimeProvider.GetDate().DateTime),
-                    existingExecutionUser ?? GenerateNewExecutionUser(),
-                    existingSourcePlatform ?? GenerateNewSourcePlatform()
-                )
-            );
+            return new Customers.Customer(
+                    new RegisterNewCustomerInputShouldBeValidValidator(new CustomerSpecifications()),
+                    new AddNewCustomerAddressInputShouldBeValidValidator(new CustomerAddressSpecifications())
+                ).RegisterNewCustomer(
+                    new Customers.Inputs.RegisterNewCustomerInput(
+                        existingTenantId ?? GenerateNewTenantId(),
+                        existingFirstName ?? Guid.NewGuid().ToString(),
+                        existingLastName ?? Guid.NewGuid().ToString(),
+                        existingBirthDate ?? DateOnly.FromDateTime(DateTimeProvider.GetDate().DateTime),
+                        existingExecutionUser ?? GenerateNewExecutionUser(),
+                        existingSourcePlatform ?? GenerateNewSourcePlatform()
+                    )
+                );
         }
     }
 }
