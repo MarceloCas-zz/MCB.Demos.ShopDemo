@@ -57,18 +57,14 @@ namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Customers
             return SetName(input.FirstName, input.LastName)
                 .RegisterModificationInternal<Customer>(input.ExecutionUser, input.SourcePlatform);
         }
-        public Customer ChangeBirthDate(
-            DateOnly birthDate,
-            string executionUser,
-            string sourcePlatform
-        )
+        public Customer ChangeBirthDate(ChangeCustomerNameInput input)
         {
             // Validate
             // TODO: Add validation
 
             // Process and Return
-            return SetBirthDate(birthDate)
-                .RegisterModificationInternal<Customer>(executionUser, sourcePlatform);
+            return SetBirthDate(input.BirthDate)
+                .RegisterModificationInternal<Customer>(input.ExecutionUser, input.SourcePlatform);
         }
 
         public CustomerAddress ChangeDefaultShippingAddress(CustomerAddress customerAddress, string executionUser, string sourcePlatform)
