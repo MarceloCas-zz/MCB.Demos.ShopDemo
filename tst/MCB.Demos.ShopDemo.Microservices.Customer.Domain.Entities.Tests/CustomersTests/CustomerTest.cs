@@ -35,6 +35,7 @@ namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Tests.Custom
             // Arrange and Act
             var customer = new Customers.Customer(
                 new RegisterNewCustomerInputShouldBeValidValidator(new CustomerSpecifications()),
+                new ChangeCustomerNameInputShouldBeValidValidator(new CustomerSpecifications()),
                 new ChangeBirthDateInputShouldBeValidValidator(new CustomerSpecifications()),
                 new AddNewCustomerAddressInputShouldBeValidValidator(new CustomerAddressSpecifications())
             );
@@ -60,6 +61,7 @@ namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Tests.Custom
             // Act
             var customer = new Customers.Customer(
                     new RegisterNewCustomerInputShouldBeValidValidator(new CustomerSpecifications()),
+                    new ChangeCustomerNameInputShouldBeValidValidator(new CustomerSpecifications()),
                     new ChangeBirthDateInputShouldBeValidValidator(new CustomerSpecifications()),
                     new AddNewCustomerAddressInputShouldBeValidValidator(new CustomerAddressSpecifications())
                 ).RegisterNewCustomer(

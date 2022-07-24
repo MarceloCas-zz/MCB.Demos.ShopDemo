@@ -22,12 +22,14 @@ namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Customers
 
         // Validators
         private readonly IRegisterNewCustomerInputShouldBeValidValidator _customerRegisterNewInputShouldBeValidValidator;
+        private readonly IChangeCustomerNameInputShouldBeValidValidator _changeCustomerNameInputShouldBeValidValidator;
         private readonly IChangeBirthDateInputShouldBeValidValidator _changeBirthDateInputShouldBeValidValidator;
         private readonly IAddNewCustomerAddressInputShouldBeValidValidator _addNewCustomerAddressInputShouldBeValidValidator;
 
         // Constructors
         public Customer(
             IRegisterNewCustomerInputShouldBeValidValidator customerRegisterNewInputShouldBeValidValidator,
+            IChangeCustomerNameInputShouldBeValidValidator changeCustomerNameInputShouldBeValidValidator,
             IChangeBirthDateInputShouldBeValidValidator changeBirthDateInputShouldBeValidValidator,
             IAddNewCustomerAddressInputShouldBeValidValidator addNewCustomerAddressInputShouldBeValidValidator
         )
@@ -36,6 +38,7 @@ namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Customers
             LastName = string.Empty;
 
             _customerRegisterNewInputShouldBeValidValidator = customerRegisterNewInputShouldBeValidValidator;
+            _changeCustomerNameInputShouldBeValidValidator = changeCustomerNameInputShouldBeValidValidator;
             _changeBirthDateInputShouldBeValidValidator = changeBirthDateInputShouldBeValidValidator;
             _addNewCustomerAddressInputShouldBeValidValidator = addNewCustomerAddressInputShouldBeValidValidator;
         }
@@ -55,8 +58,9 @@ namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Customers
         public Customer ChangeCustomerName(ChangeCustomerNameInput input)
         {
             // Validate
-            // TODO: Add validation
-
+            if (!Validate(() => _changeCustomerNameInputShouldBeValidValidator.Validate(input)))
+                return this;
+            
             // Process and Return
             return SetName(input.FirstName, input.LastName)
                 .RegisterModificationInternal<Customer>(input.ExecutionUser, input.SourcePlatform);
@@ -163,6 +167,7 @@ namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Customers
         protected override DomainEntityBase CreateInstanceForCloneInternal() =>
             new Customer(
                 _customerRegisterNewInputShouldBeValidValidator,
+                _changeCustomerNameInputShouldBeValidValidator,
                 _changeBirthDateInputShouldBeValidValidator,
                 _addNewCustomerAddressInputShouldBeValidValidator
             );
