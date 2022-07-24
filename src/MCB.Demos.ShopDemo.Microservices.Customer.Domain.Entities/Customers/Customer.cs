@@ -1,9 +1,7 @@
 ﻿using MCB.Core.Domain.Entities.Abstractions;
 using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Base;
-using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Customers.Enums;
 using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Customers.Inputs;
 using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Customers.Validators.Interfaces;
-using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.ValueObjects;
 
 namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Customers
 {
