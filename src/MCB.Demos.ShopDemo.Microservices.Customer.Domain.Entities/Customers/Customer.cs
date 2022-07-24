@@ -57,7 +57,7 @@ namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Customers
             return SetName(input.FirstName, input.LastName)
                 .RegisterModificationInternal<Customer>(input.ExecutionUser, input.SourcePlatform);
         }
-        public Customer ChangeBirthDate(ChangeCustomerNameInput input)
+        public Customer ChangeBirthDate(ChangeBirthDateInput input)
         {
             // Validate
             // TODO: Add validation
