@@ -17,7 +17,7 @@ namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Customers.Va
         // Constructors
         public ChangeBirthDateInputShouldBeValidValidator(
             ICustomerSpecifications customerSpecifications
-        ) : base(customerSpecifications)
+        ) : base()
         {
             _customerSpecifications = customerSpecifications;
         }

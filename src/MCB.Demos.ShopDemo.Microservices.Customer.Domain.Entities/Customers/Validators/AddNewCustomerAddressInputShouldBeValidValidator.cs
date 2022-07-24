@@ -17,7 +17,7 @@ namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Customers.Va
         // Constructors
         public AddNewCustomerAddressInputShouldBeValidValidator(
             ICustomerAddressSpecifications customerAddressSpecifications
-        ) : base(customerAddressSpecifications)
+        ) : base()
         {
             _customerAddressSpecifications = customerAddressSpecifications;
         }

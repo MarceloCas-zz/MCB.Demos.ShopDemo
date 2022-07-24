@@ -16,7 +16,7 @@ namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Customers.Va
         // Constructors
         public RegisterNewCustomerInputShouldBeValidValidator(
             ICustomerSpecifications customerSpecifications
-        ) : base(customerSpecifications)
+        ) : base()
         {
             _customerSpecifications = customerSpecifications;
         }
