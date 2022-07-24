@@ -29,9 +29,11 @@ namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Customers.Va
                 .Must(birthDate => _customerSpecifications.CustomerShouldHaveBirthDate(birthDate))
                 .WithErrorCode(ICustomerSpecifications.CustomerShouldHaveBirthDateErrorCode)
                 .WithMessage(ICustomerSpecifications.CustomerShouldHaveBirthDateMessage)
-                .WithSeverity(ICustomerSpecifications.CustomerShouldHaveBirthDateSeverity)
+                .WithSeverity(ICustomerSpecifications.CustomerShouldHaveBirthDateSeverity);
 
+            fluentValidationValidatorWrapper.RuleFor(input => input.BirthDate)
                 .Must(birthDate => _customerSpecifications.CustomerShouldHaveValidBirthDate(birthDate))
+                .When(input => _customerSpecifications.CustomerShouldHaveBirthDate(input.BirthDate))
                 .WithErrorCode(ICustomerSpecifications.CustomerShouldHaveValidBirthDateErrorCode)
                 .WithMessage(ICustomerSpecifications.CustomerShouldHaveValidBirthDateMessage)
                 .WithSeverity(ICustomerSpecifications.CustomerShouldHaveValidBirthDateSeverity);

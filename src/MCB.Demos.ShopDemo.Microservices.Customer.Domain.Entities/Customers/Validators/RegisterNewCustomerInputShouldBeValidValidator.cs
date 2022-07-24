@@ -28,9 +28,11 @@ namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Customers.Va
                 .Must(firstName => _customerSpecifications.CustomerShouldHaveFirstName(firstName))
                 .WithErrorCode(ICustomerSpecifications.CustomerShouldHaveFirstNameErrorCode)
                 .WithMessage(ICustomerSpecifications.CustomerShouldHaveFirstNameMessage)
-                .WithSeverity(ICustomerSpecifications.CustomerShouldHaveFirstNameSeverity)
+                .WithSeverity(ICustomerSpecifications.CustomerShouldHaveFirstNameSeverity);
 
+            fluentValidationValidatorWrapper.RuleFor(input => input.FirstName)
                 .Must(firstName => _customerSpecifications.CustomerShouldHaveFirstNameMaximumLength(firstName))
+                .When(input => _customerSpecifications.CustomerShouldHaveFirstName(input.FirstName))
                 .WithErrorCode(ICustomerSpecifications.CustomerShouldHaveFirstNameMaximumLengthErrorCode)
                 .WithMessage(ICustomerSpecifications.CustomerShouldHaveFirstNameMaximumLengthMessage)
                 .WithSeverity(ICustomerSpecifications.CustomerShouldHaveFirstNameMaximumLengthSeverity);
@@ -39,9 +41,11 @@ namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Customers.Va
                 .Must(lastName => _customerSpecifications.CustomerShouldHaveLastName(lastName))
                 .WithErrorCode(ICustomerSpecifications.CustomerShouldHaveLastNameErrorCode)
                 .WithMessage(ICustomerSpecifications.CustomerShouldHaveLastNameMessage)
-                .WithSeverity(ICustomerSpecifications.CustomerShouldHaveLastNameSeverity)
+                .WithSeverity(ICustomerSpecifications.CustomerShouldHaveLastNameSeverity);
 
+            fluentValidationValidatorWrapper.RuleFor(input => input.LastName)
                 .Must(lastName => _customerSpecifications.CustomerShouldHaveLastNameMaximumLength(lastName))
+                .When(input => _customerSpecifications.CustomerShouldHaveLastName(input.LastName))
                 .WithErrorCode(ICustomerSpecifications.CustomerShouldHaveLastNameMaximumLengthErrorCode)
                 .WithMessage(ICustomerSpecifications.CustomerShouldHaveLastNameMaximumLengthMessage)
                 .WithSeverity(ICustomerSpecifications.CustomerShouldHaveLastNameMaximumLengthSeverity);
@@ -50,9 +54,11 @@ namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Customers.Va
                 .Must(birthDate => _customerSpecifications.CustomerShouldHaveBirthDate(birthDate))
                 .WithErrorCode(ICustomerSpecifications.CustomerShouldHaveBirthDateErrorCode)
                 .WithMessage(ICustomerSpecifications.CustomerShouldHaveBirthDateMessage)
-                .WithSeverity(ICustomerSpecifications.CustomerShouldHaveBirthDateSeverity)
+                .WithSeverity(ICustomerSpecifications.CustomerShouldHaveBirthDateSeverity);
 
+            fluentValidationValidatorWrapper.RuleFor(input => input.BirthDate)
                 .Must(birthDate => _customerSpecifications.CustomerShouldHaveValidBirthDate(birthDate))
+                .When(input => _customerSpecifications.CustomerShouldHaveBirthDate(input.BirthDate))
                 .WithErrorCode(ICustomerSpecifications.CustomerShouldHaveValidBirthDateErrorCode)
                 .WithMessage(ICustomerSpecifications.CustomerShouldHaveValidBirthDateMessage)
                 .WithSeverity(ICustomerSpecifications.CustomerShouldHaveValidBirthDateSeverity);
