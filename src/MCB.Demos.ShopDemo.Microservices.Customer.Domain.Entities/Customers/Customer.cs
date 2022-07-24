@@ -67,14 +67,14 @@ namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Customers
                 .RegisterModificationInternal<Customer>(input.ExecutionUser, input.SourcePlatform);
         }
 
-        public CustomerAddress ChangeDefaultShippingAddress(CustomerAddress customerAddress, string executionUser, string sourcePlatform)
+        public CustomerAddress ChangeDefaultShippingAddress(ChangeDefaultShippingAddressInput input)
         {
             // Validate
             // TODO: Add validation
 
             // Process
-            var newDefaultShippingAddress = _customerAddressInfo.ChangeDefaultShippingAddress(customerAddress, executionUser, sourcePlatform);
-            RegisterModificationInternal<Customer>(executionUser, sourcePlatform);
+            var newDefaultShippingAddress = _customerAddressInfo.ChangeDefaultShippingAddress(input.CustomerAddress, input.ExecutionUser, input.SourcePlatform);
+            RegisterModificationInternal<Customer>(input.ExecutionUser, input.SourcePlatform);
 
             // Return
             return newDefaultShippingAddress;

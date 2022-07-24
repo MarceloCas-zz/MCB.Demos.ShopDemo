@@ -133,6 +133,7 @@ namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Tests.Custom
         public void Customer_Should_ChangeDefaultShippingAddress()
         {
             // Arrange
+            var tenantId = DefaultFixture.GenerateNewTenantId();
             var customer = DefaultFixture.GenerateNewCustomer();
             var customerBeforeModification = customer.DeepClone();
             GenerateNewDateForDateTimeProvider();
@@ -145,11 +146,12 @@ namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Tests.Custom
             var originalDefaultShippingAddress = customer.CustomerAddressInfo?.DefaultShippingAddress;
 
             // Act
-            var newDefaultShippingAddress = customer.ChangeDefaultShippingAddress(
+            var newDefaultShippingAddress = customer.ChangeDefaultShippingAddress(new ChangeDefaultShippingAddressInput(
+                tenantId,
                 newShippingAddress,
                 executionUser,
                 sourcePlatform
-            );
+            ));
 
             // Assert
             ValidateAfterRegisterModification(customerBeforeModification, customer, executionUser, sourcePlatform);
@@ -169,6 +171,7 @@ namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Tests.Custom
         public void Customer_Should_ClearDefaultShippingAddress()
         {
             // Arrange
+            var tenantId = DefaultFixture.GenerateNewTenantId();
             var customer = DefaultFixture.GenerateNewCustomer();
             var customerBeforeModification = customer.DeepClone();
             GenerateNewDateForDateTimeProvider();
@@ -177,11 +180,12 @@ namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Tests.Custom
             var executionUser = _fixture.ExecutionUser;
             var sourcePlatform = _fixture.SourcePlatform;
 
-            customer.ChangeDefaultShippingAddress(
+            customer.ChangeDefaultShippingAddress(new ChangeDefaultShippingAddressInput(
+                tenantId,
                 newShippingAddress,
                 executionUser,
                 sourcePlatform
-            );
+            ));
             var originalDefaultShippingAddress = customer.CustomerAddressInfo?.DefaultShippingAddress;
 
             // Act
