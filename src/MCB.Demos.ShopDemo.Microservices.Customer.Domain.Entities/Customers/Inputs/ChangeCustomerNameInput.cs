@@ -5,16 +5,19 @@ namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Customers.In
     public record ChangeCustomerNameInput
         : InputBase
     {
-        public DateOnly BirthDate { get; }
+        public string FirstName { get; }
+        public string LastName { get; }
 
         public ChangeCustomerNameInput(
             Guid tenantId,
-            DateOnly birthDate,
+            string firstName,
+            string lastName,
             string executionUser,
             string sourcePlatform
         ) : base(tenantId, executionUser, sourcePlatform)
         {
-            BirthDate = birthDate;
+            FirstName = firstName;
+            LastName = lastName;
         }
     }
 }

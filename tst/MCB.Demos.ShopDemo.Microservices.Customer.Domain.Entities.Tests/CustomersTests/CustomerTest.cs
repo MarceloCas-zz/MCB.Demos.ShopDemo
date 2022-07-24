@@ -108,6 +108,7 @@ namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Tests.Custom
         public void Customer_Should_ChangeBirthDate()
         {
             // Arrange
+            var tenantId = DefaultFixture.GenerateNewTenantId();
             var customer = DefaultFixture.GenerateNewCustomer();
             var customerBeforeModification = customer.DeepClone();
             GenerateNewDateForDateTimeProvider();
@@ -116,11 +117,12 @@ namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Tests.Custom
             var sourcePlatform = _fixture.SourcePlatform;
 
             // Act
-            customer.ChangeBirthDate(
+            customer.ChangeBirthDate(new ChangeBirthDateInput(
+                tenantId,
                 birthDate,
                 executionUser,
                 sourcePlatform
-            );
+            ));
 
             // Assert
             ValidateAfterRegisterModification(customerBeforeModification, customer, executionUser, sourcePlatform);
