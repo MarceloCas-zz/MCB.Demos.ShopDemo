@@ -103,17 +103,22 @@ namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Customers
 
         public CustomerAddress AddNewCustomerAddress(AddNewCustomerAddressInput input)
         {
-            // Validate
-            if (!Validate(() => _addNewCustomerAddressInputShouldBeValidValidator.Validate(input)))
-                return default;
-
-            // Process
+            // Process Customer Address
             var addedCustomerAddress = _customerAddressInfo.AddNewCustomerAddress(
                 input.CustomerAddressType, 
                 input.AddressValueObject, 
                 input.ExecutionUser, 
                 input.SourcePlatform
             );
+
+            // Validate After Customer Address Process
+            if (!addedCustomerAddress.ValidationInfo.IsValid)
+            {
+                AddFromValidationInfoInternal(addedCustomerAddress.ValidationInfo);
+                return null;
+            }
+
+            // Process Customer
             RegisterModificationInternal<Customer>(input.ExecutionUser, input.SourcePlatform);
 
             // Return
