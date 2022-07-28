@@ -37,7 +37,10 @@ namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Tests.Custom
                 new RegisterNewCustomerInputShouldBeValidValidator(new CustomerSpecifications()),
                 new ChangeCustomerNameInputShouldBeValidValidator(new CustomerSpecifications()),
                 new ChangeCustomerBirthDateInputShouldBeValidValidator(new CustomerSpecifications()),
-                new AddNewCustomerAddressInputShouldBeValidValidator(new CustomerAddressSpecifications())
+                new AddNewCustomerAddressInputShouldBeValidValidator(
+                    new CustomerAddressSpecifications(),
+                    new AddressValueObjectSpecifications()
+                )
             );
 
             // Assert
@@ -63,7 +66,10 @@ namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Tests.Custom
                     new RegisterNewCustomerInputShouldBeValidValidator(new CustomerSpecifications()),
                     new ChangeCustomerNameInputShouldBeValidValidator(new CustomerSpecifications()),
                     new ChangeCustomerBirthDateInputShouldBeValidValidator(new CustomerSpecifications()),
-                    new AddNewCustomerAddressInputShouldBeValidValidator(new CustomerAddressSpecifications())
+                    new AddNewCustomerAddressInputShouldBeValidValidator(
+                        new CustomerAddressSpecifications(),
+                        new AddressValueObjectSpecifications()
+                    )
                 ).RegisterNewCustomer(
                     new RegisterNewCustomerInput(
                         tenantId,
