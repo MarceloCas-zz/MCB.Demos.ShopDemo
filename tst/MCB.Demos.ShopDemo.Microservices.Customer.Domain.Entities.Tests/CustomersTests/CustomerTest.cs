@@ -5,6 +5,7 @@ using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Customers.Inputs
 using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Customers.Specifications;
 using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Customers.Validators;
 using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Tests.Fixtures;
+using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.ValueObjects.AddressValueObjects.Specifications;
 using MCB.Tests;
 using System;
 using System.Linq;

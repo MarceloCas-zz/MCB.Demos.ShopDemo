@@ -1,6 +1,6 @@
-﻿using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Customers.Specifications.Interfaces;
+﻿using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.ValueObjects.AddressValueObjects.Specifications.Interfaces;
 
-namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Customers.Specifications
+namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.ValueObjects.AddressValueObjects.Specifications
 {
     public class AddressValueObjectSpecifications
         : IAddressValueObjectSpecifications
@@ -54,7 +54,7 @@ namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Customers.Sp
         {
             return country.Length <= 150;
         }
-        
+
         // Zip Code
         public bool AddressValueObjectShouldHaveZipCode(string zipCode)
         {

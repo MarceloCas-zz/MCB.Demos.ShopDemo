@@ -1,32 +1,38 @@
 ﻿using MCB.Core.Infra.CrossCutting.DesignPatterns.Validator;
 using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Customers.Inputs;
 using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Customers.Specifications.Interfaces;
-using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Customers.Validators.Base;
 using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Customers.Validators.Interfaces;
+using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Customers.Validators.Wrappers;
 
 namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Customers.Validators
 {
     public class ChangeCustomerBirthDateInputShouldBeValidValidator
-        : CustomerInputValidatorBase<ChangeCustomerBirthDateInput>,
+        : ValidatorBase<ChangeCustomerBirthDateInput>,
         IChangeCustomerBirthDateInputShouldBeValidValidator
     {
+        // Fields
+        private readonly ICustomerSpecifications _customerSpecifications;
+
         // Constructors
         public ChangeCustomerBirthDateInputShouldBeValidValidator(
             ICustomerSpecifications customerSpecifications
-        ) : base(customerSpecifications)
+        )
         {
+            _customerSpecifications = customerSpecifications;
         }
 
-        // Configure
-        protected override void ConfigureFluentValidationConcreteValidatorInternal(ValidatorBase<ChangeCustomerBirthDateInput>.FluentValidationValidatorWrapper fluentValidationValidatorWrapper)
+        // Protected Methods
+        protected override void ConfigureFluentValidationConcreteValidator(FluentValidationValidatorWrapper fluentValidationValidatorWrapper)
         {
             // BirthDate
-            AddCustomerShouldHaveBirthDate(
+            CustomerValidatorWrapper.AddCustomerShouldHaveBirthDate(
+                _customerSpecifications,
                 fluentValidationValidatorWrapper,
                 propertyExpression: input => input.BirthDate,
                 getBirthDateFunction: input => input.BirthDate
             );
-            AddCustomerShouldHaveValidBirthDate(
+            CustomerValidatorWrapper.AddCustomerShouldHaveValidBirthDate(
+                _customerSpecifications,
                 fluentValidationValidatorWrapper,
                 propertyExpression: input => input.BirthDate,
                 getBirthDateFunction: input => input.BirthDate

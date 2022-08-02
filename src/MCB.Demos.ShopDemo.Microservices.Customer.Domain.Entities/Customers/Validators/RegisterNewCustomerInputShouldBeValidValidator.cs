@@ -1,57 +1,66 @@
 ﻿using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Customers.Inputs;
 using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Customers.Validators.Interfaces;
 using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Customers.Specifications.Interfaces;
-using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Customers.Validators.Base;
+using MCB.Core.Infra.CrossCutting.DesignPatterns.Validator;
+using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Customers.Validators.Wrappers;
 
 namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Customers.Validators
 {
     public class RegisterNewCustomerInputShouldBeValidValidator
-        : CustomerInputValidatorBase<RegisterNewCustomerInput>,
+        : ValidatorBase<RegisterNewCustomerInput>,
         IRegisterNewCustomerInputShouldBeValidValidator
     {
         // Fields
+        private readonly ICustomerSpecifications _customerSpecifications;
 
         // Constructors
         public RegisterNewCustomerInputShouldBeValidValidator(
             ICustomerSpecifications customerSpecifications
-        ) : base(customerSpecifications)
+        )
         {
+            _customerSpecifications = customerSpecifications;
         }
 
-        // Configure
-        protected override void ConfigureFluentValidationConcreteValidatorInternal(FluentValidationValidatorWrapper fluentValidationValidatorWrapper)
+        // Protected Methods
+        protected override void ConfigureFluentValidationConcreteValidator(FluentValidationValidatorWrapper fluentValidationValidatorWrapper)
         {
             // FirstName
-            AddCustomerShouldHaveFirstName(
+            CustomerValidatorWrapper.AddCustomerShouldHaveFirstName(
+                _customerSpecifications,
                 fluentValidationValidatorWrapper,
                 propertyExpression: input => input.FirstName,
                 getFirstNameFunction: input => input.FirstName
             );
-            AddCustomerShouldHaveFirstNameMaximumLength(
+            CustomerValidatorWrapper.AddCustomerShouldHaveFirstNameMaximumLength(
+                _customerSpecifications,
                 fluentValidationValidatorWrapper,
                 propertyExpression: input => input.FirstName,
                 getFirstNameFunction: input => input.FirstName
             );
 
             // LastName
-            AddCustomerShouldHaveLastName(
+            CustomerValidatorWrapper.AddCustomerShouldHaveLastName(
+                _customerSpecifications,
                 fluentValidationValidatorWrapper,
                 propertyExpression: input => input.LastName,
                 getLastNameFunction: input => input.LastName
             );
-            AddCustomerShouldHaveLastNameMaximumLength(
+            CustomerValidatorWrapper.AddCustomerShouldHaveLastNameMaximumLength(
+                _customerSpecifications,
                 fluentValidationValidatorWrapper,
                 propertyExpression: input => input.LastName,
                 getLastNameFunction: input => input.LastName
             );
 
             // BirthDate
-            AddCustomerShouldHaveBirthDate(
+            CustomerValidatorWrapper.AddCustomerShouldHaveBirthDate(
+                _customerSpecifications,
                 fluentValidationValidatorWrapper,
                 propertyExpression: input => input.BirthDate,
                 getBirthDateFunction: input => input.BirthDate
             );
-            AddCustomerShouldHaveValidBirthDate(
+            CustomerValidatorWrapper.AddCustomerShouldHaveValidBirthDate(
+                _customerSpecifications,
                 fluentValidationValidatorWrapper,
                 propertyExpression: input => input.BirthDate,
                 getBirthDateFunction: input => input.BirthDate

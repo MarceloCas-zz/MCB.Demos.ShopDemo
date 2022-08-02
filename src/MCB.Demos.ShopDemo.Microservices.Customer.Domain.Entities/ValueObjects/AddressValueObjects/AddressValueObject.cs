@@ -1,4 +1,4 @@
-﻿namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.ValueObjects
+﻿namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.ValueObjects.AddressValueObjects
 {
     public struct AddressValueObject
     {

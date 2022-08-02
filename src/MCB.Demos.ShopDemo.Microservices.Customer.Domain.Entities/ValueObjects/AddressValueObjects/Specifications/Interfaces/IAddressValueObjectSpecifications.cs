@@ -1,6 +1,6 @@
 ﻿using FluentValidation;
 
-namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Customers.Specifications.Interfaces
+namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.ValueObjects.AddressValueObjects.Specifications.Interfaces
 {
     public interface IAddressValueObjectSpecifications
     {
