@@ -1,5 +1,6 @@
 ﻿using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Base;
 using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.CustomerAddresses.Enums;
+using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.CustomerAddresses.Inputs;
 using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.ValueObjects.AddressValueObjects;
 
 namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.CustomerAddresses;
@@ -12,15 +13,15 @@ public class CustomerAddress
     public AddressValueObject AddressValueObject { get; private set; }
 
     // Public Methods
-    public CustomerAddress RegisterNew(Guid tenantId, CustomerAddressType customerAddressType, AddressValueObject addressValueObject, string executionUser, string sourcePlatform)
+    public CustomerAddress RegisterNewCustomerAddress(RegisterNewCustomerAddressInput input)
     {
         // Validate
         // TODO: Add validation
 
         // Process
-        return RegisterNewInternal<CustomerAddress>(tenantId, executionUser, sourcePlatform)
-            .SetCustomerAddressType(customerAddressType)
-            .SetAddress(addressValueObject);
+        return RegisterNewInternal<CustomerAddress>(input.TenantId, input.ExecutionUser, input.SourcePlatform)
+            .SetCustomerAddressType(input.CustomerAddressType)
+            .SetAddress(input.AddressValueObject);
     }
     public CustomerAddress ChangeCustomerAddressType(CustomerAddressType customerAddressType, string executionUser, string sourcePlatform)
     {

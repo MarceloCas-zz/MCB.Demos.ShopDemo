@@ -61,7 +61,7 @@ namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.CustomerAddr
             //    return null;
 
             // Process
-            var customerAddress = new CustomerAddress().RegisterNew(TenantId, customerAddressType, addressValueObject, executionUser, sourcePlatform);
+            var customerAddress = new CustomerAddress().RegisterNewCustomerAddress(TenantId, customerAddressType, addressValueObject, executionUser, sourcePlatform);
             _customerAddressCollection.Add(
                 customerAddress
             );

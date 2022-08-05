@@ -50,7 +50,7 @@ namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Tests.Fixtur
             string existingSourcePlatform = null
         )
         {
-            return new CustomerAddress().RegisterNew(
+            return new CustomerAddress().RegisterNewCustomerAddress(
                 tenantId: existingTenantId ?? GenerateNewTenantId(),
                 customerAddressType: existingCustomerAdressType ?? EnumUtils.GetRandomEnumValue<CustomerAddressType>(),
                 addressValueObject: existingCustomerAddress ?? GenerateNewAddressValueObject(),
