@@ -1,4 +1,5 @@
 ﻿using MCB.Core.Domain.Entities.DomainEntitiesBase.Inputs;
+using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.CustomerAddresses;
 
 namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Customers.Inputs
 {

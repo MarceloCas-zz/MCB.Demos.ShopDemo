@@ -1,6 +1,6 @@
 ﻿using FluentAssertions;
-using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Customers;
-using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Customers.Enums;
+using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.CustomerAddresses.Enums;
+using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.CustomerAddressesInfo;
 using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Tests.Fixtures;
 using MCB.Tests;
 using System;

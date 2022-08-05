@@ -1,5 +1,7 @@
 ﻿using MCB.Core.Domain.Entities.Abstractions;
 using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Base;
+using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.CustomerAddresses;
+using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.CustomerAddressesInfo;
 using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Customers.Inputs;
 using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Customers.Validators.Interfaces;
 
@@ -10,7 +12,7 @@ namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Customers
         IAggregationRoot
     {
         // Fields
-        private CustomerAddressInfo _customerAddressInfo = new();
+        private CustomerAddressInfo _customerAddressInfo;
 
         // Properties
         public string FirstName { get; private set; }
@@ -41,6 +43,8 @@ namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Customers
             _changeCustomerNameInputShouldBeValidValidator = changeCustomerNameInputShouldBeValidValidator;
             _changeCustomerBirthDateInputShouldBeValidValidator = changeCustomerBirthDateInputShouldBeValidValidator;
             _addNewCustomerAddressInputShouldBeValidValidator = addNewCustomerAddressInputShouldBeValidValidator;
+
+            _customerAddressInfo = new CustomerAddressInfo();
         }
 
         // Public Methods

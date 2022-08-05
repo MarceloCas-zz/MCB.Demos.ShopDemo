@@ -1,4 +1,4 @@
-﻿namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Customers.Enums
+﻿namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.CustomerAddresses.Enums
 {
     public enum CustomerAddressType
     {

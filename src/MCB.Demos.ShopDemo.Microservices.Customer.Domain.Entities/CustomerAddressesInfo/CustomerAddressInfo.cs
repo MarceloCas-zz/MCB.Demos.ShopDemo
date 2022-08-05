@@ -1,8 +1,9 @@
 ﻿using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Base;
-using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Customers.Enums;
+using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.CustomerAddresses;
+using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.CustomerAddresses.Enums;
 using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.ValueObjects.AddressValueObjects;
 
-namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Customers
+namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.CustomerAddressesInfo
 {
     public class CustomerAddressInfo
         : DomainEntityBase
@@ -11,9 +12,17 @@ namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Customers
         private readonly List<CustomerAddress> _customerAddressCollection = new();
         private CustomerAddress _defaultShippingAddress;
 
+        // Validators
+
         // Properties
         public IEnumerable<CustomerAddress> CustomerAddressCollection => _customerAddressCollection.Select(q => q.DeepClone());
         public CustomerAddress DefaultShippingAddress => _defaultShippingAddress?.DeepClone();
+
+        // Constructors
+        public CustomerAddressInfo()
+        {
+
+        }
 
         // Public Methods
         public CustomerAddressInfo RegisterNew(Guid tenantId, string executionUser, string sourcePlatform)
@@ -48,7 +57,8 @@ namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Customers
         public CustomerAddress AddNewCustomerAddress(CustomerAddressType customerAddressType, AddressValueObject addressValueObject, string executionUser, string sourcePlatform)
         {
             // Validate
-            // TODO: Add validation
+            //if (!Validate(() => _addNewCustomerAddressInputShouldBeValidValidator.Validate(input)))
+            //    return null;
 
             // Process
             var customerAddress = new CustomerAddress().RegisterNew(TenantId, customerAddressType, addressValueObject, executionUser, sourcePlatform);

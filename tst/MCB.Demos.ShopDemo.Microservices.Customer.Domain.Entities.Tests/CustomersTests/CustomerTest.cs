@@ -1,6 +1,7 @@
 ﻿using FluentAssertions;
 using MCB.Core.Infra.CrossCutting.DateTime;
-using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Customers.Enums;
+using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.CustomerAddresses.Enums;
+using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.CustomerAddresses.Specifications;
 using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Customers.Inputs;
 using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Customers.Specifications;
 using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Customers.Validators;

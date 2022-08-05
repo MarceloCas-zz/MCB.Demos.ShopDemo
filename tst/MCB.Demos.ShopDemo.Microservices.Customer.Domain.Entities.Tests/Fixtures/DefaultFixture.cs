@@ -1,7 +1,9 @@
 ﻿using MCB.Core.Infra.CrossCutting.DateTime;
 using MCB.Core.Infra.CrossCutting.Enums;
-using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Customers;
-using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Customers.Enums;
+using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.CustomerAddresses;
+using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.CustomerAddresses.Enums;
+using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.CustomerAddresses.Specifications;
+using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.CustomerAddressesInfo;
 using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Customers.Specifications;
 using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Customers.Validators;
 using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.ValueObjects.AddressValueObjects;
