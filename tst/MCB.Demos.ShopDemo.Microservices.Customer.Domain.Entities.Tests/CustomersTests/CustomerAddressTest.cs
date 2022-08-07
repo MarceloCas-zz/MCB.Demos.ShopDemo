@@ -71,7 +71,12 @@ namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Tests.Custom
             var initialCustomerAddressType = customerAddress.CustomerAddressType;
 
             // Act
-            customerAddress.ChangeCustomerAddressType(newCustomerAddressType, _fixture.ExecutionUser, _fixture.SourcePlatform);
+            customerAddress.ChangeCustomerAddressType(new CustomerAddresses.Inputs.ChangeCustomerAddressTypeInput(
+               _fixture.TenantId,
+               newCustomerAddressType, 
+               _fixture.ExecutionUser, 
+               _fixture.SourcePlatform
+            ));
 
             // Assert
             customerAddress.CustomerAddressType.Should().NotBe(initialCustomerAddressType);
@@ -92,7 +97,12 @@ namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Tests.Custom
             var initialCustomerAddressType = customerAddress.CustomerAddressType;
 
             // Act
-            customerAddress.ChangeAddress(newCustomerAddress, _fixture.ExecutionUser, _fixture.SourcePlatform);
+            customerAddress.ChangeCustomerAddress(new CustomerAddresses.Inputs.ChangeCustomerAddressInput(
+                _fixture.TenantId,
+                newCustomerAddress, 
+                _fixture.ExecutionUser, 
+                _fixture.SourcePlatform
+            ));
 
             // Assert
             customerAddress.AddressValueObject.Should().NotBe(initialCustomerAddressType);
@@ -113,7 +123,13 @@ namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Tests.Custom
             var initialCustomerAddressType = customerAddress.CustomerAddressType;
 
             // Act
-            customerAddress.ChangeFullAddressInfo(newCustomerAddressType, newCustomerAddress, _fixture.ExecutionUser, _fixture.SourcePlatform);
+            customerAddress.ChangeCustomerFullAddressInfo(new CustomerAddresses.Inputs.ChangeCustomerFullAddressInfoInput(
+                _fixture.TenantId,
+                newCustomerAddressType, 
+                newCustomerAddress, 
+                _fixture.ExecutionUser, 
+                _fixture.SourcePlatform
+            ));
 
             // Assert
             customerAddress.AddressValueObject.Should().NotBe(initialCustomerAddressType);

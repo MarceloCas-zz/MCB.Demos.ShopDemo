@@ -4,19 +4,19 @@ using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.ValueObjects.Add
 
 namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.CustomerAddresses.Inputs
 {
-    public record RegisterNewCustomerAddressInput
+    public record ChangeCustomerFullAddressInfoInput
         : InputBase
     {
-        // Properties
+        //Properties
         public CustomerAddressType CustomerAddressType { get; }
         public AddressValueObject AddressValueObject { get; }
 
-        // Public Methods
-        public RegisterNewCustomerAddressInput(
+        // Constructors
+        public ChangeCustomerFullAddressInfoInput(
             Guid tenantId,
             CustomerAddressType customerAddressType,
             AddressValueObject addressValueObject,
-            string executionUser,
+            string executionUser, 
             string sourcePlatform
         ) : base(tenantId, executionUser, sourcePlatform)
         {

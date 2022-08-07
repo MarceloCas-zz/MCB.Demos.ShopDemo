@@ -23,33 +23,33 @@ public class CustomerAddress
             .SetCustomerAddressType(input.CustomerAddressType)
             .SetAddress(input.AddressValueObject);
     }
-    public CustomerAddress ChangeCustomerAddressType(CustomerAddressType customerAddressType, string executionUser, string sourcePlatform)
+    public CustomerAddress ChangeCustomerAddressType(ChangeCustomerAddressTypeInput input)
     {
         // Validate
         // TODO: Add validation
 
         // Process
-        return SetCustomerAddressType(customerAddressType)
-            .RegisterModificationInternal<CustomerAddress>(executionUser, sourcePlatform);
+        return SetCustomerAddressType(input.CustomerAddressType)
+            .RegisterModificationInternal<CustomerAddress>(input.ExecutionUser, input.SourcePlatform);
     }
-    public CustomerAddress ChangeAddress(AddressValueObject addressValueObject, string executionUser, string sourcePlatform)
+    public CustomerAddress ChangeCustomerAddress(ChangeCustomerAddressInput input)
     {
         // Validate
         // TODO: Add validation
 
         // Process and return
-        return SetAddress(addressValueObject)
-            .RegisterModificationInternal<CustomerAddress>(executionUser, sourcePlatform);
+        return SetAddress(input.AddressValueObject)
+            .RegisterModificationInternal<CustomerAddress>(input.ExecutionUser, input.SourcePlatform);
     }
-    public CustomerAddress ChangeFullAddressInfo(CustomerAddressType customerAddressType, AddressValueObject addressValueObject, string executionUser, string sourcePlatform)
+    public CustomerAddress ChangeCustomerFullAddressInfo(ChangeCustomerFullAddressInfoInput input)
     {
         // Validate
         // TODO: Add validation
 
         // Process
-        return SetCustomerAddressType(customerAddressType)
-            .SetAddress(addressValueObject)
-            .RegisterModificationInternal<CustomerAddress>(executionUser, sourcePlatform);
+        return SetCustomerAddressType(input.CustomerAddressType)
+            .SetAddress(input.AddressValueObject)
+            .RegisterModificationInternal<CustomerAddress>(input.ExecutionUser, input.SourcePlatform);
     }
 
     public CustomerAddress DeepClone()

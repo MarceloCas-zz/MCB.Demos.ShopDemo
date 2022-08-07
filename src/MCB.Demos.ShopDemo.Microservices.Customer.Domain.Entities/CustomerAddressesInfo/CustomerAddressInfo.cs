@@ -61,7 +61,13 @@ namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.CustomerAddr
             //    return null;
 
             // Process
-            var customerAddress = new CustomerAddress().RegisterNewCustomerAddress(TenantId, customerAddressType, addressValueObject, executionUser, sourcePlatform);
+            var customerAddress = new CustomerAddress().RegisterNewCustomerAddress(new CustomerAddresses.Inputs.RegisterNewCustomerAddressInput(
+                TenantId, 
+                customerAddressType, 
+                addressValueObject, 
+                executionUser, 
+                sourcePlatform
+            ));
             _customerAddressCollection.Add(
                 customerAddress
             );
@@ -98,7 +104,13 @@ namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.CustomerAddr
                 return null;
 
             // Process
-            customerAddress.ChangeFullAddressInfo(customerAddressType, addressValueObject, executionUser, sourcePlatform);
+            customerAddress.ChangeCustomerFullAddressInfo(new CustomerAddresses.Inputs.ChangeCustomerFullAddressInfoInput(
+                TenantId,
+                customerAddressType, 
+                addressValueObject, 
+                executionUser, 
+                sourcePlatform
+            ));
             RegisterModificationInternal<CustomerAddressInfo>(executionUser, sourcePlatform);
 
             // Return

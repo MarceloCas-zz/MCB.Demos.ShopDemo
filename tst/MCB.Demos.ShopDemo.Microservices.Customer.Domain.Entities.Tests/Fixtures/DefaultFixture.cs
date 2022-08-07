@@ -50,13 +50,13 @@ namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Tests.Fixtur
             string existingSourcePlatform = null
         )
         {
-            return new CustomerAddress().RegisterNewCustomerAddress(
+            return new CustomerAddress().RegisterNewCustomerAddress(new CustomerAddresses.Inputs.RegisterNewCustomerAddressInput(
                 tenantId: existingTenantId ?? GenerateNewTenantId(),
                 customerAddressType: existingCustomerAdressType ?? EnumUtils.GetRandomEnumValue<CustomerAddressType>(),
                 addressValueObject: existingCustomerAddress ?? GenerateNewAddressValueObject(),
                 executionUser: existingExecutionUser ?? GenerateNewExecutionUser(),
                 sourcePlatform: existingSourcePlatform ?? GenerateNewSourcePlatform()
-            );
+            ));
         }
         public static bool CompareTwoCustomerAddressValues(
             CustomerAddress leftCustomerAddress,
