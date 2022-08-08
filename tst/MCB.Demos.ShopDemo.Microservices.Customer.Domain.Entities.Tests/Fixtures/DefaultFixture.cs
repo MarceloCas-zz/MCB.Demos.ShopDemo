@@ -82,11 +82,11 @@ namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Tests.Fixtur
             string existingSourcePlatform = null
         )
         {
-            return new CustomerAddressInfo().RegisterNew(
+            return new CustomerAddressInfo().RegisterNewCustomerAddressInfo(new CustomerAddressesInfo.Inputs.RegisterNewCustomerAddressInfoInput(
                 tenantId: existingTenantId ?? GenerateNewTenantId(),
                 executionUser: existingExecutionUser ?? GenerateNewExecutionUser(),
                 sourcePlatform: existingSourcePlatform ?? GenerateNewSourcePlatform()
-            );
+            ));
         }
         public static Customers.Customer GenerateNewCustomer(
             Guid? existingTenantId = null,

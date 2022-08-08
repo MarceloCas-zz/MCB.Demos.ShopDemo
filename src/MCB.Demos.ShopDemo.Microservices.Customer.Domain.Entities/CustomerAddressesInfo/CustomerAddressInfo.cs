@@ -1,7 +1,6 @@
 ﻿using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Base;
 using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.CustomerAddresses;
-using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.CustomerAddresses.Enums;
-using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.ValueObjects.AddressValueObjects;
+using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.CustomerAddressesInfo.Inputs;
 
 namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.CustomerAddressesInfo
 {
@@ -25,36 +24,36 @@ namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.CustomerAddr
         }
 
         // Public Methods
-        public CustomerAddressInfo RegisterNew(Guid tenantId, string executionUser, string sourcePlatform)
+        public CustomerAddressInfo RegisterNewCustomerAddressInfo(RegisterNewCustomerAddressInfoInput input)
         {
             // Validate
             // TODO: Add validation
 
             // Process and Return
-            return RegisterNewInternal<CustomerAddressInfo>(tenantId, executionUser, sourcePlatform);
+            return RegisterNewInternal<CustomerAddressInfo>(input.TenantId, input.ExecutionUser, input.SourcePlatform);
         }
-        public CustomerAddress ChangeDefaultShippingAddress(CustomerAddress customerAddress, string executionUser, string sourcePlatform)
+        public CustomerAddress ChangeDefaultCustomerAddressInfoShippingAddress(ChangeDefaultCustomerAddressInfoShippingAddressInput input)
         {
             // Validate
             // TODO: Add validation
 
             // Process and Return
-            SetDefaultShippingAddress(customerAddress)
-                .RegisterModificationInternal<CustomerAddressInfo>(executionUser, sourcePlatform);
+            SetDefaultShippingAddress(input.CustomerAddress)
+                .RegisterModificationInternal<CustomerAddressInfo>(input.ExecutionUser, input.SourcePlatform);
 
-            return customerAddress;
+            return input.CustomerAddress;
         }
-        public CustomerAddressInfo ClearDefaultShippingAddress(string executionUser, string sourcePlatform)
+        public CustomerAddressInfo ClearDefaultCustomerAddressInfoShippingAddress(ClearDefaultCustomerAddressInfoShippingAddressInput input)
         {
             // Validate
             // TODO: Add validation
 
             // Process and Return
             return SetDefaultShippingAddress(null)
-                .RegisterModificationInternal<CustomerAddressInfo>(executionUser, sourcePlatform);
+                .RegisterModificationInternal<CustomerAddressInfo>(input.ExecutionUser, input.SourcePlatform);
         }
 
-        public CustomerAddress AddNewCustomerAddress(CustomerAddressType customerAddressType, AddressValueObject addressValueObject, string executionUser, string sourcePlatform)
+        public CustomerAddress AddNewCustomerAddressInfoCustomerAddress(AddNewCustomerAddressInfoCustomerAddressInput input)
         {
             // Validate
             //if (!Validate(() => _addNewCustomerAddressInputShouldBeValidValidator.Validate(input)))
@@ -62,41 +61,41 @@ namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.CustomerAddr
 
             // Process
             var customerAddress = new CustomerAddress().RegisterNewCustomerAddress(new CustomerAddresses.Inputs.RegisterNewCustomerAddressInput(
-                TenantId, 
-                customerAddressType, 
-                addressValueObject, 
-                executionUser, 
-                sourcePlatform
+                input.TenantId, 
+                input.CustomerAddressType, 
+                input.AddressValueObject, 
+                input.ExecutionUser, 
+                input.SourcePlatform
             ));
             _customerAddressCollection.Add(
                 customerAddress
             );
-            RegisterModificationInternal<CustomerAddressInfo>(executionUser, sourcePlatform);
+            RegisterModificationInternal<CustomerAddressInfo>(input.ExecutionUser, input.SourcePlatform);
 
             // Return
             return customerAddress;
         }
-        public CustomerAddress RemoveCustomerAddress(Guid customerAddressId, string executionUser, string sourcePlatform)
+        public CustomerAddress RemoveCustomerAddressInfoCustomerAddress(RemoveCustomerAddressInfoCustomerAddressInput input)
         {
             // Validate
             // TODO: Add validation
 
             // Process
-            var customerAddress = _customerAddressCollection.FirstOrDefault(q => q.Id == customerAddressId);
+            var customerAddress = _customerAddressCollection.FirstOrDefault(q => q.Id == input.CustomerAddressId);
             if (customerAddress is null)
                 return null;
 
             _customerAddressCollection.Remove(
                 customerAddress
             );
-            RegisterModificationInternal<CustomerAddressInfo>(executionUser, sourcePlatform);
+            RegisterModificationInternal<CustomerAddressInfo>(input.ExecutionUser, input.SourcePlatform);
 
             // Return
             return customerAddress;
         }
-        public CustomerAddress ChangeCustomerAddress(Guid customerAddressId, CustomerAddressType customerAddressType, AddressValueObject addressValueObject, string executionUser, string sourcePlatform)
+        public CustomerAddress ChangeCustomerAddressInfoCustomerAddress(ChangeCustomerAddressInfoCustomerAddressInput input)
         {
-            var customerAddress = _customerAddressCollection.FirstOrDefault(q => q.Id == customerAddressId);
+            var customerAddress = _customerAddressCollection.FirstOrDefault(q => q.Id == input.CustomerAddressId);
 
             // Validate
             // TODO: Add validation
@@ -105,13 +104,13 @@ namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.CustomerAddr
 
             // Process
             customerAddress.ChangeCustomerFullAddressInfo(new CustomerAddresses.Inputs.ChangeCustomerFullAddressInfoInput(
-                TenantId,
-                customerAddressType, 
-                addressValueObject, 
-                executionUser, 
-                sourcePlatform
+                input.TenantId,
+                input.CustomerAddressType, 
+                input.AddressValueObject, 
+                input.ExecutionUser,
+                input.SourcePlatform
             ));
-            RegisterModificationInternal<CustomerAddressInfo>(executionUser, sourcePlatform);
+            RegisterModificationInternal<CustomerAddressInfo>(input.ExecutionUser, input.SourcePlatform);
 
             // Return
             return customerAddress;

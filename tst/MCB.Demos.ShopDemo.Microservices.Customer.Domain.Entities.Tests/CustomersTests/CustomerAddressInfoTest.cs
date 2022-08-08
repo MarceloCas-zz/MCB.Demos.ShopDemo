@@ -66,11 +66,12 @@ namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Tests.Custom
             GenerateNewDateForDateTimeProvider();
 
             // Act
-            customerAddressInfo.ChangeDefaultShippingAddress(
+            customerAddressInfo.ChangeDefaultCustomerAddressInfoShippingAddress(new CustomerAddressesInfo.Inputs.ChangeDefaultCustomerAddressInfoShippingAddressInput(
+                _fixture.TenantId,
                 customerAddress,
                 _fixture.ExecutionUser,
                 _fixture.SourcePlatform
-            );
+            ));
 
             // Assert
             customerAddressInfo.DefaultShippingAddress.Should().NotBeNull();
@@ -89,19 +90,21 @@ namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Tests.Custom
                 existingSourcePlatform: _fixture.SourcePlatform
             );
             var customerAddress = DefaultFixture.GenerateNewCustomerAddress();
-            customerAddressInfo.ChangeDefaultShippingAddress(
+            customerAddressInfo.ChangeDefaultCustomerAddressInfoShippingAddress(new CustomerAddressesInfo.Inputs.ChangeDefaultCustomerAddressInfoShippingAddressInput(
+                _fixture.TenantId,
                 customerAddress,
                 _fixture.ExecutionUser,
                 _fixture.SourcePlatform
-            );
+            ));
             var clonedCustomerAddressInfoAfterRegisterNew = customerAddressInfo.DeepClone();
             GenerateNewDateForDateTimeProvider();
 
             // Act
-            customerAddressInfo.ClearDefaultShippingAddress(
+            customerAddressInfo.ClearDefaultCustomerAddressInfoShippingAddress(new CustomerAddressesInfo.Inputs.ClearDefaultCustomerAddressInfoShippingAddressInput(
+                _fixture.TenantId,
                 _fixture.ExecutionUser,
                 _fixture.SourcePlatform
-            );
+            ));
 
             // Assert
             customerAddressInfo.DefaultShippingAddress.Should().BeNull();
@@ -124,12 +127,13 @@ namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Tests.Custom
             var addressValueObject = DefaultFixture.GenerateNewAddressValueObject();
 
             // Act
-            customerAddressInfo.AddNewCustomerAddress(
+            customerAddressInfo.AddNewCustomerAddressInfoCustomerAddress(new CustomerAddressesInfo.Inputs.AddNewCustomerAddressInfoCustomerAddressInput(
+                tenantId: _fixture.TenantId,
                 customerAddressType,
                 addressValueObject,
                 _fixture.ExecutionUser,
                 _fixture.SourcePlatform
-            );
+            ));
 
             // Assert
             customerAddressInfo.CustomerAddressCollection.Should().NotBeNull();
@@ -157,30 +161,33 @@ namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Tests.Custom
             );
             GenerateNewDateForDateTimeProvider();
 
-            customerAddressInfo.AddNewCustomerAddress(
+            customerAddressInfo.AddNewCustomerAddressInfoCustomerAddress(new CustomerAddressesInfo.Inputs.AddNewCustomerAddressInfoCustomerAddressInput(
+                tenantId: _fixture.TenantId,
                 customerAddressType: CustomerAddressType.HomeAddress,
                 addressValueObject: DefaultFixture.GenerateNewAddressValueObject(),
                 _fixture.ExecutionUser,
                 _fixture.SourcePlatform
-            );
+            ));
             GenerateNewDateForDateTimeProvider();
 
-            customerAddressInfo.AddNewCustomerAddress(
+            customerAddressInfo.AddNewCustomerAddressInfoCustomerAddress(new CustomerAddressesInfo.Inputs.AddNewCustomerAddressInfoCustomerAddressInput(
+                _fixture.TenantId,
                 customerAddressType: CustomerAddressType.BusinessAddress,
                 addressValueObject: DefaultFixture.GenerateNewAddressValueObject(),
                 _fixture.ExecutionUser,
                 _fixture.SourcePlatform
-            );
+            ));
             GenerateNewDateForDateTimeProvider();
 
             var clonedCustomerAddressInfoAfterRegisterNew = customerAddressInfo.DeepClone();
 
             // Act
-            customerAddressInfo.RemoveCustomerAddress(
+            customerAddressInfo.RemoveCustomerAddressInfoCustomerAddress(new CustomerAddressesInfo.Inputs.RemoveCustomerAddressInfoCustomerAddressInput(
+                _fixture.TenantId,
                 customerAddressInfo.CustomerAddressCollection.First().Id,
                 _fixture.ExecutionUser,
                 _fixture.SourcePlatform
-            );
+            ));
 
             // Assert
             customerAddressInfo.CustomerAddressCollection.Should().NotBeNull();
@@ -205,20 +212,22 @@ namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Tests.Custom
             );
             GenerateNewDateForDateTimeProvider();
 
-            customerAddressInfo.AddNewCustomerAddress(
+            customerAddressInfo.AddNewCustomerAddressInfoCustomerAddress(new CustomerAddressesInfo.Inputs.AddNewCustomerAddressInfoCustomerAddressInput(
+                _fixture.TenantId,
                 customerAddressType: CustomerAddressType.HomeAddress,
                 addressValueObject: DefaultFixture.GenerateNewAddressValueObject(),
                 _fixture.ExecutionUser,
                 _fixture.SourcePlatform
-            );
+            ));
             GenerateNewDateForDateTimeProvider();
 
             // Act
-            var removedCustomerAddress = customerAddressInfo.RemoveCustomerAddress(
-                Guid.NewGuid(),
+            var removedCustomerAddress = customerAddressInfo.RemoveCustomerAddressInfoCustomerAddress(new CustomerAddressesInfo.Inputs.RemoveCustomerAddressInfoCustomerAddressInput(
+                _fixture.TenantId,
+                customerAddressId: Guid.NewGuid(),
                 _fixture.ExecutionUser,
                 _fixture.SourcePlatform
-            );
+            ));
 
             // Assert
             removedCustomerAddress.Should().BeNull();
@@ -235,21 +244,23 @@ namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Tests.Custom
             );
             GenerateNewDateForDateTimeProvider();
 
-            customerAddressInfo.AddNewCustomerAddress(
+            customerAddressInfo.AddNewCustomerAddressInfoCustomerAddress(new CustomerAddressesInfo.Inputs.AddNewCustomerAddressInfoCustomerAddressInput(
+                _fixture.TenantId,
                 customerAddressType: CustomerAddressType.HomeAddress,
                 addressValueObject: DefaultFixture.GenerateNewAddressValueObject(),
                 _fixture.ExecutionUser,
                 _fixture.SourcePlatform
-            );
+            ));
             GenerateNewDateForDateTimeProvider();
             var firstCustomerAddress = customerAddressInfo.CustomerAddressCollection.First();
 
-            customerAddressInfo.AddNewCustomerAddress(
+            customerAddressInfo.AddNewCustomerAddressInfoCustomerAddress(new CustomerAddressesInfo.Inputs.AddNewCustomerAddressInfoCustomerAddressInput(
+                _fixture.TenantId,
                 customerAddressType: CustomerAddressType.BusinessAddress,
                 addressValueObject: DefaultFixture.GenerateNewAddressValueObject(),
                 _fixture.ExecutionUser,
                 _fixture.SourcePlatform
-            );
+            ));
             GenerateNewDateForDateTimeProvider();
 
             var clonedCustomerAddressInfoAfterRegisterNew = customerAddressInfo.DeepClone();
@@ -257,13 +268,14 @@ namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Tests.Custom
             var customerAddressToModify = customerAddressInfo.CustomerAddressCollection.Last();
 
             // Act
-            customerAddressInfo.ChangeCustomerAddress(
+            customerAddressInfo.ChangeCustomerAddressInfoCustomerAddress(new CustomerAddressesInfo.Inputs.ChangeCustomerAddressInfoCustomerAddressInput(
+                _fixture.TenantId,
                 customerAddressToModify.Id,
                 CustomerAddressType.HomeAddress,
                 customerAddressToModify.AddressValueObject,
                 _fixture.ExecutionUser,
                 _fixture.SourcePlatform
-            );
+            ));
 
             // Assert
             customerAddressInfo.CustomerAddressCollection.Should().NotBeNull();
@@ -288,31 +300,34 @@ namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Tests.Custom
             );
             GenerateNewDateForDateTimeProvider();
 
-            customerAddressInfo.AddNewCustomerAddress(
+            customerAddressInfo.AddNewCustomerAddressInfoCustomerAddress(new CustomerAddressesInfo.Inputs.AddNewCustomerAddressInfoCustomerAddressInput(
+                _fixture.TenantId,
                 customerAddressType: CustomerAddressType.HomeAddress,
                 addressValueObject: DefaultFixture.GenerateNewAddressValueObject(),
                 _fixture.ExecutionUser,
                 _fixture.SourcePlatform
-            );
+            ));
             GenerateNewDateForDateTimeProvider();
 
-            customerAddressInfo.AddNewCustomerAddress(
+            customerAddressInfo.AddNewCustomerAddressInfoCustomerAddress(new CustomerAddressesInfo.Inputs.AddNewCustomerAddressInfoCustomerAddressInput(
+                _fixture.TenantId,
                 customerAddressType: CustomerAddressType.BusinessAddress,
                 addressValueObject: DefaultFixture.GenerateNewAddressValueObject(),
                 _fixture.ExecutionUser,
                 _fixture.SourcePlatform
-            );
+            ));
             GenerateNewDateForDateTimeProvider();
 
 
             // Act
-            var changedCustomerAddress = customerAddressInfo.ChangeCustomerAddress(
+            var changedCustomerAddress = customerAddressInfo.ChangeCustomerAddressInfoCustomerAddress(new CustomerAddressesInfo.Inputs.ChangeCustomerAddressInfoCustomerAddressInput(
+                _fixture.TenantId,
                 Guid.NewGuid(),
                 CustomerAddressType.HomeAddress,
                 DefaultFixture.GenerateNewAddressValueObject(),
                 _fixture.ExecutionUser,
                 _fixture.SourcePlatform
-            );
+            ));
 
             // Assert
             changedCustomerAddress.Should().BeNull();
