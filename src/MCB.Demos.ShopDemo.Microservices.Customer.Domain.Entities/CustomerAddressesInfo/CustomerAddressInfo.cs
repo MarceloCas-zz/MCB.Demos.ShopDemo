@@ -1,5 +1,7 @@
 ﻿using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Base;
 using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.CustomerAddresses;
+using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.CustomerAddresses.Specifications;
+using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.CustomerAddresses.Validators;
 using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.CustomerAddressesInfo.Inputs;
 
 namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.CustomerAddressesInfo
@@ -60,13 +62,19 @@ namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.CustomerAddr
             //    return null;
 
             // Process
-            var customerAddress = new CustomerAddress().RegisterNewCustomerAddress(new CustomerAddresses.Inputs.RegisterNewCustomerAddressInput(
-                input.TenantId, 
-                input.CustomerAddressType, 
-                input.AddressValueObject, 
-                input.ExecutionUser, 
-                input.SourcePlatform
-            ));
+            var customerAddress = new CustomerAddress(
+                    new ChangeCustomerAddressTypeValidator(new CustomerAddressSpecifications()),
+                    new ChangeCustomerAddressValidator(new CustomerAddressSpecifications()),
+                    new ChangeCustomerFullAddressInfoValidator(new CustomerAddressSpecifications()),
+                    new RegisterNewCustomerAddressValidator(new CustomerAddressSpecifications())
+                )
+                .RegisterNewCustomerAddress(new CustomerAddresses.Inputs.RegisterNewCustomerAddressInput(
+                    input.TenantId, 
+                    input.CustomerAddressType, 
+                    input.AddressValueObject, 
+                    input.ExecutionUser, 
+                    input.SourcePlatform
+                ));
             _customerAddressCollection.Add(
                 customerAddress
             );

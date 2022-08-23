@@ -2,7 +2,6 @@
 using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.CustomerAddresses.Enums;
 using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.CustomerAddresses.Inputs;
 using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.CustomerAddresses.Validators.Interfaces;
-using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Customers.Validators.Interfaces;
 using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.ValueObjects.AddressValueObjects;
 
 namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.CustomerAddresses;
@@ -15,13 +14,22 @@ public class CustomerAddress
     public AddressValueObject AddressValueObject { get; private set; }
 
     // Validators
+    private readonly IChangeCustomerAddressTypeValidator _changeCustomerAddressTypeValidator;
+    private readonly IChangeCustomerAddressValidator _changeCustomerAddressValidator;
+    private readonly IChangeCustomerFullAddressInfoValidator _changeCustomerFullAddressInfoValidator;
     private readonly IRegisterNewCustomerAddressValidator _registerNewCustomerAddressValidator;
 
     // Constructors
     public CustomerAddress(
+        IChangeCustomerAddressTypeValidator changeCustomerAddressTypeValidator,
+        IChangeCustomerAddressValidator changeCustomerAddressValidator,
+        IChangeCustomerFullAddressInfoValidator changeCustomerFullAddressInfoValidator,
         IRegisterNewCustomerAddressValidator registerNewCustomerAddressValidator
     )
     {
+        _changeCustomerAddressTypeValidator = changeCustomerAddressTypeValidator;
+        _changeCustomerAddressValidator = changeCustomerAddressValidator;
+        _changeCustomerFullAddressInfoValidator = changeCustomerFullAddressInfoValidator;
         _registerNewCustomerAddressValidator = registerNewCustomerAddressValidator;
     }
 
@@ -40,7 +48,8 @@ public class CustomerAddress
     public CustomerAddress ChangeCustomerAddressType(ChangeCustomerAddressTypeInput input)
     {
         // Validate
-        // TODO: Add validation
+        if (!Validate(() => _changeCustomerAddressTypeValidator.Validate(input)))
+            return this;
 
         // Process
         return SetCustomerAddressType(input.CustomerAddressType)
@@ -49,7 +58,8 @@ public class CustomerAddress
     public CustomerAddress ChangeCustomerAddress(ChangeCustomerAddressInput input)
     {
         // Validate
-        // TODO: Add validation
+        if (!Validate(() => _changeCustomerAddressValidator.Validate(input)))
+            return this;
 
         // Process and return
         return SetAddress(input.AddressValueObject)
@@ -58,7 +68,8 @@ public class CustomerAddress
     public CustomerAddress ChangeCustomerFullAddressInfo(ChangeCustomerFullAddressInfoInput input)
     {
         // Validate
-        // TODO: Add validation
+        if (!Validate(() => _changeCustomerFullAddressInfoValidator.Validate(input)))
+            return this;
 
         // Process
         return SetCustomerAddressType(input.CustomerAddressType)
@@ -76,6 +87,9 @@ public class CustomerAddress
 
     // Protected Abstract Methods
     protected override DomainEntityBase CreateInstanceForCloneInternal() => new CustomerAddress(
+        _changeCustomerAddressTypeValidator,
+        _changeCustomerAddressValidator,
+        _changeCustomerFullAddressInfoValidator,
         _registerNewCustomerAddressValidator
     );
 

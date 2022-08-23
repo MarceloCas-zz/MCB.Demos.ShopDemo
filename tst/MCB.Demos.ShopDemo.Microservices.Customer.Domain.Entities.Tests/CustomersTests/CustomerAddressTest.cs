@@ -1,6 +1,8 @@
 using FluentAssertions;
 using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.CustomerAddresses;
 using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.CustomerAddresses.Enums;
+using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.CustomerAddresses.Specifications;
+using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.CustomerAddresses.Validators;
 using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Tests.Fixtures;
 using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.ValueObjects.AddressValueObjects;
 using MCB.Tests;
@@ -30,7 +32,12 @@ namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Tests.Custom
         public void CustomerAddress_Should_Correctly_Instanciated()
         {
             // Arrange and Act
-            var customerAddress = new CustomerAddress();
+            var customerAddress = new CustomerAddress(
+                new ChangeCustomerAddressTypeValidator(new CustomerAddressSpecifications()),
+                new ChangeCustomerAddressValidator(new CustomerAddressSpecifications()),
+                new ChangeCustomerFullAddressInfoValidator(new CustomerAddressSpecifications()),
+                new RegisterNewCustomerAddressValidator(new CustomerAddressSpecifications())
+            );
 
             // Assert
             customerAddress.CustomerAddressType.Should().Be(default);

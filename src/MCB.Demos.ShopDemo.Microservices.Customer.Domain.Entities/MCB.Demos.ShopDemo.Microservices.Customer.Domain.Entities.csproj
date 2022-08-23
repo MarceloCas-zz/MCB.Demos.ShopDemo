@@ -18,8 +18,4 @@
 	  <PackageReference Include="MCB.Core.Infra.CrossCutting.DesignPatterns.Validator" Version="0.13.0-alpha" />
 	</ItemGroup>
 
-	<ItemGroup>
-	  <Folder Include="CustomerAddresses\Validators\Interfaces\" />
-	</ItemGroup>
-
 </Project>

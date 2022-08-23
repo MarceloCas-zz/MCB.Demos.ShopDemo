@@ -3,6 +3,7 @@ using MCB.Core.Infra.CrossCutting.Enums;
 using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.CustomerAddresses;
 using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.CustomerAddresses.Enums;
 using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.CustomerAddresses.Specifications;
+using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.CustomerAddresses.Validators;
 using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.CustomerAddressesInfo;
 using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Customers.Specifications;
 using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Customers.Validators;
@@ -50,13 +51,18 @@ namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Tests.Fixtur
             string existingSourcePlatform = null
         )
         {
-            return new CustomerAddress().RegisterNewCustomerAddress(new CustomerAddresses.Inputs.RegisterNewCustomerAddressInput(
-                tenantId: existingTenantId ?? GenerateNewTenantId(),
-                customerAddressType: existingCustomerAdressType ?? EnumUtils.GetRandomEnumValue<CustomerAddressType>(),
-                addressValueObject: existingCustomerAddress ?? GenerateNewAddressValueObject(),
-                executionUser: existingExecutionUser ?? GenerateNewExecutionUser(),
-                sourcePlatform: existingSourcePlatform ?? GenerateNewSourcePlatform()
-            ));
+            return new CustomerAddress(
+                    new ChangeCustomerAddressTypeValidator(new CustomerAddressSpecifications()),
+                    new ChangeCustomerAddressValidator(new CustomerAddressSpecifications()),
+                    new ChangeCustomerFullAddressInfoValidator(new CustomerAddressSpecifications()),
+                    new RegisterNewCustomerAddressValidator(new CustomerAddressSpecifications())
+                ).RegisterNewCustomerAddress(new CustomerAddresses.Inputs.RegisterNewCustomerAddressInput(
+                    tenantId: existingTenantId ?? GenerateNewTenantId(),
+                    customerAddressType: existingCustomerAdressType ?? EnumUtils.GetRandomEnumValue<CustomerAddressType>(),
+                    addressValueObject: existingCustomerAddress ?? GenerateNewAddressValueObject(),
+                    executionUser: existingExecutionUser ?? GenerateNewExecutionUser(),
+                    sourcePlatform: existingSourcePlatform ?? GenerateNewSourcePlatform()
+                ));
         }
         public static bool CompareTwoCustomerAddressValues(
             CustomerAddress leftCustomerAddress,
