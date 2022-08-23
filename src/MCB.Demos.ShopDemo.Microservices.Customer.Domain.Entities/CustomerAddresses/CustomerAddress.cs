@@ -1,6 +1,8 @@
 ﻿using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Base;
 using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.CustomerAddresses.Enums;
 using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.CustomerAddresses.Inputs;
+using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.CustomerAddresses.Validators.Interfaces;
+using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Customers.Validators.Interfaces;
 using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.ValueObjects.AddressValueObjects;
 
 namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.CustomerAddresses;
@@ -12,11 +14,23 @@ public class CustomerAddress
     public CustomerAddressType CustomerAddressType { get; private set; }
     public AddressValueObject AddressValueObject { get; private set; }
 
+    // Validators
+    private readonly IRegisterNewCustomerAddressValidator _registerNewCustomerAddressValidator;
+
+    // Constructors
+    public CustomerAddress(
+        IRegisterNewCustomerAddressValidator registerNewCustomerAddressValidator
+    )
+    {
+        _registerNewCustomerAddressValidator = registerNewCustomerAddressValidator;
+    }
+
     // Public Methods
     public CustomerAddress RegisterNewCustomerAddress(RegisterNewCustomerAddressInput input)
     {
         // Validate
-        // TODO: Add validation
+        if (!Validate(() => _registerNewCustomerAddressValidator.Validate(input)))
+            return this;
 
         // Process
         return RegisterNewInternal<CustomerAddress>(input.TenantId, input.ExecutionUser, input.SourcePlatform)
@@ -61,7 +75,9 @@ public class CustomerAddress
     }
 
     // Protected Abstract Methods
-    protected override DomainEntityBase CreateInstanceForCloneInternal() => new CustomerAddress();
+    protected override DomainEntityBase CreateInstanceForCloneInternal() => new CustomerAddress(
+        _registerNewCustomerAddressValidator
+    );
 
     // Private Methods
     private CustomerAddress SetCustomerAddressType(CustomerAddressType customerAddressType)
