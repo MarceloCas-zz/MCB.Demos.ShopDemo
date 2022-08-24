@@ -13,7 +13,7 @@ namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.CustomerAddr
         public static readonly Severity CustomerAddressInfoShouldHaveCustomerAddressCollectionSeverity = Severity.Error;
 
         // DefaultShippingAddress
-        public static readonly string CustomerAddressInfoShouldHaveDefaultShippingAddresstErrorCode = nameof(CustomerAddressInfoShouldHaveDefaultShippingAddresstErrorCode);
+        public static readonly string CustomerAddressInfoShouldHaveDefaultShippingAddressErrorCode = nameof(CustomerAddressInfoShouldHaveDefaultShippingAddressErrorCode);
         public static readonly string CustomerAddressInfoShouldHaveDefaultShippingAddressMessage = nameof(CustomerAddressInfoShouldHaveDefaultShippingAddressMessage);
         public static readonly Severity CustomerAddressInfoShouldHaveDefaultShippingAddressSeverity = Severity.Error;
 
