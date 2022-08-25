@@ -1,4 +1,5 @@
-﻿using MCB.Core.Infra.CrossCutting.DesignPatterns.Validator;
+﻿using MCB.Core.Domain.Entities.DomainEntitiesBase.Validators;
+using MCB.Core.Infra.CrossCutting.DesignPatterns.Validator;
 using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.CustomerAddresses.Inputs;
 using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.CustomerAddresses.Specifications.Interfaces;
 using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.CustomerAddresses.Validators.Interfaces;
@@ -7,7 +8,7 @@ using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.CustomerAddresse
 namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.CustomerAddresses.Validators
 {
     public class ChangeCustomerAddressValidator
-        : ValidatorBase<ChangeCustomerAddressInput>,
+        : InputBaseValidator<ChangeCustomerAddressInput>,
         IChangeCustomerAddressValidator
     {
         // Fields
@@ -22,7 +23,7 @@ namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.CustomerAddr
         }
 
         // Protected Methods
-        protected override void ConfigureFluentValidationConcreteValidator(FluentValidationValidatorWrapper fluentValidationValidatorWrapper)
+        protected override void ConfigureFluentValidationConcreteValidatorInternal(ValidatorBase<ChangeCustomerAddressInput>.FluentValidationValidatorWrapper fluentValidationValidatorWrapper)
         {
             CustomerAddressValidatorWrapper.AddCustomerAddressShouldHaveAddressValueObject(
                 _customerAddressSpecifications,

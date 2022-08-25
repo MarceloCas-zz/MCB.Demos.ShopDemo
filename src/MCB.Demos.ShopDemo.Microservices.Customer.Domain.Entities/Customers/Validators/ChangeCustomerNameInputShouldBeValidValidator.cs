@@ -1,4 +1,5 @@
-﻿using MCB.Core.Infra.CrossCutting.DesignPatterns.Validator;
+﻿using MCB.Core.Domain.Entities.DomainEntitiesBase.Validators;
+using MCB.Core.Infra.CrossCutting.DesignPatterns.Validator;
 using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Customers.Inputs;
 using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Customers.Specifications.Interfaces;
 using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Customers.Validators.Interfaces;
@@ -7,7 +8,7 @@ using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Customers.Valida
 namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Customers.Validators
 {
     public class ChangeCustomerNameInputShouldBeValidValidator
-        : ValidatorBase<ChangeCustomerNameInput>,
+        : InputBaseValidator<ChangeCustomerNameInput>,
         IChangeCustomerNameInputShouldBeValidValidator
     {
         // Fields
@@ -22,7 +23,7 @@ namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Customers.Va
         }
 
         // Protected Methods
-        protected override void ConfigureFluentValidationConcreteValidator(FluentValidationValidatorWrapper fluentValidationValidatorWrapper)
+        protected override void ConfigureFluentValidationConcreteValidatorInternal(ValidatorBase<ChangeCustomerNameInput>.FluentValidationValidatorWrapper fluentValidationValidatorWrapper)
         {
             // FirstName
             CustomerValidatorWrapper.AddCustomerShouldHaveFirstName(

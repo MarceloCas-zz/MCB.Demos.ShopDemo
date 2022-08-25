@@ -3,11 +3,12 @@ using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Customers.Valida
 using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Customers.Specifications.Interfaces;
 using MCB.Core.Infra.CrossCutting.DesignPatterns.Validator;
 using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Customers.Validators.Wrappers;
+using MCB.Core.Domain.Entities.DomainEntitiesBase.Validators;
 
 namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Customers.Validators
 {
     public class RegisterNewCustomerInputShouldBeValidValidator
-        : ValidatorBase<RegisterNewCustomerInput>,
+        : InputBaseValidator<RegisterNewCustomerInput>,
         IRegisterNewCustomerInputShouldBeValidValidator
     {
         // Fields
@@ -22,7 +23,7 @@ namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Customers.Va
         }
 
         // Protected Methods
-        protected override void ConfigureFluentValidationConcreteValidator(FluentValidationValidatorWrapper fluentValidationValidatorWrapper)
+        protected override void ConfigureFluentValidationConcreteValidatorInternal(ValidatorBase<RegisterNewCustomerInput>.FluentValidationValidatorWrapper fluentValidationValidatorWrapper)
         {
             // FirstName
             CustomerValidatorWrapper.AddCustomerShouldHaveFirstName(

@@ -1,15 +1,14 @@
-﻿using MCB.Core.Infra.CrossCutting.DesignPatterns.Validator;
-using MCB.Core.Infra.CrossCutting.DesignPatterns.Validator.Abstractions.Models;
+﻿using MCB.Core.Domain.Entities.DomainEntitiesBase.Validators;
+using MCB.Core.Infra.CrossCutting.DesignPatterns.Validator;
 using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.CustomerAddresses.Inputs;
 using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.CustomerAddresses.Specifications.Interfaces;
 using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.CustomerAddresses.Validators.Interfaces;
 using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.CustomerAddresses.Validators.Wrappers;
-using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.CustomerAddressesInfo.Inputs;
 
 namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.CustomerAddresses.Validators
 {
     public class ChangeCustomerAddressTypeValidator
-        : ValidatorBase<ChangeCustomerAddressTypeInput>,
+        : InputBaseValidator<ChangeCustomerAddressTypeInput>,
         IChangeCustomerAddressTypeValidator
     {
         // Fields
@@ -24,7 +23,7 @@ namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.CustomerAddr
         }
 
         // Protected Methods
-        protected override void ConfigureFluentValidationConcreteValidator(FluentValidationValidatorWrapper fluentValidationValidatorWrapper)
+        protected override void ConfigureFluentValidationConcreteValidatorInternal(ValidatorBase<ChangeCustomerAddressTypeInput>.FluentValidationValidatorWrapper fluentValidationValidatorWrapper)
         {
             CustomerAddressValidatorWrapper.AddCustomerAddressShouldHaveCustomerAddressType(
                 _customerAddressSpecifications,
