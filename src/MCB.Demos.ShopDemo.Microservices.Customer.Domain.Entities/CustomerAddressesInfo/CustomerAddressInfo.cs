@@ -3,6 +3,7 @@ using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.CustomerAddresse
 using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.CustomerAddresses.Specifications;
 using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.CustomerAddresses.Validators;
 using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.CustomerAddressesInfo.Inputs;
+using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.CustomerAddressesInfo.Validators.Interfaces;
 
 namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.CustomerAddressesInfo
 {
@@ -12,24 +13,27 @@ namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.CustomerAddr
         // Fields
         private readonly List<CustomerAddress> _customerAddressCollection = new();
         private CustomerAddress _defaultShippingAddress;
-
-        // Validators
-
         // Properties
         public IEnumerable<CustomerAddress> CustomerAddressCollection => _customerAddressCollection.Select(q => q.DeepClone());
         public CustomerAddress DefaultShippingAddress => _defaultShippingAddress?.DeepClone();
 
-        // Constructors
-        public CustomerAddressInfo()
-        {
+        // Validators
+        private readonly IRegisterNewCustomerAddressInfoValidator _registerNewCustomerAddressInfoValidator;
 
+        // Constructors
+        public CustomerAddressInfo(
+            IRegisterNewCustomerAddressInfoValidator registerNewCustomerAddressInfoValidator
+        )
+        {
+            _registerNewCustomerAddressInfoValidator = registerNewCustomerAddressInfoValidator;
         }
 
         // Public Methods
         public CustomerAddressInfo RegisterNewCustomerAddressInfo(RegisterNewCustomerAddressInfoInput input)
         {
             // Validate
-            // TODO: Add validation
+            if (!Validate(() => _registerNewCustomerAddressInfoValidator.Validate(input)))
+                return this;
 
             // Process and Return
             return RegisterNewInternal<CustomerAddressInfo>(input.TenantId, input.ExecutionUser, input.SourcePlatform);
@@ -57,11 +61,7 @@ namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.CustomerAddr
 
         public CustomerAddress AddNewCustomerAddressInfoCustomerAddress(AddNewCustomerAddressInfoCustomerAddressInput input)
         {
-            // Validate
-            //if (!Validate(() => _addNewCustomerAddressInputShouldBeValidValidator.Validate(input)))
-            //    return null;
-
-            // Process
+            // Process customer address
             var customerAddress = new CustomerAddress(
                     new ChangeCustomerAddressTypeValidator(new CustomerAddressSpecifications()),
                     new ChangeCustomerAddressValidator(new CustomerAddressSpecifications()),
@@ -75,6 +75,13 @@ namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.CustomerAddr
                     input.ExecutionUser, 
                     input.SourcePlatform
                 ));
+            AddFromValidationInfoInternal(customerAddress.ValidationInfo);
+
+            // Validate customer address after registration
+            if (!ValidationInfo.IsValid)
+                return null;
+
+            // Process
             _customerAddressCollection.Add(
                 customerAddress
             );
@@ -157,6 +164,8 @@ namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.CustomerAddr
         }
 
         // Protected Abstract Methods
-        protected override DomainEntityBase CreateInstanceForCloneInternal() => new CustomerAddressInfo();
+        protected override DomainEntityBase CreateInstanceForCloneInternal() => new CustomerAddressInfo(
+            _registerNewCustomerAddressInfoValidator    
+        );
     }
 }

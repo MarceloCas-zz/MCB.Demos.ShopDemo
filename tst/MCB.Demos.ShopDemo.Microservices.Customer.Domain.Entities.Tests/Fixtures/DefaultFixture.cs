@@ -5,6 +5,7 @@ using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.CustomerAddresse
 using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.CustomerAddresses.Specifications;
 using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.CustomerAddresses.Validators;
 using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.CustomerAddressesInfo;
+using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.CustomerAddressesInfo.Validators;
 using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Customers.Specifications;
 using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Customers.Validators;
 using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.ValueObjects.AddressValueObjects;
@@ -88,10 +89,15 @@ namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Tests.Fixtur
             string existingSourcePlatform = null
         )
         {
-            return new CustomerAddressInfo().RegisterNewCustomerAddressInfo(new CustomerAddressesInfo.Inputs.RegisterNewCustomerAddressInfoInput(
+            return new CustomerAddressInfo(
+                new RegisterNewCustomerAddressInfoValidator(new CustomerAddressSpecifications())
+                ).RegisterNewCustomerAddressInfo(new CustomerAddressesInfo.Inputs.RegisterNewCustomerAddressInfoInput(
                 tenantId: existingTenantId ?? GenerateNewTenantId(),
                 executionUser: existingExecutionUser ?? GenerateNewExecutionUser(),
-                sourcePlatform: existingSourcePlatform ?? GenerateNewSourcePlatform()
+                sourcePlatform: existingSourcePlatform ?? GenerateNewSourcePlatform(),
+                customerAddressType: CustomerAddressType.HomeAddress,
+                addressValueObject: new AddressValueObject(),
+                isDefaultShippingAddress: true
             ));
         }
         public static Customers.Customer GenerateNewCustomer(
