@@ -90,6 +90,8 @@ namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Tests.Fixtur
         )
         {
             return new CustomerAddressInfo(
+                customerAddressFactory: null,
+                registerNewCustomerAddressInputFactory: null,
                 new RegisterNewCustomerAddressInfoValidator(new CustomerAddressSpecifications())
                 ).RegisterNewCustomerAddressInfo(new CustomerAddressesInfo.Inputs.RegisterNewCustomerAddressInfoInput(
                 tenantId: existingTenantId ?? GenerateNewTenantId(),

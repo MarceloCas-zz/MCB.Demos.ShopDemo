@@ -1,9 +1,9 @@
 ﻿using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Base;
 using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.CustomerAddresses;
-using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.CustomerAddresses.Factories;
 using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.CustomerAddresses.Factories.Interfaces;
 using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.CustomerAddresses.Specifications;
 using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.CustomerAddresses.Validators;
+using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.CustomerAddressesInfo.Factories.Interfaces;
 using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.CustomerAddressesInfo.Inputs;
 using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.CustomerAddressesInfo.Validators.Interfaces;
 
@@ -22,6 +22,7 @@ namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.CustomerAddr
 
         // Factories
         private readonly ICustomerAddressFactory _customerAddressFactory;
+        private readonly IRegisterNewCustomerAddressInputFactory _registerNewCustomerAddressInputFactory;
 
         // Validators
         private readonly IRegisterNewCustomerAddressInfoValidator _registerNewCustomerAddressInfoValidator;
@@ -29,10 +30,12 @@ namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.CustomerAddr
         // Constructors
         public CustomerAddressInfo(
             ICustomerAddressFactory customerAddressFactory,
+            IRegisterNewCustomerAddressInputFactory registerNewCustomerAddressInputFactory,
             IRegisterNewCustomerAddressInfoValidator registerNewCustomerAddressInfoValidator
         )
         {
             _customerAddressFactory = customerAddressFactory;
+            _registerNewCustomerAddressInputFactory = registerNewCustomerAddressInputFactory;
             _registerNewCustomerAddressInfoValidator = registerNewCustomerAddressInfoValidator;
         }
 
@@ -46,12 +49,7 @@ namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.CustomerAddr
             // Process
             var customerAddress = _customerAddressFactory
                 .Create()
-                .RegisterNewCustomerAddress(
-                    new CustomerAddresses.Inputs.RegisterNewCustomerAddressInput(
-                        // TODO: ADD ADAPTERS
-                    )
-                );
-
+                .RegisterNewCustomerAddress(_registerNewCustomerAddressInputFactory.Create(input));
 
             // Return
             return RegisterNewInternal<CustomerAddressInfo>(input.TenantId, input.ExecutionUser, input.SourcePlatform);
@@ -183,6 +181,8 @@ namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.CustomerAddr
 
         // Protected Abstract Methods
         protected override DomainEntityBase CreateInstanceForCloneInternal() => new CustomerAddressInfo(
+            _customerAddressFactory,
+            _registerNewCustomerAddressInputFactory,
             _registerNewCustomerAddressInfoValidator    
         );
     }

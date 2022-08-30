@@ -32,7 +32,11 @@ namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Tests.Custom
         public void CustomerAddressInfo_Should_Correctly_Instanciated()
         {
             // Arrange and Act
-            var customerAddressInfo = new CustomerAddressInfo(new RegisterNewCustomerAddressInfoValidator(new CustomerAddressSpecifications()));
+            var customerAddressInfo = new CustomerAddressInfo(
+                customerAddressFactory: null,
+                registerNewCustomerAddressInputFactory: null,
+                registerNewCustomerAddressInfoValidator: null
+            );
 
             // Assert
             customerAddressInfo.CustomerAddressCollection.Should().NotBeNull();
