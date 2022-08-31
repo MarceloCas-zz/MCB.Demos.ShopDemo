@@ -47,9 +47,16 @@ namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.CustomerAddr
                 return this;
 
             // Process
-            var customerAddress = _customerAddressFactory
+            var customerAddress = 
+                _customerAddressFactory
                 .Create()
                 .RegisterNewCustomerAddress(_registerNewCustomerAddressInputFactory.Create(input));
+
+            AddFromValidationInfoInternal(customerAddress.ValidationInfo);
+
+            // Validate
+            if (ValidationInfo.IsValid)
+                return this;
 
             // Return
             return RegisterNewInternal<CustomerAddressInfo>(input.TenantId, input.ExecutionUser, input.SourcePlatform);
