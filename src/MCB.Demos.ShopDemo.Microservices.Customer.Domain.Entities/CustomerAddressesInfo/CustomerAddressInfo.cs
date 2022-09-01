@@ -3,6 +3,7 @@ using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.CustomerAddresse
 using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.CustomerAddresses.Factories.Interfaces;
 using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.CustomerAddresses.Specifications;
 using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.CustomerAddresses.Validators;
+using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.CustomerAddresses.Validators.Interfaces;
 using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.CustomerAddressesInfo.Factories.Interfaces;
 using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.CustomerAddressesInfo.Inputs;
 using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.CustomerAddressesInfo.Validators.Interfaces;
@@ -26,35 +27,44 @@ namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.CustomerAddr
 
         // Validators
         private readonly IRegisterNewCustomerAddressInfoValidator _registerNewCustomerAddressInfoValidator;
+        private readonly IChangeDefaultCustomerAddressInfoShippingAddressValidator _changeDefaultCustomerAddressInfoShippingAddressValidator;
+        private readonly ICustomerAddressIsValidValidator _customerAddressIsValidValidator;
 
         // Constructors
         public CustomerAddressInfo(
             ICustomerAddressFactory customerAddressFactory,
             IRegisterNewCustomerAddressInputFactory registerNewCustomerAddressInputFactory,
-            IRegisterNewCustomerAddressInfoValidator registerNewCustomerAddressInfoValidator
+            IRegisterNewCustomerAddressInfoValidator registerNewCustomerAddressInfoValidator,
+            IChangeDefaultCustomerAddressInfoShippingAddressValidator changeDefaultCustomerAddressInfoShippingAddressValidator,
+            ICustomerAddressIsValidValidator customerAddressIsValidValidator
         )
         {
             _customerAddressFactory = customerAddressFactory;
             _registerNewCustomerAddressInputFactory = registerNewCustomerAddressInputFactory;
             _registerNewCustomerAddressInfoValidator = registerNewCustomerAddressInfoValidator;
+            _changeDefaultCustomerAddressInfoShippingAddressValidator = changeDefaultCustomerAddressInfoShippingAddressValidator;
+            _customerAddressIsValidValidator = customerAddressIsValidValidator;
         }
 
         // Public Methods
         public CustomerAddressInfo RegisterNewCustomerAddressInfo(RegisterNewCustomerAddressInfoInput input)
         {
-            // Validate
+            // Validate input
             if (!Validate(() => _registerNewCustomerAddressInfoValidator.Validate(input)))
                 return this;
 
-            // Process
+            // Register new customer address
             var customerAddress = 
                 _customerAddressFactory
                 .Create()
                 .RegisterNewCustomerAddress(_registerNewCustomerAddressInputFactory.Create(input));
 
-            AddFromValidationInfoInternal(customerAddress.ValidationInfo);
+            if (!Validate(() => customerAddress.ValidationInfo))
+                return this;
 
-            // Validate
+            // Process
+            AddCustomerAddress(customerAddress);
+
             if (ValidationInfo.IsValid)
                 return this;
 
@@ -63,14 +73,19 @@ namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.CustomerAddr
         }
         public CustomerAddress ChangeDefaultCustomerAddressInfoShippingAddress(ChangeDefaultCustomerAddressInfoShippingAddressInput input)
         {
-            // Validate
-            // TODO: Add validation
+            // Validate input
+            if (!Validate(() => _changeDefaultCustomerAddressInfoShippingAddressValidator.Validate(input)))
+                return null;
 
-            // Process and Return
+            // Validate customer address in input
+            if (!Validate(() => _customerAddressIsValidValidator.Validate(input.CustomerAddress)))
+                return null;
+
+            // Process
             SetDefaultShippingAddress(input.CustomerAddress)
                 .RegisterModificationInternal<CustomerAddressInfo>(input.ExecutionUser, input.SourcePlatform);
 
-            return input.CustomerAddress;
+            return DefaultShippingAddress;
         }
         public CustomerAddressInfo ClearDefaultCustomerAddressInfoShippingAddress(ClearDefaultCustomerAddressInfoShippingAddressInput input)
         {
@@ -158,7 +173,7 @@ namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.CustomerAddr
         {
             // Process
             var customerAddressInfo = DeepCloneInternal<CustomerAddressInfo>()
-                .SetcustomerAddressCollection(_customerAddressCollection);
+                .SetCustomerAddressCollection(_customerAddressCollection);
 
             if (_defaultShippingAddress != null)
                 customerAddressInfo.SetDefaultShippingAddress(_defaultShippingAddress);
@@ -168,7 +183,12 @@ namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.CustomerAddr
         }
 
         // Private Methods
-        private CustomerAddressInfo SetcustomerAddressCollection(IEnumerable<CustomerAddress> customerAddressCollection)
+        private CustomerAddressInfo AddCustomerAddress(CustomerAddress customerAddress)
+        {
+            _customerAddressCollection.Add(customerAddress);
+            return this;
+        }
+        private CustomerAddressInfo SetCustomerAddressCollection(IEnumerable<CustomerAddress> customerAddressCollection)
         {
             // Validate
             // TODO: Add validation
@@ -190,7 +210,9 @@ namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.CustomerAddr
         protected override DomainEntityBase CreateInstanceForCloneInternal() => new CustomerAddressInfo(
             _customerAddressFactory,
             _registerNewCustomerAddressInputFactory,
-            _registerNewCustomerAddressInfoValidator    
+            _registerNewCustomerAddressInfoValidator,
+            _changeDefaultCustomerAddressInfoShippingAddressValidator,
+            _customerAddressIsValidValidator
         );
     }
 }

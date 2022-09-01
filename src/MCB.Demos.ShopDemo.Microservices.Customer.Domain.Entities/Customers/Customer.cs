@@ -1,8 +1,8 @@
 ﻿using MCB.Core.Domain.Entities.Abstractions;
 using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Base;
 using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.CustomerAddresses;
-using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.CustomerAddresses.Factories;
 using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.CustomerAddresses.Specifications;
+using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.CustomerAddresses.Validators;
 using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.CustomerAddressesInfo;
 using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.CustomerAddressesInfo.Validators;
 using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Customers.Inputs;
@@ -50,7 +50,9 @@ namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Customers
             _customerAddressInfo = new CustomerAddressInfo(
                 customerAddressFactory: null,
                 registerNewCustomerAddressInputFactory: null,
-                new RegisterNewCustomerAddressInfoValidator(new CustomerAddressSpecifications())
+                new RegisterNewCustomerAddressInfoValidator(new CustomerAddressSpecifications()),
+                new ChangeDefaultCustomerAddressInfoShippingAddressValidator(new CustomerAddressSpecifications()),
+                new CustomerAddressIsValidValidator(new CustomerAddressSpecifications())
             );
         }
 

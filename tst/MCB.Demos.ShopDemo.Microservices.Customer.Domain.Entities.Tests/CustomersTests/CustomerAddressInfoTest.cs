@@ -1,8 +1,6 @@
 ﻿using FluentAssertions;
 using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.CustomerAddresses.Enums;
-using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.CustomerAddresses.Specifications;
 using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.CustomerAddressesInfo;
-using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.CustomerAddressesInfo.Validators;
 using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Tests.Fixtures;
 using MCB.Tests;
 using System;
@@ -35,7 +33,9 @@ namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Tests.Custom
             var customerAddressInfo = new CustomerAddressInfo(
                 customerAddressFactory: null,
                 registerNewCustomerAddressInputFactory: null,
-                registerNewCustomerAddressInfoValidator: null
+                registerNewCustomerAddressInfoValidator: null,
+                changeDefaultCustomerAddressInfoShippingAddressValidator: null,
+                customerAddressIsValidValidator: null
             );
 
             // Assert
