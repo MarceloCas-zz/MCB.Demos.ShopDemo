@@ -35,7 +35,8 @@ namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Tests.Custom
                 registerNewCustomerAddressInputFactory: null,
                 registerNewCustomerAddressInfoValidator: null,
                 changeDefaultCustomerAddressInfoShippingAddressValidator: null,
-                customerAddressIsValidValidator: null
+                customerAddressIsValidValidator: null,
+                clearDefaultCustomerAddressInfoShippingAddressInputValidator: null
             );
 
             // Assert

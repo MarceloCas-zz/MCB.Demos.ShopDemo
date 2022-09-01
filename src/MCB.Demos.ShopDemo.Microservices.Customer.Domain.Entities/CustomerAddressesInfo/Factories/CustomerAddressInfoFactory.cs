@@ -1,6 +1,7 @@
 ﻿using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.CustomerAddresses.Factories.Interfaces;
 using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.CustomerAddresses.Validators.Interfaces;
 using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.CustomerAddressesInfo.Factories.Interfaces;
+using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.CustomerAddressesInfo.Validators;
 using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.CustomerAddressesInfo.Validators.Interfaces;
 
 namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.CustomerAddressesInfo.Factories
@@ -14,6 +15,7 @@ namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.CustomerAddr
         private readonly IRegisterNewCustomerAddressInfoValidator _registerNewCustomerAddressInfoValidator;
         private readonly IChangeDefaultCustomerAddressInfoShippingAddressValidator _changeDefaultCustomerAddressInfoShippingAddressValidator;
         private readonly ICustomerAddressIsValidValidator _customerAddressIsValidValidator;
+        private readonly IClearDefaultCustomerAddressInfoShippingAddressInputValidator _clearDefaultCustomerAddressInfoShippingAddressInputValidator;
 
         // Constructors
         public CustomerAddressInfoFactory(
@@ -21,7 +23,8 @@ namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.CustomerAddr
             IRegisterNewCustomerAddressInputFactory registerNewCustomerAddressInputFactory,
             IRegisterNewCustomerAddressInfoValidator registerNewCustomerAddressInfoValidator,
             IChangeDefaultCustomerAddressInfoShippingAddressValidator changeDefaultCustomerAddressInfoShippingAddressValidator,
-            ICustomerAddressIsValidValidator customerAddressIsValidValidator
+            ICustomerAddressIsValidValidator customerAddressIsValidValidator,
+            IClearDefaultCustomerAddressInfoShippingAddressInputValidator clearDefaultCustomerAddressInfoShippingAddressInputValidator
         )
         {
             _customerAddressFactory = customerAddressFactory;
@@ -29,6 +32,7 @@ namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.CustomerAddr
             _registerNewCustomerAddressInfoValidator = registerNewCustomerAddressInfoValidator;
             _changeDefaultCustomerAddressInfoShippingAddressValidator = changeDefaultCustomerAddressInfoShippingAddressValidator;
             _customerAddressIsValidValidator = customerAddressIsValidValidator;
+            _clearDefaultCustomerAddressInfoShippingAddressInputValidator = clearDefaultCustomerAddressInfoShippingAddressInputValidator;
         }
 
         // Public Methods
@@ -39,7 +43,8 @@ namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.CustomerAddr
                 _registerNewCustomerAddressInputFactory,
                 _registerNewCustomerAddressInfoValidator,
                 _changeDefaultCustomerAddressInfoShippingAddressValidator,
-                _customerAddressIsValidValidator
+                _customerAddressIsValidValidator,
+                _clearDefaultCustomerAddressInfoShippingAddressInputValidator
             );
         }
     }
