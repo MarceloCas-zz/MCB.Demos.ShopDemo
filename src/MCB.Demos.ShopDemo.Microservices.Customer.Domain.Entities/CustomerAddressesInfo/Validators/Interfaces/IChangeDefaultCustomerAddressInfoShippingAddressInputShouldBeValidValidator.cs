@@ -3,8 +3,8 @@ using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.CustomerAddresse
 
 namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.CustomerAddressesInfo.Validators.Interfaces
 {
-    public interface IRemoveCustomerAddressInfoCustomerAddressValidator
-        : IValidator<RemoveCustomerAddressInfoCustomerAddressInput>
+    public interface IChangeDefaultCustomerAddressInfoShippingAddressInputShouldBeValidValidator
+        : IValidator<ChangeDefaultCustomerAddressInfoShippingAddressInput>
     {
     }
 }

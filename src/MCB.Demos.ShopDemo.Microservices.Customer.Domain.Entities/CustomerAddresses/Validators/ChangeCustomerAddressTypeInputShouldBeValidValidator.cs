@@ -7,15 +7,15 @@ using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.CustomerAddresse
 
 namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.CustomerAddresses.Validators
 {
-    public class ChangeCustomerFullAddressInfoValidator
-        : InputBaseValidator<ChangeCustomerFullAddressInfoInput>,
-        IChangeCustomerFullAddressInfoValidator
+    public class ChangeCustomerAddressTypeInputShouldBeValidValidator
+        : InputBaseValidator<ChangeCustomerAddressTypeInput>,
+        IChangeCustomerAddressTypeInputShouldBeValidValidator
     {
         // Fields
         private readonly ICustomerAddressSpecifications _customerAddressSpecifications;
 
         // Constructors
-        public ChangeCustomerFullAddressInfoValidator(
+        public ChangeCustomerAddressTypeInputShouldBeValidValidator(
             ICustomerAddressSpecifications customerAddressSpecifications
         )
         {
@@ -23,14 +23,8 @@ namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.CustomerAddr
         }
 
         // Protected Methods
-        protected override void ConfigureFluentValidationConcreteValidatorInternal(ValidatorBase<ChangeCustomerFullAddressInfoInput>.FluentValidationValidatorWrapper fluentValidationValidatorWrapper)
+        protected override void ConfigureFluentValidationConcreteValidatorInternal(ValidatorBase<ChangeCustomerAddressTypeInput>.FluentValidationValidatorWrapper fluentValidationValidatorWrapper)
         {
-            CustomerAddressValidatorWrapper.AddCustomerAddressShouldHaveAddressValueObject(
-                _customerAddressSpecifications,
-                fluentValidationValidatorWrapper,
-                propertyExpression: q => q.AddressValueObject,
-                getAddressValueObjectFunction: q => q.AddressValueObject
-            );
             CustomerAddressValidatorWrapper.AddCustomerAddressShouldHaveCustomerAddressType(
                 _customerAddressSpecifications,
                 fluentValidationValidatorWrapper,

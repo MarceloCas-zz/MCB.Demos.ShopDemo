@@ -32,11 +32,11 @@ namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Tests.Custom
             // Arrange and Act
             var customerAddressInfo = new CustomerAddressInfo(
                 customerAddressFactory: null,
-                registerNewCustomerAddressInputFactory: null,
-                registerNewCustomerAddressInfoValidator: null,
-                changeDefaultCustomerAddressInfoShippingAddressValidator: null,
-                customerAddressIsValidValidator: null,
-                clearDefaultCustomerAddressInfoShippingAddressInputValidator: null
+                registerNewCustomerAddressInputShouldBeValidFactory: null,
+                registerNewCustomerAddressInfoInputShouldBeValidValidator: null,
+                changeDefaultCustomerAddressInfoShippingAddressInputShouldBeValidValidator: null,
+                customerAddressShouldBeValidValidator: null,
+                clearDefaultCustomerAddressInfoShippingAddressInputShouldBeValidValidator: null
             );
 
             // Assert

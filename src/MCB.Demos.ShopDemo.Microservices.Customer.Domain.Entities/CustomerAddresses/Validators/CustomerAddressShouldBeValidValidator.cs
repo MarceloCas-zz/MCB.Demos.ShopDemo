@@ -1,21 +1,19 @@
 ﻿using MCB.Core.Domain.Entities.DomainEntitiesBase.Validators;
-using MCB.Core.Infra.CrossCutting.DesignPatterns.Validator;
-using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.CustomerAddresses.Inputs;
 using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.CustomerAddresses.Specifications.Interfaces;
 using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.CustomerAddresses.Validators.Interfaces;
 using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.CustomerAddresses.Validators.Wrappers;
 
 namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.CustomerAddresses.Validators
 {
-    public class ChangeCustomerAddressValidator
-        : InputBaseValidator<ChangeCustomerAddressInput>,
-        IChangeCustomerAddressValidator
+    public class CustomerAddressShouldBeValidValidator 
+        : DomainEntityBaseValidator<CustomerAddress>,
+        ICustomerAddressShouldBeValidValidator
     {
         // Fields
         private readonly ICustomerAddressSpecifications _customerAddressSpecifications;
 
         // Constructors
-        public ChangeCustomerAddressValidator(
+        public CustomerAddressShouldBeValidValidator(
             ICustomerAddressSpecifications customerAddressSpecifications
         )
         {
@@ -23,13 +21,19 @@ namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.CustomerAddr
         }
 
         // Protected Methods
-        protected override void ConfigureFluentValidationConcreteValidatorInternal(ValidatorBase<ChangeCustomerAddressInput>.FluentValidationValidatorWrapper fluentValidationValidatorWrapper)
+        protected override void ConfigureFluentValidationConcreteValidatorInternal(FluentValidationValidatorWrapper fluentValidationValidatorWrapper)
         {
             CustomerAddressValidatorWrapper.AddCustomerAddressShouldHaveAddressValueObject(
                 _customerAddressSpecifications,
                 fluentValidationValidatorWrapper,
                 propertyExpression: q => q.AddressValueObject,
                 getAddressValueObjectFunction: q => q.AddressValueObject
+            );
+            CustomerAddressValidatorWrapper.AddCustomerAddressShouldHaveCustomerAddressType(
+                _customerAddressSpecifications,
+                fluentValidationValidatorWrapper,
+                propertyExpression: q => q.CustomerAddressType,
+                getCustomerAddressTypeFunction: q => q.CustomerAddressType
             );
         }
     }

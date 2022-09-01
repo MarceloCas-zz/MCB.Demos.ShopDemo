@@ -11,19 +11,19 @@ namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.CustomerAddr
         // Fields
         private readonly ICustomerAddressFactory _customerAddressFactory;
         private readonly IRegisterNewCustomerAddressInputFactory _registerNewCustomerAddressInputFactory;
-        private readonly IRegisterNewCustomerAddressInfoValidator _registerNewCustomerAddressInfoValidator;
-        private readonly IChangeDefaultCustomerAddressInfoShippingAddressValidator _changeDefaultCustomerAddressInfoShippingAddressValidator;
-        private readonly ICustomerAddressIsValidValidator _customerAddressIsValidValidator;
-        private readonly IClearDefaultCustomerAddressInfoShippingAddressInputValidator _clearDefaultCustomerAddressInfoShippingAddressInputValidator;
+        private readonly IRegisterNewCustomerAddressInfoInputShouldBeValidValidator _registerNewCustomerAddressInfoValidator;
+        private readonly IChangeDefaultCustomerAddressInfoShippingAddressInputShouldBeValidValidator _changeDefaultCustomerAddressInfoShippingAddressValidator;
+        private readonly ICustomerAddressShouldBeValidValidator _customerAddressIsValidValidator;
+        private readonly IClearDefaultCustomerAddressInfoShippingAddressInputShouldBeValidValidator _clearDefaultCustomerAddressInfoShippingAddressInputValidator;
 
         // Constructors
         public CustomerAddressInfoFactory(
             ICustomerAddressFactory customerAddressFactory,
             IRegisterNewCustomerAddressInputFactory registerNewCustomerAddressInputFactory,
-            IRegisterNewCustomerAddressInfoValidator registerNewCustomerAddressInfoValidator,
-            IChangeDefaultCustomerAddressInfoShippingAddressValidator changeDefaultCustomerAddressInfoShippingAddressValidator,
-            ICustomerAddressIsValidValidator customerAddressIsValidValidator,
-            IClearDefaultCustomerAddressInfoShippingAddressInputValidator clearDefaultCustomerAddressInfoShippingAddressInputValidator
+            IRegisterNewCustomerAddressInfoInputShouldBeValidValidator registerNewCustomerAddressInfoValidator,
+            IChangeDefaultCustomerAddressInfoShippingAddressInputShouldBeValidValidator changeDefaultCustomerAddressInfoShippingAddressValidator,
+            ICustomerAddressShouldBeValidValidator customerAddressIsValidValidator,
+            IClearDefaultCustomerAddressInfoShippingAddressInputShouldBeValidValidator clearDefaultCustomerAddressInfoShippingAddressInputValidator
         )
         {
             _customerAddressFactory = customerAddressFactory;

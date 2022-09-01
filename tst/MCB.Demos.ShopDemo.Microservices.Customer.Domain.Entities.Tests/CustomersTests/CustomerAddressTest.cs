@@ -33,10 +33,10 @@ namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Tests.Custom
         {
             // Arrange and Act
             var customerAddress = new CustomerAddress(
-                new ChangeCustomerAddressTypeValidator(new CustomerAddressSpecifications()),
-                new ChangeCustomerAddressValidator(new CustomerAddressSpecifications()),
-                new ChangeCustomerFullAddressInfoValidator(new CustomerAddressSpecifications()),
-                new RegisterNewCustomerAddressValidator(new CustomerAddressSpecifications())
+                new ChangeCustomerAddressTypeInputShouldBeValidValidator(new CustomerAddressSpecifications()),
+                new ChangeCustomerAddressInputShouldBeValidValidator(new CustomerAddressSpecifications()),
+                new ChangeCustomerFullAddressInfoInputShouldBeValidValidator(new CustomerAddressSpecifications()),
+                new RegisterNewCustomerAddressInputShouldBeValidValidator(new CustomerAddressSpecifications())
             );
 
             // Assert

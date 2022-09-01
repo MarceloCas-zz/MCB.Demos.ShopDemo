@@ -7,17 +7,17 @@ namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.CustomerAddr
         : ICustomerAddressFactory
     {
         // Fields
-        private readonly IChangeCustomerAddressTypeValidator _changeCustomerAddressTypeValidator;
-        private readonly IChangeCustomerAddressValidator _changeCustomerAddressValidator;
-        private readonly IChangeCustomerFullAddressInfoValidator _changeCustomerFullAddressInfoValidator;
-        private readonly IRegisterNewCustomerAddressValidator _registerNewCustomerAddressValidator;
+        private readonly IChangeCustomerAddressTypeInputShouldBeValidValidator _changeCustomerAddressTypeValidator;
+        private readonly IChangeCustomerAddressInputShouldBeValidValidator _changeCustomerAddressValidator;
+        private readonly IChangeCustomerFullAddressInfoInputShouldBeValidValidator _changeCustomerFullAddressInfoValidator;
+        private readonly IRegisterNewCustomerAddressInputShouldBeValidValidator _registerNewCustomerAddressValidator;
 
         // Constructors
         public CustomerAddressFactory(
-            IChangeCustomerAddressTypeValidator changeCustomerAddressTypeValidator,
-            IChangeCustomerAddressValidator changeCustomerAddressValidator,
-            IChangeCustomerFullAddressInfoValidator changeCustomerFullAddressInfoValidator,
-            IRegisterNewCustomerAddressValidator registerNewCustomerAddressValidator
+            IChangeCustomerAddressTypeInputShouldBeValidValidator changeCustomerAddressTypeValidator,
+            IChangeCustomerAddressInputShouldBeValidValidator changeCustomerAddressValidator,
+            IChangeCustomerFullAddressInfoInputShouldBeValidValidator changeCustomerFullAddressInfoValidator,
+            IRegisterNewCustomerAddressInputShouldBeValidValidator registerNewCustomerAddressValidator
         )
         {
             _changeCustomerAddressTypeValidator = changeCustomerAddressTypeValidator;

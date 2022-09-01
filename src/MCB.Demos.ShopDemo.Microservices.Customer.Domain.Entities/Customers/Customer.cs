@@ -49,11 +49,11 @@ namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Customers
 
             _customerAddressInfo = new CustomerAddressInfo(
                 customerAddressFactory: null,
-                registerNewCustomerAddressInputFactory: null,
-                new RegisterNewCustomerAddressInfoValidator(new CustomerAddressSpecifications()),
-                new ChangeDefaultCustomerAddressInfoShippingAddressValidator(new CustomerAddressSpecifications()),
-                new CustomerAddressIsValidValidator(new CustomerAddressSpecifications()),
-                new ClearDefaultCustomerAddressInfoShippingAddressInputValidator()
+                registerNewCustomerAddressInputShouldBeValidFactory: null,
+                new RegisterNewCustomerAddressInfoInputShouldBeValidValidator(new CustomerAddressSpecifications()),
+                new ChangeDefaultCustomerAddressInfoShippingAddressInputShouldBeValidValidator(new CustomerAddressSpecifications()),
+                new CustomerAddressShouldBeValidValidator(new CustomerAddressSpecifications()),
+                new ClearDefaultCustomerAddressInfoShippingAddressInputShouldBeValidValidator()
             );
         }
 

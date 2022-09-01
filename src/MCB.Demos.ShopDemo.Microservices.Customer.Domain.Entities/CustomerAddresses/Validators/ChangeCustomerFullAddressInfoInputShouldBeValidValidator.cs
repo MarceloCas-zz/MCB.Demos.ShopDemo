@@ -7,15 +7,15 @@ using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.CustomerAddresse
 
 namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.CustomerAddresses.Validators
 {
-    public class RegisterNewCustomerAddressValidator
-        : InputBaseValidator<RegisterNewCustomerAddressInput>,
-        IRegisterNewCustomerAddressValidator
+    public class ChangeCustomerFullAddressInfoInputShouldBeValidValidator
+        : InputBaseValidator<ChangeCustomerFullAddressInfoInput>,
+        IChangeCustomerFullAddressInfoInputShouldBeValidValidator
     {
         // Fields
         private readonly ICustomerAddressSpecifications _customerAddressSpecifications;
 
         // Constructors
-        public RegisterNewCustomerAddressValidator(
+        public ChangeCustomerFullAddressInfoInputShouldBeValidValidator(
             ICustomerAddressSpecifications customerAddressSpecifications
         )
         {
@@ -23,7 +23,7 @@ namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.CustomerAddr
         }
 
         // Protected Methods
-        protected override void ConfigureFluentValidationConcreteValidatorInternal(ValidatorBase<RegisterNewCustomerAddressInput>.FluentValidationValidatorWrapper fluentValidationValidatorWrapper)
+        protected override void ConfigureFluentValidationConcreteValidatorInternal(ValidatorBase<ChangeCustomerFullAddressInfoInput>.FluentValidationValidatorWrapper fluentValidationValidatorWrapper)
         {
             CustomerAddressValidatorWrapper.AddCustomerAddressShouldHaveAddressValueObject(
                 _customerAddressSpecifications,

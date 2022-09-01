@@ -53,10 +53,10 @@ namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Tests.Fixtur
         )
         {
             return new CustomerAddress(
-                    new ChangeCustomerAddressTypeValidator(new CustomerAddressSpecifications()),
-                    new ChangeCustomerAddressValidator(new CustomerAddressSpecifications()),
-                    new ChangeCustomerFullAddressInfoValidator(new CustomerAddressSpecifications()),
-                    new RegisterNewCustomerAddressValidator(new CustomerAddressSpecifications())
+                    new ChangeCustomerAddressTypeInputShouldBeValidValidator(new CustomerAddressSpecifications()),
+                    new ChangeCustomerAddressInputShouldBeValidValidator(new CustomerAddressSpecifications()),
+                    new ChangeCustomerFullAddressInfoInputShouldBeValidValidator(new CustomerAddressSpecifications()),
+                    new RegisterNewCustomerAddressInputShouldBeValidValidator(new CustomerAddressSpecifications())
                 ).RegisterNewCustomerAddress(new CustomerAddresses.Inputs.RegisterNewCustomerAddressInput(
                     tenantId: existingTenantId ?? GenerateNewTenantId(),
                     customerAddressType: existingCustomerAdressType ?? EnumUtils.GetRandomEnumValue<CustomerAddressType>(),
@@ -91,11 +91,11 @@ namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Tests.Fixtur
         {
             return new CustomerAddressInfo(
                     customerAddressFactory: null,
-                    registerNewCustomerAddressInputFactory: null,
-                    new RegisterNewCustomerAddressInfoValidator(new CustomerAddressSpecifications()),
-                    new ChangeDefaultCustomerAddressInfoShippingAddressValidator(new CustomerAddressSpecifications()),
-                    new CustomerAddressIsValidValidator(new CustomerAddressSpecifications()),
-                    new ClearDefaultCustomerAddressInfoShippingAddressInputValidator()
+                    registerNewCustomerAddressInputShouldBeValidFactory: null,
+                    new RegisterNewCustomerAddressInfoInputShouldBeValidValidator(new CustomerAddressSpecifications()),
+                    new ChangeDefaultCustomerAddressInfoShippingAddressInputShouldBeValidValidator(new CustomerAddressSpecifications()),
+                    new CustomerAddressShouldBeValidValidator(new CustomerAddressSpecifications()),
+                    new ClearDefaultCustomerAddressInfoShippingAddressInputShouldBeValidValidator()
                 )
                 .RegisterNewCustomerAddressInfo(new CustomerAddressesInfo.Inputs.RegisterNewCustomerAddressInfoInput(
                     tenantId: existingTenantId ?? GenerateNewTenantId(),

@@ -5,9 +5,9 @@ using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.CustomerAddresse
 
 namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.CustomerAddressesInfo.Validators
 {
-    public class ClearDefaultCustomerAddressInfoShippingAddressInputValidator
+    public class ClearDefaultCustomerAddressInfoShippingAddressInputShouldBeValidValidator
         : InputBaseValidator<ClearDefaultCustomerAddressInfoShippingAddressInput>,
-        IClearDefaultCustomerAddressInfoShippingAddressInputValidator
+        IClearDefaultCustomerAddressInfoShippingAddressInputShouldBeValidValidator
     {
         // Protected Methods
         protected override void ConfigureFluentValidationConcreteValidatorInternal(ValidatorBase<ClearDefaultCustomerAddressInfoShippingAddressInput>.FluentValidationValidatorWrapper fluentValidationValidatorWrapper)
