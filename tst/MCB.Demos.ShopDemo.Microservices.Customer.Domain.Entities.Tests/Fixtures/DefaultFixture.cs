@@ -6,6 +6,7 @@ using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.CustomerAddresse
 using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.CustomerAddresses.Validators;
 using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.CustomerAddressesInfo;
 using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.CustomerAddressesInfo.Validators;
+using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.CustomerAddressesInfo.Validators.Interfaces;
 using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Customers.Specifications;
 using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Customers.Validators;
 using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.ValueObjects.AddressValueObjects;
@@ -95,7 +96,8 @@ namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Tests.Fixtur
                     new RegisterNewCustomerAddressInfoInputShouldBeValidValidator(new CustomerAddressSpecifications()),
                     new ChangeDefaultCustomerAddressInfoShippingAddressInputShouldBeValidValidator(new CustomerAddressSpecifications()),
                     new CustomerAddressShouldBeValidValidator(new CustomerAddressSpecifications()),
-                    new ClearDefaultCustomerAddressInfoShippingAddressInputShouldBeValidValidator()
+                    new ClearDefaultCustomerAddressInfoShippingAddressInputShouldBeValidValidator(),
+                    new AddNewCustomerAddressInfoCustomerAddressInputShouldBeValidValidator(new CustomerAddressSpecifications())
                 )
                 .RegisterNewCustomerAddressInfo(new CustomerAddressesInfo.Inputs.RegisterNewCustomerAddressInfoInput(
                     tenantId: existingTenantId ?? GenerateNewTenantId(),

@@ -1,8 +1,6 @@
 ﻿using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Base;
 using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.CustomerAddresses;
 using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.CustomerAddresses.Factories.Interfaces;
-using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.CustomerAddresses.Specifications;
-using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.CustomerAddresses.Validators;
 using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.CustomerAddresses.Validators.Interfaces;
 using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.CustomerAddressesInfo.Factories.Interfaces;
 using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.CustomerAddressesInfo.Inputs;
@@ -30,6 +28,7 @@ namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.CustomerAddr
         private readonly IChangeDefaultCustomerAddressInfoShippingAddressInputShouldBeValidValidator _changeDefaultCustomerAddressInfoShippingAddressInputShouldBeValidValidator;
         private readonly ICustomerAddressShouldBeValidValidator _customerAddressShouldBeValidValidator;
         private readonly IClearDefaultCustomerAddressInfoShippingAddressInputShouldBeValidValidator _clearDefaultCustomerAddressInfoShippingAddressInputShouldBeValidValidator;
+        private readonly IAddNewCustomerAddressInfoCustomerAddressInputShouldBeValidValidator _addNewCustomerAddressInfoCustomerAddressInputShouldBeValidValidator;
 
         // Constructors
         public CustomerAddressInfo(
@@ -38,7 +37,8 @@ namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.CustomerAddr
             IRegisterNewCustomerAddressInfoInputShouldBeValidValidator registerNewCustomerAddressInfoInputShouldBeValidValidator,
             IChangeDefaultCustomerAddressInfoShippingAddressInputShouldBeValidValidator changeDefaultCustomerAddressInfoShippingAddressInputShouldBeValidValidator,
             ICustomerAddressShouldBeValidValidator customerAddressShouldBeValidValidator,
-            IClearDefaultCustomerAddressInfoShippingAddressInputShouldBeValidValidator clearDefaultCustomerAddressInfoShippingAddressInputShouldBeValidValidator
+            IClearDefaultCustomerAddressInfoShippingAddressInputShouldBeValidValidator clearDefaultCustomerAddressInfoShippingAddressInputShouldBeValidValidator,
+            IAddNewCustomerAddressInfoCustomerAddressInputShouldBeValidValidator addNewCustomerAddressInfoCustomerAddressInputShouldBeValidValidator
         )
         {
             _customerAddressFactory = customerAddressFactory;
@@ -47,6 +47,7 @@ namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.CustomerAddr
             _changeDefaultCustomerAddressInfoShippingAddressInputShouldBeValidValidator = changeDefaultCustomerAddressInfoShippingAddressInputShouldBeValidValidator;
             _customerAddressShouldBeValidValidator = customerAddressShouldBeValidValidator;
             _clearDefaultCustomerAddressInfoShippingAddressInputShouldBeValidValidator = clearDefaultCustomerAddressInfoShippingAddressInputShouldBeValidValidator;
+            _addNewCustomerAddressInfoCustomerAddressInputShouldBeValidValidator = addNewCustomerAddressInfoCustomerAddressInputShouldBeValidValidator;
         }
 
         // Public Methods
@@ -68,7 +69,7 @@ namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.CustomerAddr
             // Process
             AddCustomerAddress(customerAddress);
 
-            if (ValidationInfo.IsValid)
+            if (!ValidationInfo.IsValid)
                 return this;
 
             // Return
@@ -88,6 +89,7 @@ namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.CustomerAddr
             SetDefaultShippingAddress(input.CustomerAddress)
                 .RegisterModificationInternal<CustomerAddressInfo>(input.ExecutionUser, input.SourcePlatform);
 
+            // Return
             return DefaultShippingAddress;
         }
         public CustomerAddressInfo ClearDefaultCustomerAddressInfoShippingAddress(ClearDefaultCustomerAddressInfoShippingAddressInput input)
@@ -103,31 +105,25 @@ namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.CustomerAddr
 
         public CustomerAddress AddNewCustomerAddressInfoCustomerAddress(AddNewCustomerAddressInfoCustomerAddressInput input)
         {
-            // Process customer address
-            var customerAddress = new CustomerAddress(
-                    new ChangeCustomerAddressTypeInputShouldBeValidValidator(new CustomerAddressSpecifications()),
-                    new ChangeCustomerAddressInputShouldBeValidValidator(new CustomerAddressSpecifications()),
-                    new ChangeCustomerFullAddressInfoInputShouldBeValidValidator(new CustomerAddressSpecifications()),
-                    new RegisterNewCustomerAddressInputShouldBeValidValidator(new CustomerAddressSpecifications())
-                )
-                .RegisterNewCustomerAddress(new CustomerAddresses.Inputs.RegisterNewCustomerAddressInput(
-                    input.TenantId, 
-                    input.CustomerAddressType, 
-                    input.AddressValueObject, 
-                    input.ExecutionUser, 
-                    input.SourcePlatform
-                ));
-            AddFromValidationInfoInternal(customerAddress.ValidationInfo);
+            // Validate input
+            if (!Validate(() => _addNewCustomerAddressInfoCustomerAddressInputShouldBeValidValidator.Validate(input)))
+                return null;
 
-            // Validate customer address after registration
-            if (!ValidationInfo.IsValid)
+            // Register new customer address
+            var customerAddress =
+                _customerAddressFactory
+                .Create()
+                .RegisterNewCustomerAddress(_registerNewCustomerAddressInputFactory.Create(input));
+
+            if (!Validate(() => customerAddress.ValidationInfo))
                 return null;
 
             // Process
-            _customerAddressCollection.Add(
-                customerAddress
-            );
-            RegisterModificationInternal<CustomerAddressInfo>(input.ExecutionUser, input.SourcePlatform);
+            AddCustomerAddress(customerAddress)
+                .RegisterModificationInternal<CustomerAddressInfo>(input.ExecutionUser, input.SourcePlatform);
+
+            if (!ValidationInfo.IsValid)
+                return null;
 
             // Return
             return customerAddress;
@@ -217,7 +213,8 @@ namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.CustomerAddr
             _registerNewCustomerAddressInfoInputShouldBeValidValidator,
             _changeDefaultCustomerAddressInfoShippingAddressInputShouldBeValidValidator,
             _customerAddressShouldBeValidValidator,
-            _clearDefaultCustomerAddressInfoShippingAddressInputShouldBeValidValidator
+            _clearDefaultCustomerAddressInfoShippingAddressInputShouldBeValidValidator,
+            _addNewCustomerAddressInfoCustomerAddressInputShouldBeValidValidator
         );
     }
 }

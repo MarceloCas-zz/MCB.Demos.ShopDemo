@@ -5,6 +5,7 @@ using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.CustomerAddresse
 using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.CustomerAddresses.Validators;
 using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.CustomerAddressesInfo;
 using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.CustomerAddressesInfo.Validators;
+using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.CustomerAddressesInfo.Validators.Interfaces;
 using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Customers.Inputs;
 using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Customers.Validators.Interfaces;
 
@@ -53,7 +54,8 @@ namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Customers
                 new RegisterNewCustomerAddressInfoInputShouldBeValidValidator(new CustomerAddressSpecifications()),
                 new ChangeDefaultCustomerAddressInfoShippingAddressInputShouldBeValidValidator(new CustomerAddressSpecifications()),
                 new CustomerAddressShouldBeValidValidator(new CustomerAddressSpecifications()),
-                new ClearDefaultCustomerAddressInfoShippingAddressInputShouldBeValidValidator()
+                new ClearDefaultCustomerAddressInfoShippingAddressInputShouldBeValidValidator(),
+                new AddNewCustomerAddressInfoCustomerAddressInputShouldBeValidValidator(new CustomerAddressSpecifications())
             );
         }
 

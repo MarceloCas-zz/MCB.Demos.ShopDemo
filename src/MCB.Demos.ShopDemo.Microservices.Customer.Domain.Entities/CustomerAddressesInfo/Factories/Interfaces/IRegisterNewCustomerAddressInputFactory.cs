@@ -5,7 +5,8 @@ using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.CustomerAddresse
 namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.CustomerAddressesInfo.Factories.Interfaces
 {
     public interface IRegisterNewCustomerAddressInputFactory
-        : IFactoryWithParameter<RegisterNewCustomerAddressInput, RegisterNewCustomerAddressInfoInput>
+        : IFactoryWithParameter<RegisterNewCustomerAddressInput, RegisterNewCustomerAddressInfoInput>,
+        IFactoryWithParameter<RegisterNewCustomerAddressInput, AddNewCustomerAddressInfoCustomerAddressInput>
     {
     }
 }
