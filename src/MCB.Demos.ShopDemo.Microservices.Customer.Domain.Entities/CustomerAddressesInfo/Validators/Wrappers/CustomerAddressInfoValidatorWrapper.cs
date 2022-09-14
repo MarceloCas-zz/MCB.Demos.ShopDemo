@@ -56,9 +56,9 @@ namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.CustomerAddr
         {
             fluentValidationValidatorWrapper.RuleFor(propertyExpression)
                 .Must((input, property) => customerAddressInfoSpecifications.CustomerAddressInfoShouldHaveCustomerAddressInCustomerAddressCollection(getFunction(input).customerAddressId, getFunction(input).customerAddressCollection))
-                .WithErrorCode(ICustomerAddressInfoSpecifications.CustomerAddressInfoShouldHaveDefaultShippingAddressInCustomerAddressCollectionErrorCode)
-                .WithMessage(ICustomerAddressInfoSpecifications.CustomerAddressInfoShouldHaveDefaultShippingAddressInCustomerAddressCollectionMessage)
-                .WithSeverity(ICustomerAddressInfoSpecifications.CustomerAddressInfoShouldHaveDefaultShippingAddressInCustomerAddressCollectionSeverity);
+                .WithErrorCode(ICustomerAddressInfoSpecifications.CustomerAddressInfoShouldHaveCustomerAddressInCustomerAddressCollectionErrorCode)
+                .WithMessage(ICustomerAddressInfoSpecifications.CustomerAddressInfoShouldHaveCustomerAddressInCustomerAddressCollectionMessage)
+                .WithSeverity(ICustomerAddressInfoSpecifications.CustomerAddressInfoShouldHaveCustomerAddressInCustomerAddressCollectionSeverity);
         }
     }
 }

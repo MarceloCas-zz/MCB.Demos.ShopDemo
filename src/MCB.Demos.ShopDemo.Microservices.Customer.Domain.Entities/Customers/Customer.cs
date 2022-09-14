@@ -54,7 +54,9 @@ namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Customers
                 new ChangeDefaultCustomerAddressInfoShippingAddressInputShouldBeValidValidator(new CustomerAddressSpecifications()),
                 new ClearDefaultCustomerAddressInfoShippingAddressInputShouldBeValidValidator(),
                 new AddNewCustomerAddressInfoCustomerAddressInputShouldBeValidValidator(new CustomerAddressSpecifications()),
-                new CustomerAddressInfoShouldHaveCustomerAddressValidator(new CustomerAddressInfoSpecifications())
+                new CustomerAddressInfoShouldHaveCustomerAddressValidator(new CustomerAddressInfoSpecifications()),
+                new RemoveCustomerAddressInfoCustomerAddressInputShouldBeValidValidator(default),
+                default
             );
         }
 

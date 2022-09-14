@@ -97,7 +97,9 @@ namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Tests.Fixtur
                     new ChangeDefaultCustomerAddressInfoShippingAddressInputShouldBeValidValidator(new CustomerAddressSpecifications()),
                     new ClearDefaultCustomerAddressInfoShippingAddressInputShouldBeValidValidator(),
                     new AddNewCustomerAddressInfoCustomerAddressInputShouldBeValidValidator(new CustomerAddressSpecifications()),
-                    new CustomerAddressInfoShouldHaveCustomerAddressValidator(new CustomerAddressInfoSpecifications())
+                    new CustomerAddressInfoShouldHaveCustomerAddressValidator(new CustomerAddressInfoSpecifications()),
+                    default,
+                    default
                 )
                 .RegisterNewCustomerAddressInfo(new CustomerAddressesInfo.Inputs.RegisterNewCustomerAddressInfoInput(
                     tenantId: existingTenantId ?? GenerateNewTenantId(),

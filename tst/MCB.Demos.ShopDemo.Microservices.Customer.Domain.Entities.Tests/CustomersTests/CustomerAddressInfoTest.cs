@@ -37,7 +37,9 @@ namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Tests.Custom
                 changeDefaultCustomerAddressInfoShippingAddressInputShouldBeValidValidator: null,
                 clearDefaultCustomerAddressInfoShippingAddressInputShouldBeValidValidator: null,
                 addNewCustomerAddressInfoCustomerAddressInputShouldBeValidValidator: null,
-                customerAddressInfoShouldHaveCustomerAddressValidator: null
+                customerAddressInfoShouldHaveCustomerAddressValidator: null,
+                removeCustomerAddressInfoCustomerAddressInputShouldBeValidValidator: null,
+                changeCustomerAddressInfoCustomerAddressInputShouldBeValidValidator: null
             );
 
             // Assert

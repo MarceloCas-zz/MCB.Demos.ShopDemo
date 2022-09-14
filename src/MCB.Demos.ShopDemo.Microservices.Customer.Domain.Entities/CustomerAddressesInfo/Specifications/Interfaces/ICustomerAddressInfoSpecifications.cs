@@ -22,6 +22,10 @@ namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.CustomerAddr
         public static readonly string CustomerAddressInfoShouldHaveDefaultShippingAddressInCustomerAddressCollectionMessage = nameof(CustomerAddressInfoShouldHaveDefaultShippingAddressInCustomerAddressCollectionMessage);
         public static readonly Severity CustomerAddressInfoShouldHaveDefaultShippingAddressInCustomerAddressCollectionSeverity = Severity.Error;
 
+        public static readonly string CustomerAddressInfoShouldHaveCustomerAddressInCustomerAddressCollectionErrorCode = nameof(CustomerAddressInfoShouldHaveCustomerAddressInCustomerAddressCollectionErrorCode);
+        public static readonly string CustomerAddressInfoShouldHaveCustomerAddressInCustomerAddressCollectionMessage = nameof(CustomerAddressInfoShouldHaveCustomerAddressInCustomerAddressCollectionMessage);
+        public static readonly Severity CustomerAddressInfoShouldHaveCustomerAddressInCustomerAddressCollectionSeverity = Severity.Error;
+
         // Public Methods
         bool CustomerAddressInfoShouldHaveCustomerAddressCollection(IEnumerable<CustomerAddress> customerAddressCollection);
         bool CustomerAddressInfoShouldHaveDefaultShippingAddress(CustomerAddress defaultShippingAddress);
