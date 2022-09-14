@@ -35,9 +35,9 @@ namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Tests.Custom
                 registerNewCustomerAddressInputShouldBeValidFactory: null,
                 registerNewCustomerAddressInfoInputShouldBeValidValidator: null,
                 changeDefaultCustomerAddressInfoShippingAddressInputShouldBeValidValidator: null,
-                customerAddressShouldBeValidValidator: null,
                 clearDefaultCustomerAddressInfoShippingAddressInputShouldBeValidValidator: null,
-                addNewCustomerAddressInfoCustomerAddressInputShouldBeValidValidator: null
+                addNewCustomerAddressInfoCustomerAddressInputShouldBeValidValidator: null,
+                customerAddressInfoShouldHaveCustomerAddressValidator: null
             );
 
             // Assert
@@ -76,7 +76,7 @@ namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Tests.Custom
             // Act
             customerAddressInfo.ChangeDefaultCustomerAddressInfoShippingAddress(new CustomerAddressesInfo.Inputs.ChangeDefaultCustomerAddressInfoShippingAddressInput(
                 _fixture.TenantId,
-                customerAddress,
+                customerAddress.Id,
                 _fixture.ExecutionUser,
                 _fixture.SourcePlatform
             ));
@@ -100,7 +100,7 @@ namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Tests.Custom
             var customerAddress = DefaultFixture.GenerateNewCustomerAddress();
             customerAddressInfo.ChangeDefaultCustomerAddressInfoShippingAddress(new CustomerAddressesInfo.Inputs.ChangeDefaultCustomerAddressInfoShippingAddressInput(
                 _fixture.TenantId,
-                customerAddress,
+                customerAddress.Id,
                 _fixture.ExecutionUser,
                 _fixture.SourcePlatform
             ));

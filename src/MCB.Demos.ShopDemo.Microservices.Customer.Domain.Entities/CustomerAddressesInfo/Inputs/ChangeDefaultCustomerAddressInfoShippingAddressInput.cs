@@ -1,5 +1,4 @@
 ﻿using MCB.Core.Domain.Entities.DomainEntitiesBase.Inputs;
-using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.CustomerAddresses;
 
 namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.CustomerAddressesInfo.Inputs
 {
@@ -7,17 +6,17 @@ namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.CustomerAddr
         : InputBase
     {
         // Properties
-        public CustomerAddress CustomerAddress { get; set; }
+        public Guid CustomerAddressId { get; set; }
 
         // Constructors
         public ChangeDefaultCustomerAddressInfoShippingAddressInput(
             Guid tenantId,
-            CustomerAddress customerAddress,
-            string executionUser, 
+            Guid customerAddressId,
+            string executionUser,
             string sourcePlatform
         ) : base(tenantId, executionUser, sourcePlatform)
         {
-            CustomerAddress = customerAddress;
+            CustomerAddressId = customerAddressId;
         }
     }
 }

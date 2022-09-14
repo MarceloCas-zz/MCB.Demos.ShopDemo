@@ -22,14 +22,13 @@ namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.CustomerAddr
             _customerAddressSpecifications = customerAddressSpecifications;
         }
 
-        // Protected Methods
         protected override void ConfigureFluentValidationConcreteValidatorInternal(ValidatorBase<ChangeDefaultCustomerAddressInfoShippingAddressInput>.FluentValidationValidatorWrapper fluentValidationValidatorWrapper)
         {
-            CustomerAddressValidatorWrapper.AddCustomerAddressShouldHaveAddressValueObject(
+            CustomerAddressValidatorWrapper.AddCustomerAddressShouldHaveId(
                 _customerAddressSpecifications,
                 fluentValidationValidatorWrapper,
-                propertyExpression: q => q.CustomerAddress.AddressValueObject,
-                getAddressValueObjectFunction: q => q.CustomerAddress.AddressValueObject
+                propertyExpression: q => q.CustomerAddressId,
+                getIdFunction: q => q.CustomerAddressId
             );
         }
     }

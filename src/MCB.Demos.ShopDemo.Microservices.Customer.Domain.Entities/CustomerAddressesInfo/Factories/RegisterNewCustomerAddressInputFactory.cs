@@ -17,7 +17,6 @@ namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.CustomerAddr
                 parameter.SourcePlatform
             );
         }
-
         public RegisterNewCustomerAddressInput Create(AddNewCustomerAddressInfoCustomerAddressInput parameter)
         {
             return new RegisterNewCustomerAddressInput(

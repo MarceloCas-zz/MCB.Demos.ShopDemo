@@ -20,5 +20,10 @@ namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.CustomerAddr
         {
             return customerAddressCollection?.Any(q => q == defaultShippingAddress) == true;
         }
+
+        public bool CustomerAddressInfoShouldHaveCustomerAddressInCustomerAddressCollection(Guid customerAddressId, IEnumerable<CustomerAddress> customerAddressCollection)
+        {
+            return customerAddressCollection?.Any(q => q.Id == customerAddressId) == true;
+        }
     }
 }

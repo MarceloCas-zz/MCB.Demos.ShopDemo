@@ -35,5 +35,18 @@ namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.CustomerAddr
                 .WithMessage(ICustomerAddressSpecifications.CustomerAddressShouldHaveCustomerAddressTypeMessage)
                 .WithSeverity(ICustomerAddressSpecifications.CustomerAddressShouldHaveCustomerAddressTypeSeverity);
         }
+        public static void AddCustomerAddressShouldHaveId<TInput, TProperty>(
+            ICustomerAddressSpecifications customerAddressSpecifications,
+            ValidatorBase<TInput>.FluentValidationValidatorWrapper fluentValidationValidatorWrapper,
+            Expression<Func<TInput, TProperty>> propertyExpression,
+            Func<TInput, Guid> getIdFunction
+        )
+        {
+            fluentValidationValidatorWrapper.RuleFor(propertyExpression)
+                .Must((input, customerAddressType) => customerAddressSpecifications.IdShouldRequired(getIdFunction(input)))
+                .WithErrorCode(ICustomerAddressSpecifications.CustomerAddressShouldHaveCustomerAddressTypeErrorCode)
+                .WithMessage(ICustomerAddressSpecifications.CustomerAddressShouldHaveCustomerAddressTypeMessage)
+                .WithSeverity(ICustomerAddressSpecifications.CustomerAddressShouldHaveCustomerAddressTypeSeverity);
+        }
     }
 }

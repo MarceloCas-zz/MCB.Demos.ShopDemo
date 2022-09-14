@@ -47,5 +47,18 @@ namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.CustomerAddr
                 .WithMessage(ICustomerAddressInfoSpecifications.CustomerAddressInfoShouldHaveDefaultShippingAddressInCustomerAddressCollectionMessage)
                 .WithSeverity(ICustomerAddressInfoSpecifications.CustomerAddressInfoShouldHaveDefaultShippingAddressInCustomerAddressCollectionSeverity);
         }
+        public static void AddCustomerAddressInfoShouldHaveCustomerAddressInCustomerAddressCollection<TInput, TProperty>(
+            ICustomerAddressInfoSpecifications customerAddressInfoSpecifications,
+            ValidatorBase<TInput>.FluentValidationValidatorWrapper fluentValidationValidatorWrapper,
+            Expression<Func<TInput, TProperty>> propertyExpression,
+            Func<TInput, (Guid customerAddressId, IEnumerable<CustomerAddress> customerAddressCollection)> getFunction
+        )
+        {
+            fluentValidationValidatorWrapper.RuleFor(propertyExpression)
+                .Must((input, property) => customerAddressInfoSpecifications.CustomerAddressInfoShouldHaveCustomerAddressInCustomerAddressCollection(getFunction(input).customerAddressId, getFunction(input).customerAddressCollection))
+                .WithErrorCode(ICustomerAddressInfoSpecifications.CustomerAddressInfoShouldHaveDefaultShippingAddressInCustomerAddressCollectionErrorCode)
+                .WithMessage(ICustomerAddressInfoSpecifications.CustomerAddressInfoShouldHaveDefaultShippingAddressInCustomerAddressCollectionMessage)
+                .WithSeverity(ICustomerAddressInfoSpecifications.CustomerAddressInfoShouldHaveDefaultShippingAddressInCustomerAddressCollectionSeverity);
+        }
     }
 }

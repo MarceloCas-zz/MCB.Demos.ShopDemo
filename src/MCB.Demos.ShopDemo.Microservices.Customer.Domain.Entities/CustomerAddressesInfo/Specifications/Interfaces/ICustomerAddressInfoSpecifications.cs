@@ -26,5 +26,6 @@ namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.CustomerAddr
         bool CustomerAddressInfoShouldHaveCustomerAddressCollection(IEnumerable<CustomerAddress> customerAddressCollection);
         bool CustomerAddressInfoShouldHaveDefaultShippingAddress(CustomerAddress defaultShippingAddress);
         bool CustomerAddressInfoShouldHaveDefaultShippingAddressInCustomerAddressCollection(CustomerAddress defaultShippingAddress, IEnumerable<CustomerAddress> customerAddressCollection);
+        bool CustomerAddressInfoShouldHaveCustomerAddressInCustomerAddressCollection(Guid customerAddressId, IEnumerable<CustomerAddress> customerAddressCollection);
     }
 }
