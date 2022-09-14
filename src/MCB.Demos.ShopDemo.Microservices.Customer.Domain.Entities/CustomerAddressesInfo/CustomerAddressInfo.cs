@@ -100,7 +100,7 @@ namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.CustomerAddr
                 return this;
 
             // Process and Return
-            return SetDefaultShippingAddress(null)
+            return SetDefaultShippingAddress(customerAddress: null)
                 .RegisterModificationInternal<CustomerAddressInfo>(input.ExecutionUser, input.SourcePlatform);
         }
 
