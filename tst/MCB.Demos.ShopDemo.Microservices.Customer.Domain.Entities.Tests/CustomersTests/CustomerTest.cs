@@ -40,8 +40,7 @@ namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Tests.Custom
                 new ChangeCustomerNameInputShouldBeValidValidator(new CustomerSpecifications()),
                 new ChangeCustomerBirthDateInputShouldBeValidValidator(new CustomerSpecifications()),
                 new AddNewCustomerAddressInputShouldBeValidValidator(
-                    new CustomerAddressSpecifications(),
-                    new AddressValueObjectSpecifications()
+                    new CustomerAddressSpecifications()
                 ),
                 default,
                 default,
@@ -72,8 +71,7 @@ namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Tests.Custom
                     new ChangeCustomerNameInputShouldBeValidValidator(new CustomerSpecifications()),
                     new ChangeCustomerBirthDateInputShouldBeValidValidator(new CustomerSpecifications()),
                     new AddNewCustomerAddressInputShouldBeValidValidator(
-                        new CustomerAddressSpecifications(),
-                        new AddressValueObjectSpecifications()
+                        new CustomerAddressSpecifications()
                     ),
                     default,
                     default,

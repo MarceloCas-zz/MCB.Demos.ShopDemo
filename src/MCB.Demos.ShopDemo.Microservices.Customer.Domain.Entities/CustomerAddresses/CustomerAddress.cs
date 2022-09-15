@@ -3,6 +3,7 @@ using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.CustomerAddresse
 using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.CustomerAddresses.Inputs;
 using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.CustomerAddresses.Validators.Interfaces;
 using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.ValueObjects.AddressValueObjects;
+using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.ValueObjects.AddressValueObjects.Validators.Interfaces;
 
 namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.CustomerAddresses;
 
@@ -18,19 +19,22 @@ public class CustomerAddress
     private readonly IChangeCustomerAddressInputShouldBeValidValidator _changeCustomerAddressInputShouldBeValidValidator;
     private readonly IChangeCustomerFullAddressInfoInputShouldBeValidValidator _changeCustomerFullAddressInfoInputShouldBeValidValidator;
     private readonly IRegisterNewCustomerAddressInputShouldBeValidValidator _registerNewCustomerAddressInputShouldBeValidValidator;
+    private readonly IAddressValueObjectShouldBeValidValidator _addressValueObjectShouldBeValidValidator;
 
     // Constructors
     public CustomerAddress(
         IChangeCustomerAddressTypeInputShouldBeValidValidator changeCustomerAddressTypeInputShouldBeValidValidator,
         IChangeCustomerAddressInputShouldBeValidValidator changeCustomerAddressInputShouldBeValidValidator,
         IChangeCustomerFullAddressInfoInputShouldBeValidValidator changeCustomerFullAddressInfoInputShouldBeValidValidator,
-        IRegisterNewCustomerAddressInputShouldBeValidValidator registerNewCustomerAddressInputShouldBeValidValidator
+        IRegisterNewCustomerAddressInputShouldBeValidValidator registerNewCustomerAddressInputShouldBeValidValidator,
+        IAddressValueObjectShouldBeValidValidator addressValueObjectShouldBeValidValidator
     )
     {
         _changeCustomerAddressTypeInputShouldBeValidValidator = changeCustomerAddressTypeInputShouldBeValidValidator;
         _changeCustomerAddressInputShouldBeValidValidator = changeCustomerAddressInputShouldBeValidValidator;
         _changeCustomerFullAddressInfoInputShouldBeValidValidator = changeCustomerFullAddressInfoInputShouldBeValidValidator;
         _registerNewCustomerAddressInputShouldBeValidValidator = registerNewCustomerAddressInputShouldBeValidValidator;
+        _addressValueObjectShouldBeValidValidator = addressValueObjectShouldBeValidValidator;
     }
 
     // Public Methods
@@ -38,6 +42,8 @@ public class CustomerAddress
     {
         // Validate
         if (!Validate(() => _registerNewCustomerAddressInputShouldBeValidValidator.Validate(input)))
+            return this;
+        if (!Validate(() => _addressValueObjectShouldBeValidValidator.Validate(input.AddressValueObject)))
             return this;
 
         // Process
@@ -60,6 +66,8 @@ public class CustomerAddress
         // Validate
         if (!Validate(() => _changeCustomerAddressInputShouldBeValidValidator.Validate(input)))
             return this;
+        if (!Validate(() => _addressValueObjectShouldBeValidValidator.Validate(input.AddressValueObject)))
+            return this;
 
         // Process and return
         return SetAddress(input.AddressValueObject)
@@ -69,6 +77,8 @@ public class CustomerAddress
     {
         // Validate
         if (!Validate(() => _changeCustomerFullAddressInfoInputShouldBeValidValidator.Validate(input)))
+            return this;
+        if (!Validate(() => _addressValueObjectShouldBeValidValidator.Validate(input.AddressValueObject)))
             return this;
 
         // Process
@@ -90,7 +100,8 @@ public class CustomerAddress
         _changeCustomerAddressTypeInputShouldBeValidValidator,
         _changeCustomerAddressInputShouldBeValidValidator,
         _changeCustomerFullAddressInfoInputShouldBeValidValidator,
-        _registerNewCustomerAddressInputShouldBeValidValidator
+        _registerNewCustomerAddressInputShouldBeValidValidator,
+        _addressValueObjectShouldBeValidValidator
     );
 
     // Private Methods

@@ -36,7 +36,8 @@ namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Tests.Custom
                 new ChangeCustomerAddressTypeInputShouldBeValidValidator(new CustomerAddressSpecifications()),
                 new ChangeCustomerAddressInputShouldBeValidValidator(new CustomerAddressSpecifications()),
                 new ChangeCustomerFullAddressInfoInputShouldBeValidValidator(new CustomerAddressSpecifications()),
-                new RegisterNewCustomerAddressInputShouldBeValidValidator(new CustomerAddressSpecifications())
+                new RegisterNewCustomerAddressInputShouldBeValidValidator(new CustomerAddressSpecifications()),
+                default
             );
 
             // Assert

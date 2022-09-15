@@ -57,7 +57,8 @@ namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Tests.Fixtur
                     new ChangeCustomerAddressTypeInputShouldBeValidValidator(new CustomerAddressSpecifications()),
                     new ChangeCustomerAddressInputShouldBeValidValidator(new CustomerAddressSpecifications()),
                     new ChangeCustomerFullAddressInfoInputShouldBeValidValidator(new CustomerAddressSpecifications()),
-                    new RegisterNewCustomerAddressInputShouldBeValidValidator(new CustomerAddressSpecifications())
+                    new RegisterNewCustomerAddressInputShouldBeValidValidator(new CustomerAddressSpecifications()),
+                    default
                 ).RegisterNewCustomerAddress(new CustomerAddresses.Inputs.RegisterNewCustomerAddressInput(
                     tenantId: existingTenantId ?? GenerateNewTenantId(),
                     customerAddressType: existingCustomerAdressType ?? EnumUtils.GetRandomEnumValue<CustomerAddressType>(),
@@ -125,8 +126,7 @@ namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Tests.Fixtur
                     new ChangeCustomerNameInputShouldBeValidValidator(new CustomerSpecifications()),
                     new ChangeCustomerBirthDateInputShouldBeValidValidator(new CustomerSpecifications()),
                     new AddNewCustomerAddressInputShouldBeValidValidator(
-                        new CustomerAddressSpecifications(),
-                        new AddressValueObjectSpecifications()
+                        new CustomerAddressSpecifications()
                     ),
                     default,
                     default,
