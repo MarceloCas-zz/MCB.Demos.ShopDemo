@@ -42,7 +42,8 @@ namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Tests.Custom
                 new AddNewCustomerAddressInputShouldBeValidValidator(
                     new CustomerAddressSpecifications(),
                     new AddressValueObjectSpecifications()
-                )
+                ),
+                default
             );
 
             // Assert
@@ -71,7 +72,8 @@ namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Tests.Custom
                     new AddNewCustomerAddressInputShouldBeValidValidator(
                         new CustomerAddressSpecifications(),
                         new AddressValueObjectSpecifications()
-                    )
+                    ),
+                    default
                 ).RegisterNewCustomer(
                     new RegisterNewCustomerInput(
                         tenantId,
@@ -166,7 +168,7 @@ namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Tests.Custom
             // Act
             var newDefaultShippingAddress = customer.ChangeDefaultShippingAddress(new ChangeCustomerDefaultShippingAddressInput(
                 tenantId,
-                newShippingAddress,
+                newShippingAddress.Id,
                 executionUser,
                 sourcePlatform
             ));
@@ -200,7 +202,7 @@ namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Tests.Custom
 
             customer.ChangeDefaultShippingAddress(new ChangeCustomerDefaultShippingAddressInput(
                 tenantId,
-                newShippingAddress,
+                newShippingAddress.Id,
                 executionUser,
                 sourcePlatform
             ));

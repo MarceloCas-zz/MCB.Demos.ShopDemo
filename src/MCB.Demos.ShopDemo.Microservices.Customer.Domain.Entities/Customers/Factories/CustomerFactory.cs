@@ -11,19 +11,22 @@ namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Customers.Fa
         private readonly IChangeCustomerNameInputShouldBeValidValidator _changeCustomerNameInputShouldBeValidValidator;
         private readonly IChangeCustomerBirthDateInputShouldBeValidValidator _changeCustomerBirthDateInputShouldBeValidValidator;
         private readonly IAddNewCustomerAddressInputShouldBeValidValidator _addNewCustomerAddressInputShouldBeValidValidator;
+        private readonly IChangeCustomerDefaultShippingAddressInputShouldBeValidValidator _changeCustomerDefaultShippingAddressInputShouldBeValidValidator;
 
         // Constructors
         public CustomerFactory(
             IRegisterNewCustomerInputShouldBeValidValidator customerRegisterNewInputShouldBeValidValidator,
             IChangeCustomerNameInputShouldBeValidValidator changeCustomerNameInputShouldBeValidValidator,
             IChangeCustomerBirthDateInputShouldBeValidValidator changeCustomerBirthDateInputShouldBeValidValidator,
-            IAddNewCustomerAddressInputShouldBeValidValidator addNewCustomerAddressInputShouldBeValidValidator
+            IAddNewCustomerAddressInputShouldBeValidValidator addNewCustomerAddressInputShouldBeValidValidator,
+            IChangeCustomerDefaultShippingAddressInputShouldBeValidValidator changeCustomerDefaultShippingAddressInputShouldBeValidValidator
         )
         {
             _customerRegisterNewInputShouldBeValidValidator = customerRegisterNewInputShouldBeValidValidator;
             _changeCustomerNameInputShouldBeValidValidator = changeCustomerNameInputShouldBeValidValidator;
             _changeCustomerBirthDateInputShouldBeValidValidator = changeCustomerBirthDateInputShouldBeValidValidator;
             _addNewCustomerAddressInputShouldBeValidValidator = addNewCustomerAddressInputShouldBeValidValidator;
+            _changeCustomerDefaultShippingAddressInputShouldBeValidValidator = changeCustomerDefaultShippingAddressInputShouldBeValidValidator;
         }
 
         // Public Methods
@@ -33,7 +36,8 @@ namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Customers.Fa
                 _customerRegisterNewInputShouldBeValidValidator,
                 _changeCustomerNameInputShouldBeValidValidator,
                 _changeCustomerBirthDateInputShouldBeValidValidator,
-                _addNewCustomerAddressInputShouldBeValidValidator
+                _addNewCustomerAddressInputShouldBeValidValidator,
+                _changeCustomerDefaultShippingAddressInputShouldBeValidValidator
             );
         }
     }

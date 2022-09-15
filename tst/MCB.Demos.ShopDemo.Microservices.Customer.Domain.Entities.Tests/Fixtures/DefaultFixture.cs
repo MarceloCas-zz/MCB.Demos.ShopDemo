@@ -127,7 +127,8 @@ namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Tests.Fixtur
                     new AddNewCustomerAddressInputShouldBeValidValidator(
                         new CustomerAddressSpecifications(),
                         new AddressValueObjectSpecifications()
-                    )
+                    ),
+                    default
                 ).RegisterNewCustomer(
                     new Customers.Inputs.RegisterNewCustomerInput(
                         existingTenantId ?? GenerateNewTenantId(),
