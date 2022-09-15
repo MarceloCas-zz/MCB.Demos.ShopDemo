@@ -128,6 +128,8 @@ namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Tests.Fixtur
                         new CustomerAddressSpecifications(),
                         new AddressValueObjectSpecifications()
                     ),
+                    default,
+                    default,
                     default
                 ).RegisterNewCustomer(
                     new Customers.Inputs.RegisterNewCustomerInput(

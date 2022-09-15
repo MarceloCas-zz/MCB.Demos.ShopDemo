@@ -1,10 +1,8 @@
 ﻿using MCB.Core.Domain.Entities.Abstractions;
 using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Base;
 using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.CustomerAddresses;
-using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.CustomerAddresses.Specifications;
 using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.CustomerAddressesInfo;
-using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.CustomerAddressesInfo.Specifications;
-using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.CustomerAddressesInfo.Validators;
+using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.CustomerAddressesInfo.Factories.Interfaces;
 using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Customers.Inputs;
 using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Customers.Validators.Interfaces;
 
@@ -31,6 +29,10 @@ namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Customers
         private readonly IChangeCustomerBirthDateInputShouldBeValidValidator _changeCustomerBirthDateInputShouldBeValidValidator;
         private readonly IAddNewCustomerAddressInputShouldBeValidValidator _addNewCustomerAddressInputShouldBeValidValidator;
         private readonly IChangeCustomerDefaultShippingAddressInputShouldBeValidValidator _changeCustomerDefaultShippingAddressInputShouldBeValidValidator;
+        private readonly IClearCustomerDefaultShippingAddressInputShouldBeValidValidator _clearCustomerDefaultShippingAddressInputShouldBeValidValidator;
+
+        // Factories
+        private readonly ICustomerAddressInfoFactory _customerAddressInfoFactory;
 
         // Constructors
         public Customer(
@@ -38,7 +40,9 @@ namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Customers
             IChangeCustomerNameInputShouldBeValidValidator changeCustomerNameInputShouldBeValidValidator,
             IChangeCustomerBirthDateInputShouldBeValidValidator changeCustomerBirthDateInputShouldBeValidValidator,
             IAddNewCustomerAddressInputShouldBeValidValidator addNewCustomerAddressInputShouldBeValidValidator,
-            IChangeCustomerDefaultShippingAddressInputShouldBeValidValidator changeCustomerDefaultShippingAddressInputShouldBeValidValidator
+            IChangeCustomerDefaultShippingAddressInputShouldBeValidValidator changeCustomerDefaultShippingAddressInputShouldBeValidValidator,
+            IClearCustomerDefaultShippingAddressInputShouldBeValidValidator clearCustomerDefaultShippingAddressInputShouldBeValidValidator,
+            ICustomerAddressInfoFactory customerAddressInfoFactory
         )
         {
             FirstName = string.Empty;
@@ -49,18 +53,10 @@ namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Customers
             _changeCustomerBirthDateInputShouldBeValidValidator = changeCustomerBirthDateInputShouldBeValidValidator;
             _addNewCustomerAddressInputShouldBeValidValidator = addNewCustomerAddressInputShouldBeValidValidator;
             _changeCustomerDefaultShippingAddressInputShouldBeValidValidator = changeCustomerDefaultShippingAddressInputShouldBeValidValidator;
+            _clearCustomerDefaultShippingAddressInputShouldBeValidValidator = clearCustomerDefaultShippingAddressInputShouldBeValidValidator;
 
-            _customerAddressInfo = new CustomerAddressInfo(
-                customerAddressFactory: null,
-                registerNewCustomerAddressInputShouldBeValidFactory: null,
-                new RegisterNewCustomerAddressInfoInputShouldBeValidValidator(new CustomerAddressSpecifications()),
-                new ChangeDefaultCustomerAddressInfoShippingAddressInputShouldBeValidValidator(new CustomerAddressSpecifications()),
-                new ClearDefaultCustomerAddressInfoShippingAddressInputShouldBeValidValidator(),
-                new AddNewCustomerAddressInfoCustomerAddressInputShouldBeValidValidator(new CustomerAddressSpecifications()),
-                new CustomerAddressInfoShouldHaveCustomerAddressValidator(new CustomerAddressInfoSpecifications()),
-                new RemoveCustomerAddressInfoCustomerAddressInputShouldBeValidValidator(default),
-                default
-            );
+            _customerAddressInfoFactory = customerAddressInfoFactory;
+            _customerAddressInfo = customerAddressInfoFactory.Create();
         }
 
         // Public Methods
@@ -119,7 +115,8 @@ namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Customers
         public Customer ClearDefaultShippingAddress(ClearCustomerDefaultShippingAddressInput input)
         {
             // Validate
-            // TODO: Add validation
+            if (!Validate(() => _clearCustomerDefaultShippingAddressInputShouldBeValidValidator.Validate(input)))
+                return default;
 
             // Process
             _customerAddressInfo.ClearDefaultCustomerAddressInfoShippingAddress(new CustomerAddressesInfo.Inputs.ClearDefaultCustomerAddressInfoShippingAddressInput(
@@ -214,7 +211,9 @@ namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Customers
                 _changeCustomerNameInputShouldBeValidValidator,
                 _changeCustomerBirthDateInputShouldBeValidValidator,
                 _addNewCustomerAddressInputShouldBeValidValidator,
-                _changeCustomerDefaultShippingAddressInputShouldBeValidValidator
+                _changeCustomerDefaultShippingAddressInputShouldBeValidValidator,
+                _clearCustomerDefaultShippingAddressInputShouldBeValidValidator,
+                _customerAddressInfoFactory
             );
 
         // Private Methods

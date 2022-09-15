@@ -43,6 +43,8 @@ namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Tests.Custom
                     new CustomerAddressSpecifications(),
                     new AddressValueObjectSpecifications()
                 ),
+                default,
+                default,
                 default
             );
 
@@ -73,6 +75,8 @@ namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Tests.Custom
                         new CustomerAddressSpecifications(),
                         new AddressValueObjectSpecifications()
                     ),
+                    default,
+                    default,
                     default
                 ).RegisterNewCustomer(
                     new RegisterNewCustomerInput(
