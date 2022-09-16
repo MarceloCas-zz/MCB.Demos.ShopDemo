@@ -26,7 +26,7 @@ public interface ICustomerAddressInfoSpecifications
     public static readonly string CustomerAddressInfoShouldHaveCustomerAddressInCustomerAddressCollectionMessage = nameof(CustomerAddressInfoShouldHaveCustomerAddressInCustomerAddressCollectionMessage);
     public static readonly Severity CustomerAddressInfoShouldHaveCustomerAddressInCustomerAddressCollectionSeverity = Severity.Error;
 
-    // Public Methods
+    // Methods
     bool CustomerAddressInfoShouldHaveCustomerAddressCollection(IEnumerable<CustomerAddress> customerAddressCollection);
     bool CustomerAddressInfoShouldHaveDefaultShippingAddress(CustomerAddress defaultShippingAddress);
     bool CustomerAddressInfoShouldHaveDefaultShippingAddressInCustomerAddressCollection(CustomerAddress defaultShippingAddress, IEnumerable<CustomerAddress> customerAddressCollection);

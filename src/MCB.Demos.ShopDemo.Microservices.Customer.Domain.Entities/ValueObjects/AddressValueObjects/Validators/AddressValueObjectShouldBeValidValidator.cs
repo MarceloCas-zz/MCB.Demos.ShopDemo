@@ -20,6 +20,7 @@ public sealed class AddressValueObjectShouldBeValidValidator
         _addressValueObjectSpecifications = addressValueObjectSpecifications;
     }
 
+    // Protected Methods
     protected override void ConfigureFluentValidationConcreteValidator(FluentValidationValidatorWrapper fluentValidationValidatorWrapper)
     {
         // Address Value Object - Street

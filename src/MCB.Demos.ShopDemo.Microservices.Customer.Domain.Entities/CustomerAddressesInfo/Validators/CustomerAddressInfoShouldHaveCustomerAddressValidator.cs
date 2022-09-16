@@ -21,6 +21,7 @@ public sealed class CustomerAddressInfoShouldHaveCustomerAddressValidator
         _customerAddressInfoSpecifications = customerAddressInfoSpecifications;
     }
 
+    // Protected Methods
     protected override void ConfigureFluentValidationConcreteValidator(FluentValidationValidatorWrapper fluentValidationValidatorWrapper)
     {
         CustomerAddressInfoValidatorWrapper.AddCustomerAddressInfoShouldHaveCustomerAddressInCustomerAddressCollection(

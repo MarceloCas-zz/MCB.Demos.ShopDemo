@@ -33,7 +33,7 @@ public interface ICustomerSpecifications
     public static readonly string CustomerShouldHaveValidBirthDateMessage = nameof(CustomerShouldHaveValidBirthDateMessage);
     public static readonly Severity CustomerShouldHaveValidBirthDateSeverity = Severity.Error;
 
-    // Public Methods
+    // Methods
     bool CustomerShouldHaveFirstName(string firstName);
     bool CustomerShouldHaveFirstNameMaximumLength(string firstName);
 

@@ -214,7 +214,7 @@ public sealed class CustomerAddressInfo
         return this;
     }
 
-    // Protected Abstract Methods
+    // Protected Methods
     protected override DomainEntityBase CreateInstanceForCloneInternal() => new CustomerAddressInfo(
         _customerAddressFactory,
         _registerNewCustomerAddressInputFactory,

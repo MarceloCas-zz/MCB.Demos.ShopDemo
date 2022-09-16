@@ -11,7 +11,7 @@ public sealed record RegisterNewCustomerAddressInput
     public CustomerAddressType CustomerAddressType { get; }
     public AddressValueObject AddressValueObject { get; }
 
-    // Public Methods
+    // Constructors
     public RegisterNewCustomerAddressInput(
         Guid tenantId,
         CustomerAddressType customerAddressType,

@@ -58,7 +58,7 @@ public interface IAddressValueObjectSpecifications
     public static readonly string AddressValueObjectShouldHaveZipCodeMaximumLengthMessage = nameof(AddressValueObjectShouldHaveZipCodeMaximumLengthMessage);
     public static readonly Severity AddressValueObjectShouldHaveZipCodeMaximumLengthSeverity = Severity.Error;
 
-    // Public Methods
+    // Methods
     bool AddressValueObjectShouldHaveStreet(string street);
     bool AddressValueObjectShouldHaveStreetMaximumLength(string street);
 

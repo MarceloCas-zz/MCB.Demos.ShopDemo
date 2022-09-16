@@ -5,6 +5,7 @@ namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.CustomerAddr
 public sealed record ClearDefaultCustomerAddressInfoShippingAddressInput
     : InputBase
 {
+    // Constructors
     public ClearDefaultCustomerAddressInfoShippingAddressInput(
         Guid tenantId,
         string executionUser,

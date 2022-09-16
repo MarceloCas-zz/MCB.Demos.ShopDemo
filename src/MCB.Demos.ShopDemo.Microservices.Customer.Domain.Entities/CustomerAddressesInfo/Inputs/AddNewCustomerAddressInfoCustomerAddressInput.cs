@@ -7,7 +7,7 @@ namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.CustomerAddr
 public sealed record AddNewCustomerAddressInfoCustomerAddressInput
     : InputBase
 {
-    // Public Methods
+    // Properties
     public CustomerAddressType CustomerAddressType { get; } 
     public AddressValueObject AddressValueObject { get; }
 

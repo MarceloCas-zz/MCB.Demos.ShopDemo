@@ -7,10 +7,12 @@ namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Customers.In
 public sealed record ChangeCustomerAddressInput
     : InputBase
 {
+    // Properties
     public Guid CustomerAddressId { get; }
     public CustomerAddressType CustomerAddressType { get; }
     public AddressValueObject AddressValueObject { get; }
 
+    // Constructors
     public ChangeCustomerAddressInput(
         Guid tenantId,
         Guid customerAddressId,

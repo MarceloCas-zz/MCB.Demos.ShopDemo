@@ -25,7 +25,6 @@ public sealed class ChangeCustomerBirthDateInputShouldBeValidValidator
     // Protected Methods
     protected override void ConfigureFluentValidationConcreteValidatorInternal(ValidatorBase<ChangeCustomerBirthDateInput>.FluentValidationValidatorWrapper fluentValidationValidatorWrapper)
     {
-        // BirthDate
         CustomerValidatorWrapper.AddCustomerShouldHaveBirthDate(
             _customerSpecifications,
             fluentValidationValidatorWrapper,

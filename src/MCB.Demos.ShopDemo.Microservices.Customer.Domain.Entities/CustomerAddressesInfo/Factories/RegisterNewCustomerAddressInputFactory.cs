@@ -7,6 +7,7 @@ namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.CustomerAddr
 public sealed class RegisterNewCustomerAddressInputFactory
     : IRegisterNewCustomerAddressInputFactory
 {
+    // Public Methods
     public RegisterNewCustomerAddressInput Create(RegisterNewCustomerAddressInfoInput parameter)
     {
         return new RegisterNewCustomerAddressInput(

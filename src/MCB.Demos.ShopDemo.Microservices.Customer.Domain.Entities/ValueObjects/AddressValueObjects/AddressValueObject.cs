@@ -2,6 +2,7 @@
 
 public struct AddressValueObject
 {
+    // Properties
     public string Street { get; }
     public string Number { get; }
     public string City { get; }
@@ -9,6 +10,7 @@ public struct AddressValueObject
     public string Country { get; }
     public string ZipCode { get; }
 
+    // Constructors
     public AddressValueObject(
         string street,
         string number,

@@ -8,6 +8,7 @@ public sealed class CustomerAddressInfoSpecifications
     : DomainEntitySpecifications,
     ICustomerAddressInfoSpecifications
 {
+    // Public Methods
     public bool CustomerAddressInfoShouldHaveDefaultShippingAddress(CustomerAddress defaultShippingAddress)
     {
         return defaultShippingAddress != null;

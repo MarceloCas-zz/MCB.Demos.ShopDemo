@@ -5,8 +5,10 @@ namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Customers.In
 public sealed record ChangeCustomerBirthDateInput
     : InputBase
 {
+    // Properties
     public DateOnly BirthDate { get; }
 
+    // Constructors
     public ChangeCustomerBirthDateInput(
         Guid tenantId,
         DateOnly birthDate,

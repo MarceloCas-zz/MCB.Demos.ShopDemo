@@ -22,6 +22,7 @@ public sealed class ChangeCustomerAddressInputShouldBeValidValidator
         _customerAddressSpecifications = customerAddressSpecifications;
     }
 
+    // Protected Methods
     protected override void ConfigureFluentValidationConcreteValidatorInternal(ValidatorBase<ChangeCustomerAddressInput>.FluentValidationValidatorWrapper fluentValidationValidatorWrapper)
     {
         CustomerAddressValidatorWrapper.AddCustomerAddressShouldHaveId(

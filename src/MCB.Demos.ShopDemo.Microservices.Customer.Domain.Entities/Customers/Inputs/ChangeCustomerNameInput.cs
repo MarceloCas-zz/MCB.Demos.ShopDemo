@@ -5,9 +5,11 @@ namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Customers.In
 public sealed record ChangeCustomerNameInput
     : InputBase
 {
+    // Properties
     public string FirstName { get; }
     public string LastName { get; }
 
+    // Constructors
     public ChangeCustomerNameInput(
         Guid tenantId,
         string firstName,

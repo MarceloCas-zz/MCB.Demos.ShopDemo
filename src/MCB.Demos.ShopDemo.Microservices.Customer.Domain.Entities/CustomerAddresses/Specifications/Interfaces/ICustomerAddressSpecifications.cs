@@ -18,7 +18,7 @@ public interface ICustomerAddressSpecifications
     public static readonly string CustomerAddressShouldHaveAddressValueObjectMessage = nameof(CustomerAddressShouldHaveAddressValueObjectMessage);
     public static readonly Severity CustomerAddressShouldHaveAddressValueObjectSeverity = Severity.Error;
 
-    // Public Methods
+    // Methods
     bool CustomerAddressShouldHaveCustomerAddressType(CustomerAddressType customerAddressType);
     bool CustomerAddressShouldHaveAddressValueObject(AddressValueObject addressValueObject);
 }
