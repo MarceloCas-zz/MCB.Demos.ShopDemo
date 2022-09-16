@@ -2,7 +2,7 @@
 
 namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Customers.Inputs;
 
-public record RegisterNewCustomerInput
+public sealed record RegisterNewCustomerInput
     : InputBase
 {
     public string FirstName { get; }

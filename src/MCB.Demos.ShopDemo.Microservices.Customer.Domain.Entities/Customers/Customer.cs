@@ -8,7 +8,7 @@ using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Customers.Valida
 
 namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Customers;
 
-public class Customer
+public sealed class Customer
     : DomainEntityBase,
     IAggregationRoot
 {

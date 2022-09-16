@@ -4,7 +4,7 @@ using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Customers.Specif
 
 namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Customers.Specifications;
 
-public class CustomerSpecifications
+public sealed class CustomerSpecifications
     : DomainEntitySpecifications,
     ICustomerSpecifications
 {

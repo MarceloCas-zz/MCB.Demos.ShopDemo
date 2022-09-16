@@ -4,7 +4,7 @@ using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.ValueObjects.Add
 
 namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.CustomerAddresses.Factories;
 
-public class CustomerAddressFactory
+public sealed class CustomerAddressFactory
     : ICustomerAddressFactory
 {
     // Fields

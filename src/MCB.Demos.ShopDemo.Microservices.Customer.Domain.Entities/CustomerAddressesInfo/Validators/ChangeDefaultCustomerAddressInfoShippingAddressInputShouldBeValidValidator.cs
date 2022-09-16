@@ -7,7 +7,7 @@ using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.CustomerAddresse
 
 namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.CustomerAddressesInfo.Validators;
 
-public class ChangeDefaultCustomerAddressInfoShippingAddressInputShouldBeValidValidator
+public sealed class ChangeDefaultCustomerAddressInfoShippingAddressInputShouldBeValidValidator
     : InputBaseValidator<ChangeDefaultCustomerAddressInfoShippingAddressInput>,
     IChangeDefaultCustomerAddressInfoShippingAddressInputShouldBeValidValidator
 {

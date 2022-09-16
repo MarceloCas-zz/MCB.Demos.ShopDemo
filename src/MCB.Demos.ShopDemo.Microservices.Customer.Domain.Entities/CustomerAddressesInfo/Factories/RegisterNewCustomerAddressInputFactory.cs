@@ -4,7 +4,7 @@ using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.CustomerAddresse
 
 namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.CustomerAddressesInfo.Factories;
 
-public class RegisterNewCustomerAddressInputFactory
+public sealed class RegisterNewCustomerAddressInputFactory
     : IRegisterNewCustomerAddressInputFactory
 {
     public RegisterNewCustomerAddressInput Create(RegisterNewCustomerAddressInfoInput parameter)

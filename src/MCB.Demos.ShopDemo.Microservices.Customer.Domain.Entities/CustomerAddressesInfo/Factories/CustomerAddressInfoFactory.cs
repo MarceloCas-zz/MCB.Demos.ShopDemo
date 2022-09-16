@@ -5,7 +5,7 @@ using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.CustomerAddresse
 
 namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.CustomerAddressesInfo.Factories;
 
-public class CustomerAddressInfoFactory
+public sealed class CustomerAddressInfoFactory
     : ICustomerAddressInfoFactory
 {
     // Fields

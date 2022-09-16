@@ -2,7 +2,7 @@
 
 namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.CustomerAddressesInfo.Inputs;
 
-public record ChangeDefaultCustomerAddressInfoShippingAddressInput
+public sealed record ChangeDefaultCustomerAddressInfoShippingAddressInput
     : InputBase
 {
     // Properties

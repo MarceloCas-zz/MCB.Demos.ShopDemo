@@ -4,7 +4,7 @@ using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.ValueObjects.Add
 
 namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.CustomerAddresses.Inputs;
 
-public record RegisterNewCustomerAddressInput
+public sealed record RegisterNewCustomerAddressInput
     : InputBase
 {
     // Properties

@@ -2,7 +2,7 @@
 
 namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.ValueObjects.AddressValueObjects.Specifications;
 
-public class AddressValueObjectSpecifications
+public sealed class AddressValueObjectSpecifications
     : IAddressValueObjectSpecifications
 {
     // Street

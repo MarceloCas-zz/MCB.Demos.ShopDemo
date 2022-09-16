@@ -5,7 +5,7 @@ using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.ValueObjects.Add
 
 namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.CustomerAddresses.Specifications;
 
-public class CustomerAddressSpecifications
+public sealed class CustomerAddressSpecifications
     : DomainEntitySpecifications,
     ICustomerAddressSpecifications
 {

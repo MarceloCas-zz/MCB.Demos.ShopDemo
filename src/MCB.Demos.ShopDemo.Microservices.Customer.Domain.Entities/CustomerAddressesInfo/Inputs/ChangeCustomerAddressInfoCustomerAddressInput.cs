@@ -4,7 +4,7 @@ using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.ValueObjects.Add
 
 namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.CustomerAddressesInfo.Inputs;
 
-public record ChangeCustomerAddressInfoCustomerAddressInput
+public sealed record ChangeCustomerAddressInfoCustomerAddressInput
     : InputBase
 {
     // Properties

@@ -2,7 +2,7 @@
 
 namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Customers.Inputs;
 
-public record RemoveCustomerAddressInput
+public sealed record RemoveCustomerAddressInput
     : InputBase
 {
     public Guid CustomerAddressId { get; }

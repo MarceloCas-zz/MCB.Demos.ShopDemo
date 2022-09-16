@@ -4,7 +4,7 @@ using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Customers.Valida
 
 namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Customers.Factories;
 
-public class CustomerFactory
+public sealed class CustomerFactory
     : ICustomerFactory
 {
     // Fields

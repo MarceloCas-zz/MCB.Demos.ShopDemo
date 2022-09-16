@@ -2,7 +2,7 @@
 
 namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Customers.Inputs;
 
-public record ChangeCustomerNameInput
+public sealed record ChangeCustomerNameInput
     : InputBase
 {
     public string FirstName { get; }

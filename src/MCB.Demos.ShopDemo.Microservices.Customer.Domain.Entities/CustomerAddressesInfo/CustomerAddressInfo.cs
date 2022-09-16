@@ -7,7 +7,7 @@ using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.CustomerAddresse
 
 namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.CustomerAddressesInfo;
 
-public class CustomerAddressInfo
+public sealed class CustomerAddressInfo
     : DomainEntityBase
 {
     // Fields

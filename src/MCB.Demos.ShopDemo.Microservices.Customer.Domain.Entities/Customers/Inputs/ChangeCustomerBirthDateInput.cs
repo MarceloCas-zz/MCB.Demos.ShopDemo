@@ -2,7 +2,7 @@
 
 namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Customers.Inputs;
 
-public record ChangeCustomerBirthDateInput
+public sealed record ChangeCustomerBirthDateInput
     : InputBase
 {
     public DateOnly BirthDate { get; }

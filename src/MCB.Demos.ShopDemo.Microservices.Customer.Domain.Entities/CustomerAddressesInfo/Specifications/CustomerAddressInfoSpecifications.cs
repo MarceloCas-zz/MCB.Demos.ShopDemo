@@ -4,7 +4,7 @@ using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.CustomerAddresse
 
 namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.CustomerAddressesInfo.Specifications;
 
-public class CustomerAddressInfoSpecifications
+public sealed class CustomerAddressInfoSpecifications
     : DomainEntitySpecifications,
     ICustomerAddressInfoSpecifications
 {

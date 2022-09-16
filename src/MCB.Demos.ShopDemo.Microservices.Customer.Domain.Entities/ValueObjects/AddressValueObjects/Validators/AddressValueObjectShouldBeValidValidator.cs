@@ -5,7 +5,7 @@ using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.ValueObjects.Add
 
 namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.ValueObjects.AddressValueObjects.Validators;
 
-public class AddressValueObjectShouldBeValidValidator
+public sealed class AddressValueObjectShouldBeValidValidator
     : ValidatorBase<AddressValueObject>,
     IAddressValueObjectShouldBeValidValidator
 {

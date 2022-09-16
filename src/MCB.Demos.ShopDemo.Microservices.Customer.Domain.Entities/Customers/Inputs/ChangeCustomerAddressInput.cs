@@ -4,7 +4,7 @@ using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.ValueObjects.Add
 
 namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Customers.Inputs;
 
-public record ChangeCustomerAddressInput
+public sealed record ChangeCustomerAddressInput
     : InputBase
 {
     public Guid CustomerAddressId { get; }
