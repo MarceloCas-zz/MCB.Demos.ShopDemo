@@ -2,27 +2,27 @@
 using MCB.Core.Infra.CrossCutting.DesignPatterns.Validator;
 using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.CustomerAddresses.Specifications.Interfaces;
 using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.CustomerAddresses.Validators.Wrappers;
-using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.CustomerAddressesInfo.Inputs;
-using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.CustomerAddressesInfo.Validators.Interfaces;
+using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Customers.Inputs;
+using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Customers.Validators.Interfaces;
 
-namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.CustomerAddressesInfo.Validators
+namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Customers.Validators
 {
-    public class ChangeCustomerAddressInfoCustomerAddressInputShouldBeValidValidator
-        : InputBaseValidator<ChangeCustomerAddressInfoCustomerAddressInput>,
-        IChangeCustomerAddressInfoCustomerAddressInputShouldBeValidValidator
+    public class ChangeCustomerAddressInputShouldBeValidValidator
+        : InputBaseValidator<ChangeCustomerAddressInput>,
+        IChangeCustomerAddressInputShouldBeValidValidator
     {
         // Fields
         private readonly ICustomerAddressSpecifications _customerAddressSpecifications;
 
         // Constructors
-        public ChangeCustomerAddressInfoCustomerAddressInputShouldBeValidValidator(
+        public ChangeCustomerAddressInputShouldBeValidValidator(
             ICustomerAddressSpecifications customerAddressSpecifications
         )
         {
             _customerAddressSpecifications = customerAddressSpecifications;
         }
 
-        protected override void ConfigureFluentValidationConcreteValidatorInternal(ValidatorBase<ChangeCustomerAddressInfoCustomerAddressInput>.FluentValidationValidatorWrapper fluentValidationValidatorWrapper)
+        protected override void ConfigureFluentValidationConcreteValidatorInternal(ValidatorBase<ChangeCustomerAddressInput>.FluentValidationValidatorWrapper fluentValidationValidatorWrapper)
         {
             CustomerAddressValidatorWrapper.AddCustomerAddressShouldHaveId(
                 _customerAddressSpecifications,
