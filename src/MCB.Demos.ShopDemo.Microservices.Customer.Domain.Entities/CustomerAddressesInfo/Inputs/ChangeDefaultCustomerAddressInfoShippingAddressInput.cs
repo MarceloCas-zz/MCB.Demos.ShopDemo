@@ -6,7 +6,7 @@ public sealed record ChangeDefaultCustomerAddressInfoShippingAddressInput
     : InputBase
 {
     // Properties
-    public Guid CustomerAddressId { get; set; }
+    public Guid CustomerAddressId { get; }
 
     // Constructors
     public ChangeDefaultCustomerAddressInfoShippingAddressInput(
