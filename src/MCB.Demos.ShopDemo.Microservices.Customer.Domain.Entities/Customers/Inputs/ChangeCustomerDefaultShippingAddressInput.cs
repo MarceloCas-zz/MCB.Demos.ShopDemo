@@ -5,7 +5,7 @@ namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Customers.In
 public sealed record ChangeCustomerDefaultShippingAddressInput
     : InputBase
 {
-    public Guid CustomerAddressId { get; private set; }
+    public Guid CustomerAddressId { get; }
 
     public ChangeCustomerDefaultShippingAddressInput(
         Guid tenantId,
