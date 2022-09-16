@@ -167,6 +167,7 @@ public sealed class CustomerAddressInfo
         var customerAddress = _customerAddressCollection.FirstOrDefault(q => q.Id == input.CustomerAddressId);
 
         // Process
+        // TODO: Create factory
         customerAddress.ChangeCustomerFullAddressInfo(new CustomerAddresses.Inputs.ChangeCustomerFullAddressInfoInput(
             input.TenantId,
             input.CustomerAddressType, 

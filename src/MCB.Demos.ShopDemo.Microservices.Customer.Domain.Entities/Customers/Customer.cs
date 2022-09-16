@@ -105,6 +105,7 @@ public sealed class Customer
             return default;
         
         // Process
+        // TODO: Create factory
         var newDefaultShippingAddress = _customerAddressInfo.ChangeDefaultCustomerAddressInfoShippingAddress(
             new CustomerAddressesInfo.Inputs.ChangeDefaultCustomerAddressInfoShippingAddressInput(
                 TenantId,
@@ -125,6 +126,7 @@ public sealed class Customer
             return default;
 
         // Process
+        // TODO: Create factory
         _customerAddressInfo.ClearDefaultCustomerAddressInfoShippingAddress(new CustomerAddressesInfo.Inputs.ClearDefaultCustomerAddressInfoShippingAddressInput(
             TenantId,
             input.ExecutionUser, 
@@ -143,6 +145,7 @@ public sealed class Customer
             return default;
 
         // Process Customer Address
+        // TODO: Create factory
         var addedCustomerAddress = _customerAddressInfo.AddNewCustomerAddressInfoCustomerAddress(
             new CustomerAddressesInfo.Inputs.AddNewCustomerAddressInfoCustomerAddressInput(
                 TenantId,
@@ -173,6 +176,7 @@ public sealed class Customer
             return default;
 
         // Process
+        // TODO: Create factory
         var removedCustomerAddress = _customerAddressInfo.RemoveCustomerAddressInfoCustomerAddress(new CustomerAddressesInfo.Inputs.RemoveCustomerAddressInfoCustomerAddressInput(
             TenantId,
             input.CustomerAddressId, 
@@ -191,6 +195,7 @@ public sealed class Customer
             return default;
 
         // Process
+        // TODO: Create factory
         var changedCustomerAddress = _customerAddressInfo.ChangeCustomerAddressInfoCustomerAddress(new CustomerAddressesInfo.Inputs.ChangeCustomerAddressInfoCustomerAddressInput(
             TenantId,
             input.CustomerAddressId,
