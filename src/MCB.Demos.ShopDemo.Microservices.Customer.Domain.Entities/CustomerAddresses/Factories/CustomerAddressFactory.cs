@@ -2,44 +2,43 @@
 using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.CustomerAddresses.Validators.Interfaces;
 using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.ValueObjects.AddressValueObjects.Validators.Interfaces;
 
-namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.CustomerAddresses.Factories
+namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.CustomerAddresses.Factories;
+
+public class CustomerAddressFactory
+    : ICustomerAddressFactory
 {
-    public class CustomerAddressFactory
-        : ICustomerAddressFactory
+    // Fields
+    private readonly IChangeCustomerAddressTypeInputShouldBeValidValidator _changeCustomerAddressTypeValidator;
+    private readonly IChangeCustomerAddressInputShouldBeValidValidator _changeCustomerAddressValidator;
+    private readonly IChangeCustomerFullAddressInfoInputShouldBeValidValidator _changeCustomerFullAddressInfoValidator;
+    private readonly IRegisterNewCustomerAddressInputShouldBeValidValidator _registerNewCustomerAddressValidator;
+    private readonly IAddressValueObjectShouldBeValidValidator _addressValueObjectShouldBeValidValidator;
+
+    // Constructors
+    public CustomerAddressFactory(
+        IChangeCustomerAddressTypeInputShouldBeValidValidator changeCustomerAddressTypeValidator,
+        IChangeCustomerAddressInputShouldBeValidValidator changeCustomerAddressValidator,
+        IChangeCustomerFullAddressInfoInputShouldBeValidValidator changeCustomerFullAddressInfoValidator,
+        IRegisterNewCustomerAddressInputShouldBeValidValidator registerNewCustomerAddressValidator,
+        IAddressValueObjectShouldBeValidValidator addressValueObjectShouldBeValidValidator
+    )
     {
-        // Fields
-        private readonly IChangeCustomerAddressTypeInputShouldBeValidValidator _changeCustomerAddressTypeValidator;
-        private readonly IChangeCustomerAddressInputShouldBeValidValidator _changeCustomerAddressValidator;
-        private readonly IChangeCustomerFullAddressInfoInputShouldBeValidValidator _changeCustomerFullAddressInfoValidator;
-        private readonly IRegisterNewCustomerAddressInputShouldBeValidValidator _registerNewCustomerAddressValidator;
-        private readonly IAddressValueObjectShouldBeValidValidator _addressValueObjectShouldBeValidValidator;
+        _changeCustomerAddressTypeValidator = changeCustomerAddressTypeValidator;
+        _changeCustomerAddressValidator = changeCustomerAddressValidator;
+        _changeCustomerFullAddressInfoValidator = changeCustomerFullAddressInfoValidator;
+        _registerNewCustomerAddressValidator = registerNewCustomerAddressValidator;
+        _addressValueObjectShouldBeValidValidator = addressValueObjectShouldBeValidValidator;
+    }
 
-        // Constructors
-        public CustomerAddressFactory(
-            IChangeCustomerAddressTypeInputShouldBeValidValidator changeCustomerAddressTypeValidator,
-            IChangeCustomerAddressInputShouldBeValidValidator changeCustomerAddressValidator,
-            IChangeCustomerFullAddressInfoInputShouldBeValidValidator changeCustomerFullAddressInfoValidator,
-            IRegisterNewCustomerAddressInputShouldBeValidValidator registerNewCustomerAddressValidator,
-            IAddressValueObjectShouldBeValidValidator addressValueObjectShouldBeValidValidator
-        )
-        {
-            _changeCustomerAddressTypeValidator = changeCustomerAddressTypeValidator;
-            _changeCustomerAddressValidator = changeCustomerAddressValidator;
-            _changeCustomerFullAddressInfoValidator = changeCustomerFullAddressInfoValidator;
-            _registerNewCustomerAddressValidator = registerNewCustomerAddressValidator;
-            _addressValueObjectShouldBeValidValidator = addressValueObjectShouldBeValidValidator;
-        }
-
-        // Public Methods
-        public CustomerAddress Create()
-        {
-            return new CustomerAddress(
-                _changeCustomerAddressTypeValidator,
-                _changeCustomerAddressValidator,
-                _changeCustomerFullAddressInfoValidator,
-                _registerNewCustomerAddressValidator,
-                _addressValueObjectShouldBeValidValidator
-            );
-        }
+    // Public Methods
+    public CustomerAddress Create()
+    {
+        return new CustomerAddress(
+            _changeCustomerAddressTypeValidator,
+            _changeCustomerAddressValidator,
+            _changeCustomerFullAddressInfoValidator,
+            _registerNewCustomerAddressValidator,
+            _addressValueObjectShouldBeValidValidator
+        );
     }
 }

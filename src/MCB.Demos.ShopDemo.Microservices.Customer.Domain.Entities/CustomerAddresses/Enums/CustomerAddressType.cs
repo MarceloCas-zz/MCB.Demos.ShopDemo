@@ -1,8 +1,7 @@
-﻿namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.CustomerAddresses.Enums
+﻿namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.CustomerAddresses.Enums;
+
+public enum CustomerAddressType
 {
-    public enum CustomerAddressType
-    {
-        HomeAddress = 1,
-        BusinessAddress = 2
-    }
+    HomeAddress = 1,
+    BusinessAddress = 2
 }

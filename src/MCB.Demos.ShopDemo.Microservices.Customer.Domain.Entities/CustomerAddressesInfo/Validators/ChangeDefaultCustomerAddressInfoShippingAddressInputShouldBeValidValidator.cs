@@ -5,31 +5,30 @@ using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.CustomerAddresse
 using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.CustomerAddressesInfo.Inputs;
 using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.CustomerAddressesInfo.Validators.Interfaces;
 
-namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.CustomerAddressesInfo.Validators
+namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.CustomerAddressesInfo.Validators;
+
+public class ChangeDefaultCustomerAddressInfoShippingAddressInputShouldBeValidValidator
+    : InputBaseValidator<ChangeDefaultCustomerAddressInfoShippingAddressInput>,
+    IChangeDefaultCustomerAddressInfoShippingAddressInputShouldBeValidValidator
 {
-    public class ChangeDefaultCustomerAddressInfoShippingAddressInputShouldBeValidValidator
-        : InputBaseValidator<ChangeDefaultCustomerAddressInfoShippingAddressInput>,
-        IChangeDefaultCustomerAddressInfoShippingAddressInputShouldBeValidValidator
+    // Fields
+    private readonly ICustomerAddressSpecifications _customerAddressSpecifications;
+
+    // Constructors
+    public ChangeDefaultCustomerAddressInfoShippingAddressInputShouldBeValidValidator(
+        ICustomerAddressSpecifications customerAddressSpecifications
+    )
     {
-        // Fields
-        private readonly ICustomerAddressSpecifications _customerAddressSpecifications;
+        _customerAddressSpecifications = customerAddressSpecifications;
+    }
 
-        // Constructors
-        public ChangeDefaultCustomerAddressInfoShippingAddressInputShouldBeValidValidator(
-            ICustomerAddressSpecifications customerAddressSpecifications
-        )
-        {
-            _customerAddressSpecifications = customerAddressSpecifications;
-        }
-
-        protected override void ConfigureFluentValidationConcreteValidatorInternal(ValidatorBase<ChangeDefaultCustomerAddressInfoShippingAddressInput>.FluentValidationValidatorWrapper fluentValidationValidatorWrapper)
-        {
-            CustomerAddressValidatorWrapper.AddCustomerAddressShouldHaveId(
-                _customerAddressSpecifications,
-                fluentValidationValidatorWrapper,
-                propertyExpression: q => q.CustomerAddressId,
-                getIdFunction: q => q.CustomerAddressId
-            );
-        }
+    protected override void ConfigureFluentValidationConcreteValidatorInternal(ValidatorBase<ChangeDefaultCustomerAddressInfoShippingAddressInput>.FluentValidationValidatorWrapper fluentValidationValidatorWrapper)
+    {
+        CustomerAddressValidatorWrapper.AddCustomerAddressShouldHaveId(
+            _customerAddressSpecifications,
+            fluentValidationValidatorWrapper,
+            propertyExpression: q => q.CustomerAddressId,
+            getIdFunction: q => q.CustomerAddressId
+        );
     }
 }

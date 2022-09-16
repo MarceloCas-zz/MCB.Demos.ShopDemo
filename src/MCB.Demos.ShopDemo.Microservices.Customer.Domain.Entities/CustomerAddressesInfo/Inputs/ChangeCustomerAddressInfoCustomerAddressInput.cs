@@ -2,29 +2,28 @@
 using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.CustomerAddresses.Enums;
 using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.ValueObjects.AddressValueObjects;
 
-namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.CustomerAddressesInfo.Inputs
-{
-    public record ChangeCustomerAddressInfoCustomerAddressInput
-        : InputBase
-    {
-        // Properties
-        public Guid CustomerAddressId { get; }
-        public CustomerAddressType CustomerAddressType { get; }
-        public AddressValueObject AddressValueObject { get; }
+namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.CustomerAddressesInfo.Inputs;
 
-        // Constructors
-        public ChangeCustomerAddressInfoCustomerAddressInput(
-            Guid tenantId,
-            Guid customerAddressId,
-            CustomerAddressType customerAddressType,
-            AddressValueObject addressValueObject,
-            string executionUser, 
-            string sourcePlatform
-        ) : base(tenantId, executionUser, sourcePlatform)
-        {
-            CustomerAddressId = customerAddressId;
-            CustomerAddressType = customerAddressType;
-            AddressValueObject = addressValueObject;
-        }
+public record ChangeCustomerAddressInfoCustomerAddressInput
+    : InputBase
+{
+    // Properties
+    public Guid CustomerAddressId { get; }
+    public CustomerAddressType CustomerAddressType { get; }
+    public AddressValueObject AddressValueObject { get; }
+
+    // Constructors
+    public ChangeCustomerAddressInfoCustomerAddressInput(
+        Guid tenantId,
+        Guid customerAddressId,
+        CustomerAddressType customerAddressType,
+        AddressValueObject addressValueObject,
+        string executionUser, 
+        string sourcePlatform
+    ) : base(tenantId, executionUser, sourcePlatform)
+    {
+        CustomerAddressId = customerAddressId;
+        CustomerAddressType = customerAddressType;
+        AddressValueObject = addressValueObject;
     }
 }

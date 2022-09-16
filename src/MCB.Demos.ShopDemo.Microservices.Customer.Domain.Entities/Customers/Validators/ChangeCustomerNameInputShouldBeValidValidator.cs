@@ -5,53 +5,52 @@ using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Customers.Specif
 using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Customers.Validators.Interfaces;
 using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Customers.Validators.Wrappers;
 
-namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Customers.Validators
+namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Customers.Validators;
+
+public class ChangeCustomerNameInputShouldBeValidValidator
+    : InputBaseValidator<ChangeCustomerNameInput>,
+    IChangeCustomerNameInputShouldBeValidValidator
 {
-    public class ChangeCustomerNameInputShouldBeValidValidator
-        : InputBaseValidator<ChangeCustomerNameInput>,
-        IChangeCustomerNameInputShouldBeValidValidator
+    // Fields
+    private readonly ICustomerSpecifications _customerSpecifications;
+
+    // Constructors
+    public ChangeCustomerNameInputShouldBeValidValidator(
+        ICustomerSpecifications customerSpecifications
+    )
     {
-        // Fields
-        private readonly ICustomerSpecifications _customerSpecifications;
+        _customerSpecifications = customerSpecifications;
+    }
 
-        // Constructors
-        public ChangeCustomerNameInputShouldBeValidValidator(
-            ICustomerSpecifications customerSpecifications
-        )
-        {
-            _customerSpecifications = customerSpecifications;
-        }
+    // Protected Methods
+    protected override void ConfigureFluentValidationConcreteValidatorInternal(ValidatorBase<ChangeCustomerNameInput>.FluentValidationValidatorWrapper fluentValidationValidatorWrapper)
+    {
+        // FirstName
+        CustomerValidatorWrapper.AddCustomerShouldHaveFirstName(
+            _customerSpecifications,
+            fluentValidationValidatorWrapper,
+            propertyExpression: input => input.FirstName,
+            getFirstNameFunction: input => input.FirstName
+        );
+        CustomerValidatorWrapper.AddCustomerShouldHaveFirstNameMaximumLength(
+            _customerSpecifications,
+            fluentValidationValidatorWrapper,
+            propertyExpression: input => input.FirstName,
+            getFirstNameFunction: input => input.FirstName
+        );
 
-        // Protected Methods
-        protected override void ConfigureFluentValidationConcreteValidatorInternal(ValidatorBase<ChangeCustomerNameInput>.FluentValidationValidatorWrapper fluentValidationValidatorWrapper)
-        {
-            // FirstName
-            CustomerValidatorWrapper.AddCustomerShouldHaveFirstName(
-                _customerSpecifications,
-                fluentValidationValidatorWrapper,
-                propertyExpression: input => input.FirstName,
-                getFirstNameFunction: input => input.FirstName
-            );
-            CustomerValidatorWrapper.AddCustomerShouldHaveFirstNameMaximumLength(
-                _customerSpecifications,
-                fluentValidationValidatorWrapper,
-                propertyExpression: input => input.FirstName,
-                getFirstNameFunction: input => input.FirstName
-            );
-
-            // LastName
-            CustomerValidatorWrapper.AddCustomerShouldHaveLastName(
-                _customerSpecifications,
-                fluentValidationValidatorWrapper,
-                propertyExpression: input => input.LastName,
-                getLastNameFunction: input => input.LastName
-            );
-            CustomerValidatorWrapper.AddCustomerShouldHaveLastNameMaximumLength(
-                _customerSpecifications,
-                fluentValidationValidatorWrapper,
-                propertyExpression: input => input.LastName,
-                getLastNameFunction: input => input.LastName
-            );
-        }
+        // LastName
+        CustomerValidatorWrapper.AddCustomerShouldHaveLastName(
+            _customerSpecifications,
+            fluentValidationValidatorWrapper,
+            propertyExpression: input => input.LastName,
+            getLastNameFunction: input => input.LastName
+        );
+        CustomerValidatorWrapper.AddCustomerShouldHaveLastNameMaximumLength(
+            _customerSpecifications,
+            fluentValidationValidatorWrapper,
+            propertyExpression: input => input.LastName,
+            getLastNameFunction: input => input.LastName
+        );
     }
 }

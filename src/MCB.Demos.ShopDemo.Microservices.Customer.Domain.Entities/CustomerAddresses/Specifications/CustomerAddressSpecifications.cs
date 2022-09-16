@@ -3,20 +3,19 @@ using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.CustomerAddresse
 using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.CustomerAddresses.Specifications.Interfaces;
 using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.ValueObjects.AddressValueObjects;
 
-namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.CustomerAddresses.Specifications
+namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.CustomerAddresses.Specifications;
+
+public class CustomerAddressSpecifications
+    : DomainEntitySpecifications,
+    ICustomerAddressSpecifications
 {
-    public class CustomerAddressSpecifications
-        : DomainEntitySpecifications,
-        ICustomerAddressSpecifications
+    // Public Methods
+    public bool CustomerAddressShouldHaveCustomerAddressType(CustomerAddressType customerAddressType)
     {
-        // Public Methods
-        public bool CustomerAddressShouldHaveCustomerAddressType(CustomerAddressType customerAddressType)
-        {
-            return Enum.IsDefined(typeof(CustomerAddressType), customerAddressType);
-        }
-        public bool CustomerAddressShouldHaveAddressValueObject(AddressValueObject addressValueObject)
-        {
-            return !addressValueObject.Equals(new AddressValueObject());
-        }
+        return Enum.IsDefined(typeof(CustomerAddressType), customerAddressType);
+    }
+    public bool CustomerAddressShouldHaveAddressValueObject(AddressValueObject addressValueObject)
+    {
+        return !addressValueObject.Equals(new AddressValueObject());
     }
 }

@@ -12,29 +12,62 @@ using System.Linq;
 using Xunit;
 using Xunit.Abstractions;
 
-namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Tests.CustomersTests
+namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Tests.CustomersTests;
+
+[Collection(nameof(DefaultFixture))]
+public class CustomerTest
+    : TestBase
 {
-    [Collection(nameof(DefaultFixture))]
-    public class CustomerTest
-        : TestBase
+    // Fields
+    private readonly DefaultFixture _fixture;
+
+    // Constructors
+    public CustomerTest(
+        ITestOutputHelper testOutputHelper,
+        DefaultFixture fixture
+    ) : base(testOutputHelper)
     {
-        // Fields
-        private readonly DefaultFixture _fixture;
+        _fixture = fixture;
+    }
 
-        // Constructors
-        public CustomerTest(
-            ITestOutputHelper testOutputHelper,
-            DefaultFixture fixture
-        ) : base(testOutputHelper)
-        {
-            _fixture = fixture;
-        }
+    [Fact]
+    public void Customer_Should_Correctly_Instanciated()
+    {
+        // Arrange and Act
+        var customer = new Customers.Customer(
+            new RegisterNewCustomerInputShouldBeValidValidator(new CustomerSpecifications()),
+            new ChangeCustomerNameInputShouldBeValidValidator(new CustomerSpecifications()),
+            new ChangeCustomerBirthDateInputShouldBeValidValidator(new CustomerSpecifications()),
+            new AddNewCustomerAddressInputShouldBeValidValidator(
+                new CustomerAddressSpecifications()
+            ),
+            default,
+            default,
+            default,
+            default,
+            default
+        );
 
-        [Fact]
-        public void Customer_Should_Correctly_Instanciated()
-        {
-            // Arrange and Act
-            var customer = new Customers.Customer(
+        // Assert
+        customer.FirstName.Should().BeNullOrEmpty();
+        customer.LastName.Should().BeNullOrEmpty();
+        customer.BirthDate.Should().Be(default);
+        customer.CustomerAddressInfo.Should().NotBeNull();
+    }
+
+    [Fact]
+    public void Customer_Should_RegisterNew()
+    {
+        // Arrange
+        var tenantId = _fixture.TenantId;
+        var firstName = "Marcelo";
+        var lastName = "Castelo Branco";
+        var birthDate = DateOnly.FromDateTime(DateTimeProvider.GetDate().DateTime);
+        var executionUser = _fixture.ExecutionUser;
+        var sourcePlatform = _fixture.SourcePlatform;
+
+        // Act
+        var customer = new Customers.Customer(
                 new RegisterNewCustomerInputShouldBeValidValidator(new CustomerSpecifications()),
                 new ChangeCustomerNameInputShouldBeValidValidator(new CustomerSpecifications()),
                 new ChangeCustomerBirthDateInputShouldBeValidValidator(new CustomerSpecifications()),
@@ -46,373 +79,339 @@ namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Tests.Custom
                 default,
                 default,
                 default
-            );
-
-            // Assert
-            customer.FirstName.Should().BeNullOrEmpty();
-            customer.LastName.Should().BeNullOrEmpty();
-            customer.BirthDate.Should().Be(default);
-            customer.CustomerAddressInfo.Should().NotBeNull();
-        }
-
-        [Fact]
-        public void Customer_Should_RegisterNew()
-        {
-            // Arrange
-            var tenantId = _fixture.TenantId;
-            var firstName = "Marcelo";
-            var lastName = "Castelo Branco";
-            var birthDate = DateOnly.FromDateTime(DateTimeProvider.GetDate().DateTime);
-            var executionUser = _fixture.ExecutionUser;
-            var sourcePlatform = _fixture.SourcePlatform;
-
-            // Act
-            var customer = new Customers.Customer(
-                    new RegisterNewCustomerInputShouldBeValidValidator(new CustomerSpecifications()),
-                    new ChangeCustomerNameInputShouldBeValidValidator(new CustomerSpecifications()),
-                    new ChangeCustomerBirthDateInputShouldBeValidValidator(new CustomerSpecifications()),
-                    new AddNewCustomerAddressInputShouldBeValidValidator(
-                        new CustomerAddressSpecifications()
-                    ),
-                    default,
-                    default,
-                    default,
-                    default,
-                    default
-                ).RegisterNewCustomer(
-                    new RegisterNewCustomerInput(
-                        tenantId,
-                        firstName,
-                        lastName,
-                        birthDate,
-                        executionUser,
-                        sourcePlatform
-                    )
-                );
-
-            // Assert
-            ValidateAfterRegisterNew(customer, executionUser, sourcePlatform);
-            customer.TenantId.Should().Be(tenantId);
-            customer.FirstName.Should().Be(firstName);
-            customer.LastName.Should().Be(lastName);
-            customer.BirthDate.Should().Be(birthDate);
-        }
-
-        [Fact]
-        public void Customer_Should_ChangeName()
-        {
-            // Arrange
-            var customer = DefaultFixture.GenerateNewCustomer();
-            var customerBeforeModification = customer.DeepClone();
-            GenerateNewDateForDateTimeProvider();
-
-            var tenantId = Guid.NewGuid();
-            var firstName = "Marcelo";
-            var lastName = "Castelo Branco";
-            var executionUser = _fixture.ExecutionUser;
-            var sourcePlatform = _fixture.SourcePlatform;
-
-            // Act
-            customer.ChangeCustomerName(
-                new ChangeCustomerNameInput(
+            ).RegisterNewCustomer(
+                new RegisterNewCustomerInput(
                     tenantId,
                     firstName,
                     lastName,
+                    birthDate,
                     executionUser,
                     sourcePlatform
                 )
             );
 
-            // Assert
-            ValidateAfterRegisterModification(customerBeforeModification, customer, executionUser, sourcePlatform);
-            customer.FirstName.Should().Be(firstName);
-            customer.LastName.Should().Be(lastName);
-        }
+        // Assert
+        ValidateAfterRegisterNew(customer, executionUser, sourcePlatform);
+        customer.TenantId.Should().Be(tenantId);
+        customer.FirstName.Should().Be(firstName);
+        customer.LastName.Should().Be(lastName);
+        customer.BirthDate.Should().Be(birthDate);
+    }
 
-        [Fact]
-        public void Customer_Should_ChangeBirthDate()
-        {
-            // Arrange
-            var tenantId = DefaultFixture.GenerateNewTenantId();
-            var customer = DefaultFixture.GenerateNewCustomer();
-            var customerBeforeModification = customer.DeepClone();
-            GenerateNewDateForDateTimeProvider();
-            var birthDate = DateOnly.FromDateTime(DateTimeProvider.GetDate().AddYears(-21).DateTime);
-            var executionUser = _fixture.ExecutionUser;
-            var sourcePlatform = _fixture.SourcePlatform;
+    [Fact]
+    public void Customer_Should_ChangeName()
+    {
+        // Arrange
+        var customer = DefaultFixture.GenerateNewCustomer();
+        var customerBeforeModification = customer.DeepClone();
+        GenerateNewDateForDateTimeProvider();
 
-            // Act
-            customer.ChangeBirthDate(new ChangeCustomerBirthDateInput(
+        var tenantId = Guid.NewGuid();
+        var firstName = "Marcelo";
+        var lastName = "Castelo Branco";
+        var executionUser = _fixture.ExecutionUser;
+        var sourcePlatform = _fixture.SourcePlatform;
+
+        // Act
+        customer.ChangeCustomerName(
+            new ChangeCustomerNameInput(
                 tenantId,
-                birthDate,
+                firstName,
+                lastName,
                 executionUser,
                 sourcePlatform
-            ));
+            )
+        );
 
-            // Assert
-            ValidateAfterRegisterModification(customerBeforeModification, customer, executionUser, sourcePlatform);
-            customer.BirthDate.Should().Be(birthDate);
-        }
+        // Assert
+        ValidateAfterRegisterModification(customerBeforeModification, customer, executionUser, sourcePlatform);
+        customer.FirstName.Should().Be(firstName);
+        customer.LastName.Should().Be(lastName);
+    }
 
-        [Fact]
-        public void Customer_Should_ChangeDefaultShippingAddress()
-        {
-            // Arrange
-            var tenantId = DefaultFixture.GenerateNewTenantId();
-            var customer = DefaultFixture.GenerateNewCustomer();
-            var customerBeforeModification = customer.DeepClone();
-            GenerateNewDateForDateTimeProvider();
+    [Fact]
+    public void Customer_Should_ChangeBirthDate()
+    {
+        // Arrange
+        var tenantId = DefaultFixture.GenerateNewTenantId();
+        var customer = DefaultFixture.GenerateNewCustomer();
+        var customerBeforeModification = customer.DeepClone();
+        GenerateNewDateForDateTimeProvider();
+        var birthDate = DateOnly.FromDateTime(DateTimeProvider.GetDate().AddYears(-21).DateTime);
+        var executionUser = _fixture.ExecutionUser;
+        var sourcePlatform = _fixture.SourcePlatform;
 
-            var newShippingAddress = DefaultFixture.GenerateNewCustomerAddress();
-            var executionUser = _fixture.ExecutionUser;
-            var sourcePlatform = _fixture.SourcePlatform;
-            var originalCustomerAddress = customer.CustomerAddressInfo.DeepClone();
+        // Act
+        customer.ChangeBirthDate(new ChangeCustomerBirthDateInput(
+            tenantId,
+            birthDate,
+            executionUser,
+            sourcePlatform
+        ));
 
-            var originalDefaultShippingAddress = customer.CustomerAddressInfo?.DefaultShippingAddress;
+        // Assert
+        ValidateAfterRegisterModification(customerBeforeModification, customer, executionUser, sourcePlatform);
+        customer.BirthDate.Should().Be(birthDate);
+    }
 
-            // Act
-            var newDefaultShippingAddress = customer.ChangeDefaultShippingAddress(new ChangeCustomerDefaultShippingAddressInput(
-                tenantId,
-                newShippingAddress.Id,
-                executionUser,
-                sourcePlatform
-            ));
+    [Fact]
+    public void Customer_Should_ChangeDefaultShippingAddress()
+    {
+        // Arrange
+        var tenantId = DefaultFixture.GenerateNewTenantId();
+        var customer = DefaultFixture.GenerateNewCustomer();
+        var customerBeforeModification = customer.DeepClone();
+        GenerateNewDateForDateTimeProvider();
 
-            // Assert
-            ValidateAfterRegisterModification(customerBeforeModification, customer, executionUser, sourcePlatform);
+        var newShippingAddress = DefaultFixture.GenerateNewCustomerAddress();
+        var executionUser = _fixture.ExecutionUser;
+        var sourcePlatform = _fixture.SourcePlatform;
+        var originalCustomerAddress = customer.CustomerAddressInfo.DeepClone();
 
-            customer.CustomerAddressInfo.Should().NotBeSameAs(customer.CustomerAddressInfo);
-            originalCustomerAddress.Should().NotBeSameAs(customer.CustomerAddressInfo);
+        var originalDefaultShippingAddress = customer.CustomerAddressInfo?.DefaultShippingAddress;
 
-            originalDefaultShippingAddress.Should().BeNull();
-            originalDefaultShippingAddress.Should().NotBeSameAs(customer.CustomerAddressInfo.DefaultShippingAddress);
-            DefaultFixture.CompareTwoCustomerAddressValues(
-                newDefaultShippingAddress,
-                customer.CustomerAddressInfo.DefaultShippingAddress
-            ).Should().BeTrue();
-        }
+        // Act
+        var newDefaultShippingAddress = customer.ChangeDefaultShippingAddress(new ChangeCustomerDefaultShippingAddressInput(
+            tenantId,
+            newShippingAddress.Id,
+            executionUser,
+            sourcePlatform
+        ));
 
-        [Fact]
-        public void Customer_Should_ClearDefaultShippingAddress()
-        {
-            // Arrange
-            var tenantId = DefaultFixture.GenerateNewTenantId();
-            var customer = DefaultFixture.GenerateNewCustomer();
-            var customerBeforeModification = customer.DeepClone();
-            GenerateNewDateForDateTimeProvider();
+        // Assert
+        ValidateAfterRegisterModification(customerBeforeModification, customer, executionUser, sourcePlatform);
 
-            var newShippingAddress = DefaultFixture.GenerateNewCustomerAddress();
-            var executionUser = _fixture.ExecutionUser;
-            var sourcePlatform = _fixture.SourcePlatform;
+        customer.CustomerAddressInfo.Should().NotBeSameAs(customer.CustomerAddressInfo);
+        originalCustomerAddress.Should().NotBeSameAs(customer.CustomerAddressInfo);
 
-            customer.ChangeDefaultShippingAddress(new ChangeCustomerDefaultShippingAddressInput(
-                tenantId,
-                newShippingAddress.Id,
-                executionUser,
-                sourcePlatform
-            ));
-            var originalDefaultShippingAddress = customer.CustomerAddressInfo?.DefaultShippingAddress;
+        originalDefaultShippingAddress.Should().BeNull();
+        originalDefaultShippingAddress.Should().NotBeSameAs(customer.CustomerAddressInfo.DefaultShippingAddress);
+        DefaultFixture.CompareTwoCustomerAddressValues(
+            newDefaultShippingAddress,
+            customer.CustomerAddressInfo.DefaultShippingAddress
+        ).Should().BeTrue();
+    }
 
-            // Act
-            customer.ClearDefaultShippingAddress(new ClearCustomerDefaultShippingAddressInput(tenantId, executionUser, sourcePlatform));
+    [Fact]
+    public void Customer_Should_ClearDefaultShippingAddress()
+    {
+        // Arrange
+        var tenantId = DefaultFixture.GenerateNewTenantId();
+        var customer = DefaultFixture.GenerateNewCustomer();
+        var customerBeforeModification = customer.DeepClone();
+        GenerateNewDateForDateTimeProvider();
 
-            // Assert
-            ValidateAfterRegisterModification(customerBeforeModification, customer, executionUser, sourcePlatform);
-            originalDefaultShippingAddress.Should().NotBe(customer.CustomerAddressInfo.DefaultShippingAddress);
-            customer.CustomerAddressInfo.DefaultShippingAddress.Should().BeNull();
-        }
+        var newShippingAddress = DefaultFixture.GenerateNewCustomerAddress();
+        var executionUser = _fixture.ExecutionUser;
+        var sourcePlatform = _fixture.SourcePlatform;
 
-        [Fact]
-        public void Customer_Should_AddNewCustomerAddress()
-        {
-            // Arrange
-            var tenantId = DefaultFixture.GenerateNewTenantId();
-            var customer = DefaultFixture.GenerateNewCustomer();
-            var customerBeforeModification = customer.DeepClone();
-            GenerateNewDateForDateTimeProvider();
+        customer.ChangeDefaultShippingAddress(new ChangeCustomerDefaultShippingAddressInput(
+            tenantId,
+            newShippingAddress.Id,
+            executionUser,
+            sourcePlatform
+        ));
+        var originalDefaultShippingAddress = customer.CustomerAddressInfo?.DefaultShippingAddress;
 
-            var customerAddressType = CustomerAddressType.BusinessAddress;
-            var addressValueObject = DefaultFixture.GenerateNewAddressValueObject();
-            var executionUser = _fixture.ExecutionUser;
-            var sourcePlatform = _fixture.SourcePlatform;
+        // Act
+        customer.ClearDefaultShippingAddress(new ClearCustomerDefaultShippingAddressInput(tenantId, executionUser, sourcePlatform));
 
-            // Act
-            var addedCustomerAddress = customer.AddNewCustomerAddress(new AddNewCustomerAddressInput(
-                tenantId,
-                customerAddressType,
-                addressValueObject,
-                executionUser,
-                sourcePlatform
-            ));
+        // Assert
+        ValidateAfterRegisterModification(customerBeforeModification, customer, executionUser, sourcePlatform);
+        originalDefaultShippingAddress.Should().NotBe(customer.CustomerAddressInfo.DefaultShippingAddress);
+        customer.CustomerAddressInfo.DefaultShippingAddress.Should().BeNull();
+    }
 
-            // Assert
-            ValidateAfterRegisterModification(customerBeforeModification, customer, executionUser, sourcePlatform);
-            customer.CustomerAddressInfo.CustomerAddressCollection.Should().NotBeNull();
-            customer.CustomerAddressInfo.CustomerAddressCollection.Should().HaveCount(1);
-            DefaultFixture.CompareTwoCustomerAddressValues(
-                customer.CustomerAddressInfo.CustomerAddressCollection.First(),
-                addedCustomerAddress
-            ).Should().BeTrue();
-        }
+    [Fact]
+    public void Customer_Should_AddNewCustomerAddress()
+    {
+        // Arrange
+        var tenantId = DefaultFixture.GenerateNewTenantId();
+        var customer = DefaultFixture.GenerateNewCustomer();
+        var customerBeforeModification = customer.DeepClone();
+        GenerateNewDateForDateTimeProvider();
 
-        [Fact]
-        public void Customer_Should_RemoveCustomerAddress()
-        {
-            // Arrange
-            var tenantId = DefaultFixture.GenerateNewTenantId();
-            var executionUser = _fixture.ExecutionUser;
-            var sourcePlatform = _fixture.SourcePlatform;
+        var customerAddressType = CustomerAddressType.BusinessAddress;
+        var addressValueObject = DefaultFixture.GenerateNewAddressValueObject();
+        var executionUser = _fixture.ExecutionUser;
+        var sourcePlatform = _fixture.SourcePlatform;
 
-            var customer = DefaultFixture.GenerateNewCustomer();
-            var customerBeforeModification = customer.DeepClone();
+        // Act
+        var addedCustomerAddress = customer.AddNewCustomerAddress(new AddNewCustomerAddressInput(
+            tenantId,
+            customerAddressType,
+            addressValueObject,
+            executionUser,
+            sourcePlatform
+        ));
 
-            var newCustomerAddressValueObject1 = DefaultFixture.GenerateNewAddressValueObject();
-            var newCustomerAddressValueObject2 = DefaultFixture.GenerateNewAddressValueObject();
+        // Assert
+        ValidateAfterRegisterModification(customerBeforeModification, customer, executionUser, sourcePlatform);
+        customer.CustomerAddressInfo.CustomerAddressCollection.Should().NotBeNull();
+        customer.CustomerAddressInfo.CustomerAddressCollection.Should().HaveCount(1);
+        DefaultFixture.CompareTwoCustomerAddressValues(
+            customer.CustomerAddressInfo.CustomerAddressCollection.First(),
+            addedCustomerAddress
+        ).Should().BeTrue();
+    }
 
-            customer.AddNewCustomerAddress(new AddNewCustomerAddressInput(
-                tenantId,
-                CustomerAddressType.BusinessAddress, 
-                newCustomerAddressValueObject1, 
-                executionUser, 
-                sourcePlatform
-            ));
-            customer.AddNewCustomerAddress(new AddNewCustomerAddressInput(
-                tenantId,
-                CustomerAddressType.BusinessAddress, 
-                newCustomerAddressValueObject2, 
-                executionUser, 
-                sourcePlatform
-            ));
+    [Fact]
+    public void Customer_Should_RemoveCustomerAddress()
+    {
+        // Arrange
+        var tenantId = DefaultFixture.GenerateNewTenantId();
+        var executionUser = _fixture.ExecutionUser;
+        var sourcePlatform = _fixture.SourcePlatform;
 
-            var customerAddressToRemove = customer.CustomerAddressInfo.CustomerAddressCollection.First();
+        var customer = DefaultFixture.GenerateNewCustomer();
+        var customerBeforeModification = customer.DeepClone();
 
-            GenerateNewDateForDateTimeProvider();
+        var newCustomerAddressValueObject1 = DefaultFixture.GenerateNewAddressValueObject();
+        var newCustomerAddressValueObject2 = DefaultFixture.GenerateNewAddressValueObject();
 
-            // Act
-            var removedCustomerAddress = customer.RemoveCustomerAddress(new RemoveCustomerAddressInput(
-                tenantId,
-                customerAddressToRemove.Id,
-                executionUser,
-                sourcePlatform
-            ));
+        customer.AddNewCustomerAddress(new AddNewCustomerAddressInput(
+            tenantId,
+            CustomerAddressType.BusinessAddress, 
+            newCustomerAddressValueObject1, 
+            executionUser, 
+            sourcePlatform
+        ));
+        customer.AddNewCustomerAddress(new AddNewCustomerAddressInput(
+            tenantId,
+            CustomerAddressType.BusinessAddress, 
+            newCustomerAddressValueObject2, 
+            executionUser, 
+            sourcePlatform
+        ));
 
-            // Assert
-            ValidateAfterRegisterModification(customerBeforeModification, customer, executionUser, sourcePlatform);
+        var customerAddressToRemove = customer.CustomerAddressInfo.CustomerAddressCollection.First();
 
-            customer.CustomerAddressInfo.CustomerAddressCollection.Should().NotBeNull();
-            customer.CustomerAddressInfo.CustomerAddressCollection.Should().HaveCount(1);
+        GenerateNewDateForDateTimeProvider();
 
-            DefaultFixture.CompareTwoCustomerAddressValues(
-                customerAddressToRemove,
-                removedCustomerAddress
-            ).Should().BeTrue();
-            DefaultFixture.CompareTwoCustomerAddressValues(
-                removedCustomerAddress,
-                customer.CustomerAddressInfo.CustomerAddressCollection.First()
-            ).Should().BeFalse();
-        }
+        // Act
+        var removedCustomerAddress = customer.RemoveCustomerAddress(new RemoveCustomerAddressInput(
+            tenantId,
+            customerAddressToRemove.Id,
+            executionUser,
+            sourcePlatform
+        ));
 
-        [Fact]
-        public void Customer_Should_ChangeCustomerAddress()
-        {
-            // Arrange
-            var tenantId = DefaultFixture.GenerateNewTenantId();
-            var executionUser = _fixture.ExecutionUser;
-            var sourcePlatform = _fixture.SourcePlatform;
-            var customerAddressType = CustomerAddressType.BusinessAddress;
+        // Assert
+        ValidateAfterRegisterModification(customerBeforeModification, customer, executionUser, sourcePlatform);
 
-            var customer = DefaultFixture.GenerateNewCustomer();
-            var customerBeforeModification = customer.DeepClone();
+        customer.CustomerAddressInfo.CustomerAddressCollection.Should().NotBeNull();
+        customer.CustomerAddressInfo.CustomerAddressCollection.Should().HaveCount(1);
 
-            var newCustomerAddressValueObject1 = DefaultFixture.GenerateNewAddressValueObject();
-            var newCustomerAddressValueObject2 = DefaultFixture.GenerateNewAddressValueObject();
-            var addressValueObjectToChange = DefaultFixture.GenerateNewAddressValueObject();
+        DefaultFixture.CompareTwoCustomerAddressValues(
+            customerAddressToRemove,
+            removedCustomerAddress
+        ).Should().BeTrue();
+        DefaultFixture.CompareTwoCustomerAddressValues(
+            removedCustomerAddress,
+            customer.CustomerAddressInfo.CustomerAddressCollection.First()
+        ).Should().BeFalse();
+    }
 
-            customer.AddNewCustomerAddress(new AddNewCustomerAddressInput(
-                tenantId,
-                CustomerAddressType.BusinessAddress, 
-                newCustomerAddressValueObject1, 
-                executionUser, 
-                sourcePlatform
-            ));
-            customer.AddNewCustomerAddress(new AddNewCustomerAddressInput(
-                tenantId,
-                CustomerAddressType.BusinessAddress, 
-                newCustomerAddressValueObject2, 
-                executionUser, 
-                sourcePlatform
-            ));
+    [Fact]
+    public void Customer_Should_ChangeCustomerAddress()
+    {
+        // Arrange
+        var tenantId = DefaultFixture.GenerateNewTenantId();
+        var executionUser = _fixture.ExecutionUser;
+        var sourcePlatform = _fixture.SourcePlatform;
+        var customerAddressType = CustomerAddressType.BusinessAddress;
 
-            var firstCustomerAddress = customer.CustomerAddressInfo.CustomerAddressCollection.First().DeepClone();
-            var customerAddressToChange = customer.CustomerAddressInfo.CustomerAddressCollection.Last();
-            var customerAddressBeforeChange = customerAddressToChange.DeepClone();
+        var customer = DefaultFixture.GenerateNewCustomer();
+        var customerBeforeModification = customer.DeepClone();
 
-            GenerateNewDateForDateTimeProvider();
+        var newCustomerAddressValueObject1 = DefaultFixture.GenerateNewAddressValueObject();
+        var newCustomerAddressValueObject2 = DefaultFixture.GenerateNewAddressValueObject();
+        var addressValueObjectToChange = DefaultFixture.GenerateNewAddressValueObject();
 
-            // Act
-            var changedCustomerAddress = customer.ChangeCustomerAddress(new ChangeCustomerAddressInput(
-                tenantId,
-                customerAddressToChange.Id,
-                customerAddressType,
-                addressValueObjectToChange,
-                executionUser,
-                sourcePlatform
-            ));
+        customer.AddNewCustomerAddress(new AddNewCustomerAddressInput(
+            tenantId,
+            CustomerAddressType.BusinessAddress, 
+            newCustomerAddressValueObject1, 
+            executionUser, 
+            sourcePlatform
+        ));
+        customer.AddNewCustomerAddress(new AddNewCustomerAddressInput(
+            tenantId,
+            CustomerAddressType.BusinessAddress, 
+            newCustomerAddressValueObject2, 
+            executionUser, 
+            sourcePlatform
+        ));
 
-            // Assert
-            ValidateAfterRegisterModification(customerBeforeModification, customer, executionUser, sourcePlatform);
+        var firstCustomerAddress = customer.CustomerAddressInfo.CustomerAddressCollection.First().DeepClone();
+        var customerAddressToChange = customer.CustomerAddressInfo.CustomerAddressCollection.Last();
+        var customerAddressBeforeChange = customerAddressToChange.DeepClone();
 
-            customer.CustomerAddressInfo.CustomerAddressCollection.Should().NotBeNull();
-            customer.CustomerAddressInfo.CustomerAddressCollection.Should().HaveCount(2);
+        GenerateNewDateForDateTimeProvider();
 
-            DefaultFixture.CompareTwoCustomerAddressValues(
-                firstCustomerAddress,
-                customer.CustomerAddressInfo.CustomerAddressCollection.First()
-            ).Should().BeTrue();
-            customer.CustomerAddressInfo.CustomerAddressCollection.Where(q => q.Id == changedCustomerAddress.Id).Should().HaveCount(1);
+        // Act
+        var changedCustomerAddress = customer.ChangeCustomerAddress(new ChangeCustomerAddressInput(
+            tenantId,
+            customerAddressToChange.Id,
+            customerAddressType,
+            addressValueObjectToChange,
+            executionUser,
+            sourcePlatform
+        ));
 
-            DefaultFixture.CompareTwoCustomerAddressValues(
-                customerAddressBeforeChange,
-                customer.CustomerAddressInfo.CustomerAddressCollection.First(q => q.Id == changedCustomerAddress.Id)
-            ).Should().BeFalse();
+        // Assert
+        ValidateAfterRegisterModification(customerBeforeModification, customer, executionUser, sourcePlatform);
 
-            changedCustomerAddress.CustomerAddressType.Should().Be(customerAddressType);
-            changedCustomerAddress.AddressValueObject.Should().Be(addressValueObjectToChange);
-        }
+        customer.CustomerAddressInfo.CustomerAddressCollection.Should().NotBeNull();
+        customer.CustomerAddressInfo.CustomerAddressCollection.Should().HaveCount(2);
 
-        [Fact]
-        public void Customer_Not_Should_ChangeCustomerAddress_When_Id_Not_Existing()
-        {
-            // Arrange
-            var tenantId = DefaultFixture.GenerateNewTenantId();
-            var executionUser = _fixture.ExecutionUser;
-            var sourcePlatform = _fixture.SourcePlatform;
-            var customerAddressType = CustomerAddressType.BusinessAddress;
+        DefaultFixture.CompareTwoCustomerAddressValues(
+            firstCustomerAddress,
+            customer.CustomerAddressInfo.CustomerAddressCollection.First()
+        ).Should().BeTrue();
+        customer.CustomerAddressInfo.CustomerAddressCollection.Where(q => q.Id == changedCustomerAddress.Id).Should().HaveCount(1);
 
-            var customer = DefaultFixture.GenerateNewCustomer();
+        DefaultFixture.CompareTwoCustomerAddressValues(
+            customerAddressBeforeChange,
+            customer.CustomerAddressInfo.CustomerAddressCollection.First(q => q.Id == changedCustomerAddress.Id)
+        ).Should().BeFalse();
 
-            customer.AddNewCustomerAddress(new AddNewCustomerAddressInput(
-                tenantId,
-                CustomerAddressType.BusinessAddress,
-                DefaultFixture.GenerateNewAddressValueObject(),
-                executionUser,
-                sourcePlatform
-            ));
+        changedCustomerAddress.CustomerAddressType.Should().Be(customerAddressType);
+        changedCustomerAddress.AddressValueObject.Should().Be(addressValueObjectToChange);
+    }
 
-            GenerateNewDateForDateTimeProvider();
+    [Fact]
+    public void Customer_Not_Should_ChangeCustomerAddress_When_Id_Not_Existing()
+    {
+        // Arrange
+        var tenantId = DefaultFixture.GenerateNewTenantId();
+        var executionUser = _fixture.ExecutionUser;
+        var sourcePlatform = _fixture.SourcePlatform;
+        var customerAddressType = CustomerAddressType.BusinessAddress;
 
-            // Act
-            var changedCustomerAddress = customer.ChangeCustomerAddress(new ChangeCustomerAddressInput(
-                tenantId,
-                Guid.NewGuid(),
-                customerAddressType,
-                DefaultFixture.GenerateNewAddressValueObject(),
-                executionUser,
-                sourcePlatform
-            ));
+        var customer = DefaultFixture.GenerateNewCustomer();
 
-            // Assert
-            changedCustomerAddress.Should().BeNull();
-        }
+        customer.AddNewCustomerAddress(new AddNewCustomerAddressInput(
+            tenantId,
+            CustomerAddressType.BusinessAddress,
+            DefaultFixture.GenerateNewAddressValueObject(),
+            executionUser,
+            sourcePlatform
+        ));
+
+        GenerateNewDateForDateTimeProvider();
+
+        // Act
+        var changedCustomerAddress = customer.ChangeCustomerAddress(new ChangeCustomerAddressInput(
+            tenantId,
+            Guid.NewGuid(),
+            customerAddressType,
+            DefaultFixture.GenerateNewAddressValueObject(),
+            executionUser,
+            sourcePlatform
+        ));
+
+        // Assert
+        changedCustomerAddress.Should().BeNull();
     }
 }

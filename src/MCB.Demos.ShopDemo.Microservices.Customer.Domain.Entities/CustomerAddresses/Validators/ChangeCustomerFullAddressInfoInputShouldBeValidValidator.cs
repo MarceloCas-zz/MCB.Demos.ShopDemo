@@ -5,38 +5,37 @@ using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.CustomerAddresse
 using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.CustomerAddresses.Validators.Interfaces;
 using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.CustomerAddresses.Validators.Wrappers;
 
-namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.CustomerAddresses.Validators
+namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.CustomerAddresses.Validators;
+
+public class ChangeCustomerFullAddressInfoInputShouldBeValidValidator
+    : InputBaseValidator<ChangeCustomerFullAddressInfoInput>,
+    IChangeCustomerFullAddressInfoInputShouldBeValidValidator
 {
-    public class ChangeCustomerFullAddressInfoInputShouldBeValidValidator
-        : InputBaseValidator<ChangeCustomerFullAddressInfoInput>,
-        IChangeCustomerFullAddressInfoInputShouldBeValidValidator
+    // Fields
+    private readonly ICustomerAddressSpecifications _customerAddressSpecifications;
+
+    // Constructors
+    public ChangeCustomerFullAddressInfoInputShouldBeValidValidator(
+        ICustomerAddressSpecifications customerAddressSpecifications
+    )
     {
-        // Fields
-        private readonly ICustomerAddressSpecifications _customerAddressSpecifications;
+        _customerAddressSpecifications = customerAddressSpecifications;
+    }
 
-        // Constructors
-        public ChangeCustomerFullAddressInfoInputShouldBeValidValidator(
-            ICustomerAddressSpecifications customerAddressSpecifications
-        )
-        {
-            _customerAddressSpecifications = customerAddressSpecifications;
-        }
-
-        // Protected Methods
-        protected override void ConfigureFluentValidationConcreteValidatorInternal(ValidatorBase<ChangeCustomerFullAddressInfoInput>.FluentValidationValidatorWrapper fluentValidationValidatorWrapper)
-        {
-            CustomerAddressValidatorWrapper.AddCustomerAddressShouldHaveAddressValueObject(
-                _customerAddressSpecifications,
-                fluentValidationValidatorWrapper,
-                propertyExpression: q => q.AddressValueObject,
-                getAddressValueObjectFunction: q => q.AddressValueObject
-            );
-            CustomerAddressValidatorWrapper.AddCustomerAddressShouldHaveCustomerAddressType(
-                _customerAddressSpecifications,
-                fluentValidationValidatorWrapper,
-                propertyExpression: q => q.CustomerAddressType,
-                getCustomerAddressTypeFunction: q => q.CustomerAddressType
-            );
-        }
+    // Protected Methods
+    protected override void ConfigureFluentValidationConcreteValidatorInternal(ValidatorBase<ChangeCustomerFullAddressInfoInput>.FluentValidationValidatorWrapper fluentValidationValidatorWrapper)
+    {
+        CustomerAddressValidatorWrapper.AddCustomerAddressShouldHaveAddressValueObject(
+            _customerAddressSpecifications,
+            fluentValidationValidatorWrapper,
+            propertyExpression: q => q.AddressValueObject,
+            getAddressValueObjectFunction: q => q.AddressValueObject
+        );
+        CustomerAddressValidatorWrapper.AddCustomerAddressShouldHaveCustomerAddressType(
+            _customerAddressSpecifications,
+            fluentValidationValidatorWrapper,
+            propertyExpression: q => q.CustomerAddressType,
+            getCustomerAddressTypeFunction: q => q.CustomerAddressType
+        );
     }
 }

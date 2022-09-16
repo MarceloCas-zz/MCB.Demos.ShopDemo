@@ -2,24 +2,23 @@
 using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.CustomerAddresses.Enums;
 using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.ValueObjects.AddressValueObjects;
 
-namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Customers.Inputs
-{
-    public record AddNewCustomerAddressInput
-        : InputBase
-    {
-        public CustomerAddressType CustomerAddressType { get; }
-        public AddressValueObject AddressValueObject { get; }
+namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Customers.Inputs;
 
-        public AddNewCustomerAddressInput(
-            Guid tenantId,
-            CustomerAddressType customerAddressType, 
-            AddressValueObject addressValueObject,
-            string executionUser,
-            string sourcePlatform
-        ) : base(tenantId, executionUser, sourcePlatform)
-        {
-            CustomerAddressType = customerAddressType;
-            AddressValueObject = addressValueObject;
-        }
+public record AddNewCustomerAddressInput
+    : InputBase
+{
+    public CustomerAddressType CustomerAddressType { get; }
+    public AddressValueObject AddressValueObject { get; }
+
+    public AddNewCustomerAddressInput(
+        Guid tenantId,
+        CustomerAddressType customerAddressType, 
+        AddressValueObject addressValueObject,
+        string executionUser,
+        string sourcePlatform
+    ) : base(tenantId, executionUser, sourcePlatform)
+    {
+        CustomerAddressType = customerAddressType;
+        AddressValueObject = addressValueObject;
     }
 }

@@ -6,246 +6,245 @@ using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.CustomerAddresse
 using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Customers.Inputs;
 using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Customers.Validators.Interfaces;
 
-namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Customers
+namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Customers;
+
+public class Customer
+    : DomainEntityBase,
+    IAggregationRoot
 {
-    public class Customer
-        : DomainEntityBase,
-        IAggregationRoot
+    // Fields
+    private CustomerAddressInfo _customerAddressInfo;
+
+    // Properties
+    public string FirstName { get; private set; }
+    public string LastName { get; private set; }
+    public DateOnly BirthDate { get; private set; }
+
+    // Navigation Properties
+    public CustomerAddressInfo CustomerAddressInfo => _customerAddressInfo.DeepClone();
+
+    // Validators
+    private readonly IRegisterNewCustomerInputShouldBeValidValidator _customerCustomerRegisterNewInputShouldBeValidValidator;
+    private readonly IChangeCustomerNameInputShouldBeValidValidator _changeCustomerNameInputShouldBeValidValidator;
+    private readonly IChangeCustomerBirthDateInputShouldBeValidValidator _changeCustomerBirthDateInputShouldBeValidValidator;
+    private readonly IAddNewCustomerAddressInputShouldBeValidValidator _addNewCustomerAddressInputShouldBeValidValidator;
+    private readonly IChangeCustomerDefaultShippingAddressInputShouldBeValidValidator _changeCustomerDefaultShippingAddressInputShouldBeValidValidator;
+    private readonly IClearCustomerDefaultShippingAddressInputShouldBeValidValidator _clearCustomerDefaultShippingAddressInputShouldBeValidValidator;
+    private readonly IRemoveCustomerAddressInputShouldBeValidValidator _removeCustomerAddressInputShouldBeValidValidator;
+    private readonly IChangeCustomerAddressInputShouldBeValidValidator _changeCustomerAddressInputShouldBeValidValidator;
+
+    // Factories
+    private readonly ICustomerAddressInfoFactory _customerAddressInfoFactory;
+
+    // Constructors
+    public Customer(
+        IRegisterNewCustomerInputShouldBeValidValidator customerRegisterNewInputShouldBeValidValidator,
+        IChangeCustomerNameInputShouldBeValidValidator changeCustomerNameInputShouldBeValidValidator,
+        IChangeCustomerBirthDateInputShouldBeValidValidator changeCustomerBirthDateInputShouldBeValidValidator,
+        IAddNewCustomerAddressInputShouldBeValidValidator addNewCustomerAddressInputShouldBeValidValidator,
+        IChangeCustomerDefaultShippingAddressInputShouldBeValidValidator changeCustomerDefaultShippingAddressInputShouldBeValidValidator,
+        IClearCustomerDefaultShippingAddressInputShouldBeValidValidator clearCustomerDefaultShippingAddressInputShouldBeValidValidator,
+        IRemoveCustomerAddressInputShouldBeValidValidator removeCustomerAddressInputShouldBeValidValidator,
+        IChangeCustomerAddressInputShouldBeValidValidator changeCustomerAddressInputShouldBeValidValidator,
+        ICustomerAddressInfoFactory customerAddressInfoFactory
+    )
     {
-        // Fields
-        private CustomerAddressInfo _customerAddressInfo;
+        FirstName = string.Empty;
+        LastName = string.Empty;
 
-        // Properties
-        public string FirstName { get; private set; }
-        public string LastName { get; private set; }
-        public DateOnly BirthDate { get; private set; }
+        _customerCustomerRegisterNewInputShouldBeValidValidator = customerRegisterNewInputShouldBeValidValidator;
+        _changeCustomerNameInputShouldBeValidValidator = changeCustomerNameInputShouldBeValidValidator;
+        _changeCustomerBirthDateInputShouldBeValidValidator = changeCustomerBirthDateInputShouldBeValidValidator;
+        _addNewCustomerAddressInputShouldBeValidValidator = addNewCustomerAddressInputShouldBeValidValidator;
+        _changeCustomerDefaultShippingAddressInputShouldBeValidValidator = changeCustomerDefaultShippingAddressInputShouldBeValidValidator;
+        _clearCustomerDefaultShippingAddressInputShouldBeValidValidator = clearCustomerDefaultShippingAddressInputShouldBeValidValidator;
+        _removeCustomerAddressInputShouldBeValidValidator = removeCustomerAddressInputShouldBeValidValidator;
+        _changeCustomerAddressInputShouldBeValidValidator = changeCustomerAddressInputShouldBeValidValidator;
 
-        // Navigation Properties
-        public CustomerAddressInfo CustomerAddressInfo => _customerAddressInfo.DeepClone();
+        _customerAddressInfoFactory = customerAddressInfoFactory;
+        _customerAddressInfo = customerAddressInfoFactory.Create();
+    }
 
-        // Validators
-        private readonly IRegisterNewCustomerInputShouldBeValidValidator _customerCustomerRegisterNewInputShouldBeValidValidator;
-        private readonly IChangeCustomerNameInputShouldBeValidValidator _changeCustomerNameInputShouldBeValidValidator;
-        private readonly IChangeCustomerBirthDateInputShouldBeValidValidator _changeCustomerBirthDateInputShouldBeValidValidator;
-        private readonly IAddNewCustomerAddressInputShouldBeValidValidator _addNewCustomerAddressInputShouldBeValidValidator;
-        private readonly IChangeCustomerDefaultShippingAddressInputShouldBeValidValidator _changeCustomerDefaultShippingAddressInputShouldBeValidValidator;
-        private readonly IClearCustomerDefaultShippingAddressInputShouldBeValidValidator _clearCustomerDefaultShippingAddressInputShouldBeValidValidator;
-        private readonly IRemoveCustomerAddressInputShouldBeValidValidator _removeCustomerAddressInputShouldBeValidValidator;
-        private readonly IChangeCustomerAddressInputShouldBeValidValidator _changeCustomerAddressInputShouldBeValidValidator;
-
-        // Factories
-        private readonly ICustomerAddressInfoFactory _customerAddressInfoFactory;
-
-        // Constructors
-        public Customer(
-            IRegisterNewCustomerInputShouldBeValidValidator customerRegisterNewInputShouldBeValidValidator,
-            IChangeCustomerNameInputShouldBeValidValidator changeCustomerNameInputShouldBeValidValidator,
-            IChangeCustomerBirthDateInputShouldBeValidValidator changeCustomerBirthDateInputShouldBeValidValidator,
-            IAddNewCustomerAddressInputShouldBeValidValidator addNewCustomerAddressInputShouldBeValidValidator,
-            IChangeCustomerDefaultShippingAddressInputShouldBeValidValidator changeCustomerDefaultShippingAddressInputShouldBeValidValidator,
-            IClearCustomerDefaultShippingAddressInputShouldBeValidValidator clearCustomerDefaultShippingAddressInputShouldBeValidValidator,
-            IRemoveCustomerAddressInputShouldBeValidValidator removeCustomerAddressInputShouldBeValidValidator,
-            IChangeCustomerAddressInputShouldBeValidValidator changeCustomerAddressInputShouldBeValidValidator,
-            ICustomerAddressInfoFactory customerAddressInfoFactory
-        )
-        {
-            FirstName = string.Empty;
-            LastName = string.Empty;
-
-            _customerCustomerRegisterNewInputShouldBeValidValidator = customerRegisterNewInputShouldBeValidValidator;
-            _changeCustomerNameInputShouldBeValidValidator = changeCustomerNameInputShouldBeValidValidator;
-            _changeCustomerBirthDateInputShouldBeValidValidator = changeCustomerBirthDateInputShouldBeValidValidator;
-            _addNewCustomerAddressInputShouldBeValidValidator = addNewCustomerAddressInputShouldBeValidValidator;
-            _changeCustomerDefaultShippingAddressInputShouldBeValidValidator = changeCustomerDefaultShippingAddressInputShouldBeValidValidator;
-            _clearCustomerDefaultShippingAddressInputShouldBeValidValidator = clearCustomerDefaultShippingAddressInputShouldBeValidValidator;
-            _removeCustomerAddressInputShouldBeValidValidator = removeCustomerAddressInputShouldBeValidValidator;
-            _changeCustomerAddressInputShouldBeValidValidator = changeCustomerAddressInputShouldBeValidValidator;
-
-            _customerAddressInfoFactory = customerAddressInfoFactory;
-            _customerAddressInfo = customerAddressInfoFactory.Create();
-        }
-
-        // Public Methods
-        public Customer RegisterNewCustomer(RegisterNewCustomerInput input)
-        {
-            // Validate
-            if (!Validate(() => _customerCustomerRegisterNewInputShouldBeValidValidator.Validate(input)))
-                return this;
-
-            // Process and Return
-            return SetName(input.FirstName, input.LastName)
-                .SetBirthDate(input.BirthDate)
-                .RegisterNewInternal<Customer>(input.TenantId, input.ExecutionUser, input.SourcePlatform);
-        }
-        public Customer ChangeCustomerName(ChangeCustomerNameInput input)
-        {
-            // Validate
-            if (!Validate(() => _changeCustomerNameInputShouldBeValidValidator.Validate(input)))
-                return this;
-            
-            // Process and Return
-            return SetName(input.FirstName, input.LastName)
-                .RegisterModificationInternal<Customer>(input.ExecutionUser, input.SourcePlatform);
-        }
-        public Customer ChangeBirthDate(ChangeCustomerBirthDateInput input)
-        {
-            // Validate
-            if (!Validate(() => _changeCustomerBirthDateInputShouldBeValidValidator.Validate(input)))
-                return this;
-
-            // Process and Return
-            return SetBirthDate(input.BirthDate)
-                .RegisterModificationInternal<Customer>(input.ExecutionUser, input.SourcePlatform);
-        }
-
-        public CustomerAddress ChangeDefaultShippingAddress(ChangeCustomerDefaultShippingAddressInput input)
-        {
-            // Validate
-            if (!Validate(() => _changeCustomerDefaultShippingAddressInputShouldBeValidValidator.Validate(input)))
-                return default;
-            
-            // Process
-            var newDefaultShippingAddress = _customerAddressInfo.ChangeDefaultCustomerAddressInfoShippingAddress(
-                new CustomerAddressesInfo.Inputs.ChangeDefaultCustomerAddressInfoShippingAddressInput(
-                    TenantId,
-                    input.CustomerAddressId, 
-                    input.ExecutionUser, 
-                    input.SourcePlatform
-                )
-            );
-            RegisterModificationInternal<Customer>(input.ExecutionUser, input.SourcePlatform);
-
-            // Return
-            return newDefaultShippingAddress;
-        }
-        public Customer ClearDefaultShippingAddress(ClearCustomerDefaultShippingAddressInput input)
-        {
-            // Validate
-            if (!Validate(() => _clearCustomerDefaultShippingAddressInputShouldBeValidValidator.Validate(input)))
-                return default;
-
-            // Process
-            _customerAddressInfo.ClearDefaultCustomerAddressInfoShippingAddress(new CustomerAddressesInfo.Inputs.ClearDefaultCustomerAddressInfoShippingAddressInput(
-                TenantId,
-                input.ExecutionUser, 
-                input.SourcePlatform
-            ));
-            RegisterModificationInternal<Customer>(input.ExecutionUser, input.SourcePlatform);
-
-            // Return
+    // Public Methods
+    public Customer RegisterNewCustomer(RegisterNewCustomerInput input)
+    {
+        // Validate
+        if (!Validate(() => _customerCustomerRegisterNewInputShouldBeValidValidator.Validate(input)))
             return this;
-        }
 
-        public CustomerAddress AddNewCustomerAddress(AddNewCustomerAddressInput input)
-        {
-            // Validate
-            if (!Validate(() => _addNewCustomerAddressInputShouldBeValidValidator.Validate(input)))
-                return default;
+        // Process and Return
+        return SetName(input.FirstName, input.LastName)
+            .SetBirthDate(input.BirthDate)
+            .RegisterNewInternal<Customer>(input.TenantId, input.ExecutionUser, input.SourcePlatform);
+    }
+    public Customer ChangeCustomerName(ChangeCustomerNameInput input)
+    {
+        // Validate
+        if (!Validate(() => _changeCustomerNameInputShouldBeValidValidator.Validate(input)))
+            return this;
+        
+        // Process and Return
+        return SetName(input.FirstName, input.LastName)
+            .RegisterModificationInternal<Customer>(input.ExecutionUser, input.SourcePlatform);
+    }
+    public Customer ChangeBirthDate(ChangeCustomerBirthDateInput input)
+    {
+        // Validate
+        if (!Validate(() => _changeCustomerBirthDateInputShouldBeValidValidator.Validate(input)))
+            return this;
 
-            // Process Customer Address
-            var addedCustomerAddress = _customerAddressInfo.AddNewCustomerAddressInfoCustomerAddress(
-                new CustomerAddressesInfo.Inputs.AddNewCustomerAddressInfoCustomerAddressInput(
-                    TenantId,
-                    input.CustomerAddressType,
-                    input.AddressValueObject,
-                    input.ExecutionUser,
-                    input.SourcePlatform
-                )
-            );
+        // Process and Return
+        return SetBirthDate(input.BirthDate)
+            .RegisterModificationInternal<Customer>(input.ExecutionUser, input.SourcePlatform);
+    }
 
-            // Validate After Customer Address Process
-            if (!addedCustomerAddress.ValidationInfo.IsValid)
-            {
-                AddFromValidationInfoInternal(addedCustomerAddress.ValidationInfo);
-                return null;
-            }
-
-            // Process Customer
-            RegisterModificationInternal<Customer>(input.ExecutionUser, input.SourcePlatform);
-
-            // Return
-            return addedCustomerAddress;
-        }
-        public CustomerAddress RemoveCustomerAddress(RemoveCustomerAddressInput input)
-        {
-            // Validate
-            if (!Validate(() => _removeCustomerAddressInputShouldBeValidValidator.Validate(input)))
-                return default;
-
-            // Process
-            var removedCustomerAddress = _customerAddressInfo.RemoveCustomerAddressInfoCustomerAddress(new CustomerAddressesInfo.Inputs.RemoveCustomerAddressInfoCustomerAddressInput(
+    public CustomerAddress ChangeDefaultShippingAddress(ChangeCustomerDefaultShippingAddressInput input)
+    {
+        // Validate
+        if (!Validate(() => _changeCustomerDefaultShippingAddressInputShouldBeValidValidator.Validate(input)))
+            return default;
+        
+        // Process
+        var newDefaultShippingAddress = _customerAddressInfo.ChangeDefaultCustomerAddressInfoShippingAddress(
+            new CustomerAddressesInfo.Inputs.ChangeDefaultCustomerAddressInfoShippingAddressInput(
                 TenantId,
                 input.CustomerAddressId, 
                 input.ExecutionUser, 
                 input.SourcePlatform
-            ));
-            RegisterModificationInternal<Customer>(input.ExecutionUser, input.SourcePlatform);
+            )
+        );
+        RegisterModificationInternal<Customer>(input.ExecutionUser, input.SourcePlatform);
 
-            // Return
-            return removedCustomerAddress;
-        }
-        public CustomerAddress ChangeCustomerAddress(ChangeCustomerAddressInput input)
-        {
-            // Validate
-            if (!Validate(() => _changeCustomerAddressInputShouldBeValidValidator.Validate(input)))
-                return default;
+        // Return
+        return newDefaultShippingAddress;
+    }
+    public Customer ClearDefaultShippingAddress(ClearCustomerDefaultShippingAddressInput input)
+    {
+        // Validate
+        if (!Validate(() => _clearCustomerDefaultShippingAddressInputShouldBeValidValidator.Validate(input)))
+            return default;
 
-            // Process
-            var changedCustomerAddress = _customerAddressInfo.ChangeCustomerAddressInfoCustomerAddress(new CustomerAddressesInfo.Inputs.ChangeCustomerAddressInfoCustomerAddressInput(
+        // Process
+        _customerAddressInfo.ClearDefaultCustomerAddressInfoShippingAddress(new CustomerAddressesInfo.Inputs.ClearDefaultCustomerAddressInfoShippingAddressInput(
+            TenantId,
+            input.ExecutionUser, 
+            input.SourcePlatform
+        ));
+        RegisterModificationInternal<Customer>(input.ExecutionUser, input.SourcePlatform);
+
+        // Return
+        return this;
+    }
+
+    public CustomerAddress AddNewCustomerAddress(AddNewCustomerAddressInput input)
+    {
+        // Validate
+        if (!Validate(() => _addNewCustomerAddressInputShouldBeValidValidator.Validate(input)))
+            return default;
+
+        // Process Customer Address
+        var addedCustomerAddress = _customerAddressInfo.AddNewCustomerAddressInfoCustomerAddress(
+            new CustomerAddressesInfo.Inputs.AddNewCustomerAddressInfoCustomerAddressInput(
                 TenantId,
-                input.CustomerAddressId,
                 input.CustomerAddressType,
                 input.AddressValueObject,
                 input.ExecutionUser,
                 input.SourcePlatform
-            ));
-            RegisterModificationInternal<Customer>(input.ExecutionUser, input.SourcePlatform);
+            )
+        );
 
-            // Return
-            return changedCustomerAddress;
-        }
-
-        public Customer DeepClone()
+        // Validate After Customer Address Process
+        if (!addedCustomerAddress.ValidationInfo.IsValid)
         {
-            // Process and Return
-            return DeepCloneInternal<Customer>()
-                .SetName(FirstName, LastName)
-                .SetBirthDate(BirthDate)
-                .SetCustomerAddressInfo(CustomerAddressInfo);
+            AddFromValidationInfoInternal(addedCustomerAddress.ValidationInfo);
+            return null;
         }
 
-        // Protected Abstract Methods
-        protected override DomainEntityBase CreateInstanceForCloneInternal() =>
-            new Customer(
-                _customerCustomerRegisterNewInputShouldBeValidValidator,
-                _changeCustomerNameInputShouldBeValidValidator,
-                _changeCustomerBirthDateInputShouldBeValidValidator,
-                _addNewCustomerAddressInputShouldBeValidValidator,
-                _changeCustomerDefaultShippingAddressInputShouldBeValidValidator,
-                _clearCustomerDefaultShippingAddressInputShouldBeValidValidator,
-                _removeCustomerAddressInputShouldBeValidValidator,
-                _changeCustomerAddressInputShouldBeValidValidator,
-                _customerAddressInfoFactory
-            );
+        // Process Customer
+        RegisterModificationInternal<Customer>(input.ExecutionUser, input.SourcePlatform);
 
-        // Private Methods
-        private Customer SetName(string firstName, string lastName)
-        {
-            FirstName = firstName;
-            LastName = lastName;
+        // Return
+        return addedCustomerAddress;
+    }
+    public CustomerAddress RemoveCustomerAddress(RemoveCustomerAddressInput input)
+    {
+        // Validate
+        if (!Validate(() => _removeCustomerAddressInputShouldBeValidValidator.Validate(input)))
+            return default;
 
-            return this;
-        }
-        private Customer SetBirthDate(DateOnly birthDate)
-        {
-            BirthDate = birthDate;
+        // Process
+        var removedCustomerAddress = _customerAddressInfo.RemoveCustomerAddressInfoCustomerAddress(new CustomerAddressesInfo.Inputs.RemoveCustomerAddressInfoCustomerAddressInput(
+            TenantId,
+            input.CustomerAddressId, 
+            input.ExecutionUser, 
+            input.SourcePlatform
+        ));
+        RegisterModificationInternal<Customer>(input.ExecutionUser, input.SourcePlatform);
 
-            return this;
-        }
-        private Customer SetCustomerAddressInfo(CustomerAddressInfo customerAddressInfo)
-        {
-            _customerAddressInfo = customerAddressInfo;
-            return this;
-        }
+        // Return
+        return removedCustomerAddress;
+    }
+    public CustomerAddress ChangeCustomerAddress(ChangeCustomerAddressInput input)
+    {
+        // Validate
+        if (!Validate(() => _changeCustomerAddressInputShouldBeValidValidator.Validate(input)))
+            return default;
+
+        // Process
+        var changedCustomerAddress = _customerAddressInfo.ChangeCustomerAddressInfoCustomerAddress(new CustomerAddressesInfo.Inputs.ChangeCustomerAddressInfoCustomerAddressInput(
+            TenantId,
+            input.CustomerAddressId,
+            input.CustomerAddressType,
+            input.AddressValueObject,
+            input.ExecutionUser,
+            input.SourcePlatform
+        ));
+        RegisterModificationInternal<Customer>(input.ExecutionUser, input.SourcePlatform);
+
+        // Return
+        return changedCustomerAddress;
+    }
+
+    public Customer DeepClone()
+    {
+        // Process and Return
+        return DeepCloneInternal<Customer>()
+            .SetName(FirstName, LastName)
+            .SetBirthDate(BirthDate)
+            .SetCustomerAddressInfo(CustomerAddressInfo);
+    }
+
+    // Protected Abstract Methods
+    protected override DomainEntityBase CreateInstanceForCloneInternal() =>
+        new Customer(
+            _customerCustomerRegisterNewInputShouldBeValidValidator,
+            _changeCustomerNameInputShouldBeValidValidator,
+            _changeCustomerBirthDateInputShouldBeValidValidator,
+            _addNewCustomerAddressInputShouldBeValidValidator,
+            _changeCustomerDefaultShippingAddressInputShouldBeValidValidator,
+            _clearCustomerDefaultShippingAddressInputShouldBeValidValidator,
+            _removeCustomerAddressInputShouldBeValidValidator,
+            _changeCustomerAddressInputShouldBeValidValidator,
+            _customerAddressInfoFactory
+        );
+
+    // Private Methods
+    private Customer SetName(string firstName, string lastName)
+    {
+        FirstName = firstName;
+        LastName = lastName;
+
+        return this;
+    }
+    private Customer SetBirthDate(DateOnly birthDate)
+    {
+        BirthDate = birthDate;
+
+        return this;
+    }
+    private Customer SetCustomerAddressInfo(CustomerAddressInfo customerAddressInfo)
+    {
+        _customerAddressInfo = customerAddressInfo;
+        return this;
     }
 }
