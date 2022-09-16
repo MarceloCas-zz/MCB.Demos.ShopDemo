@@ -54,7 +54,7 @@ namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Tests.Fixtur
         {
             return new CustomerAddress(
                     new ChangeCustomerAddressTypeInputShouldBeValidValidator(new CustomerAddressSpecifications()),
-                    new ChangeCustomerAddressInputShouldBeValidValidator(new CustomerAddressSpecifications()),
+                    new CustomerAddresses.Validators.ChangeCustomerAddressInputShouldBeValidValidator(new CustomerAddressSpecifications()),
                     new ChangeCustomerFullAddressInfoInputShouldBeValidValidator(new CustomerAddressSpecifications()),
                     new RegisterNewCustomerAddressInputShouldBeValidValidator(new CustomerAddressSpecifications()),
                     default
@@ -127,6 +127,8 @@ namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Tests.Fixtur
                     new AddNewCustomerAddressInputShouldBeValidValidator(
                         new CustomerAddressSpecifications()
                     ),
+                    default,
+                    default,
                     default,
                     default,
                     default

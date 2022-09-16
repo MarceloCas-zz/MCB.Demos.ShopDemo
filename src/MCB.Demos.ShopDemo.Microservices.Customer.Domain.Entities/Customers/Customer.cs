@@ -223,6 +223,8 @@ namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Customers
                 _addNewCustomerAddressInputShouldBeValidValidator,
                 _changeCustomerDefaultShippingAddressInputShouldBeValidValidator,
                 _clearCustomerDefaultShippingAddressInputShouldBeValidValidator,
+                _removeCustomerAddressInputShouldBeValidValidator,
+                _changeCustomerAddressInputShouldBeValidValidator,
                 _customerAddressInfoFactory
             );
 

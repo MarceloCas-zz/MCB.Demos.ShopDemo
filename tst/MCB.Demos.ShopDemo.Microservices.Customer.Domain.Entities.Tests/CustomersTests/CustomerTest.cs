@@ -43,6 +43,8 @@ namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Tests.Custom
                 ),
                 default,
                 default,
+                default,
+                default,
                 default
             );
 
@@ -72,6 +74,8 @@ namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Tests.Custom
                     new AddNewCustomerAddressInputShouldBeValidValidator(
                         new CustomerAddressSpecifications()
                     ),
+                    default,
+                    default,
                     default,
                     default,
                     default
