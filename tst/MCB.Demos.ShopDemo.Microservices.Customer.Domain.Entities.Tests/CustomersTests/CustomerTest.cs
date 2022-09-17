@@ -45,6 +45,11 @@ public class CustomerTest
             default,
             default,
             default,
+            default,
+            default,
+            default,
+            default,
+            default,
             default
         );
 
@@ -74,6 +79,11 @@ public class CustomerTest
                 new AddNewCustomerAddressInputShouldBeValidValidator(
                     new CustomerAddressSpecifications()
                 ),
+                default,
+                default,
+                default,
+                default,
+                default,
                 default,
                 default,
                 default,

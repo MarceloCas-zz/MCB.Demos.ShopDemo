@@ -93,6 +93,7 @@ public class DefaultFixture
         return new CustomerAddressInfo(
                 customerAddressFactory: null,
                 registerNewCustomerAddressInputShouldBeValidFactory: null,
+                changeCustomerFullAddressInfoInputFactory: null,
                 new RegisterNewCustomerAddressInfoInputShouldBeValidValidator(new CustomerAddressSpecifications()),
                 new ChangeDefaultCustomerAddressInfoShippingAddressInputShouldBeValidValidator(new CustomerAddressSpecifications()),
                 new ClearDefaultCustomerAddressInfoShippingAddressInputShouldBeValidValidator(),
@@ -127,6 +128,11 @@ public class DefaultFixture
                 new AddNewCustomerAddressInputShouldBeValidValidator(
                     new CustomerAddressSpecifications()
                 ),
+                default,
+                default,
+                default,
+                default,
+                default,
                 default,
                 default,
                 default,

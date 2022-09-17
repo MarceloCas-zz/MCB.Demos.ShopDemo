@@ -11,6 +11,8 @@ public sealed class CustomerAddressInfoFactory
     // Fields
     private readonly ICustomerAddressFactory _customerAddressFactory;
     private readonly IRegisterNewCustomerAddressInputFactory _registerNewCustomerAddressInputFactory;
+    private readonly IChangeCustomerFullAddressInfoInputFactory _changeCustomerFullAddressInfoInputFactory;
+
     private readonly IRegisterNewCustomerAddressInfoInputShouldBeValidValidator _registerNewCustomerAddressInfoValidator;
     private readonly IChangeDefaultCustomerAddressInfoShippingAddressInputShouldBeValidValidator _changeDefaultCustomerAddressInfoShippingAddressValidator;
     private readonly ICustomerAddressShouldBeValidValidator _customerAddressIsValidValidator;
@@ -25,6 +27,7 @@ public sealed class CustomerAddressInfoFactory
     public CustomerAddressInfoFactory(
         ICustomerAddressFactory customerAddressFactory,
         IRegisterNewCustomerAddressInputFactory registerNewCustomerAddressInputFactory,
+        IChangeCustomerFullAddressInfoInputFactory changeCustomerFullAddressInfoInputFactory,
         IRegisterNewCustomerAddressInfoInputShouldBeValidValidator registerNewCustomerAddressInfoValidator,
         IChangeDefaultCustomerAddressInfoShippingAddressInputShouldBeValidValidator changeDefaultCustomerAddressInfoShippingAddressValidator,
         ICustomerAddressShouldBeValidValidator customerAddressIsValidValidator,
@@ -37,6 +40,8 @@ public sealed class CustomerAddressInfoFactory
     {
         _customerAddressFactory = customerAddressFactory;
         _registerNewCustomerAddressInputFactory = registerNewCustomerAddressInputFactory;
+        _changeCustomerFullAddressInfoInputFactory = changeCustomerFullAddressInfoInputFactory;
+
         _registerNewCustomerAddressInfoValidator = registerNewCustomerAddressInfoValidator;
         _changeDefaultCustomerAddressInfoShippingAddressValidator = changeDefaultCustomerAddressInfoShippingAddressValidator;
         _customerAddressIsValidValidator = customerAddressIsValidValidator;
@@ -53,6 +58,7 @@ public sealed class CustomerAddressInfoFactory
         return new CustomerAddressInfo(
             _customerAddressFactory,
             _registerNewCustomerAddressInputFactory,
+            _changeCustomerFullAddressInfoInputFactory,
             _registerNewCustomerAddressInfoValidator,
             _changeDefaultCustomerAddressInfoShippingAddressValidator,
             _clearDefaultCustomerAddressInfoShippingAddressInputValidator,

@@ -33,6 +33,7 @@ public class CustomerAddressInfoTest
         var customerAddressInfo = new CustomerAddressInfo(
             customerAddressFactory: null,
             registerNewCustomerAddressInputShouldBeValidFactory: null,
+            changeCustomerFullAddressInfoInputFactory: null,
             registerNewCustomerAddressInfoInputShouldBeValidValidator: null,
             changeDefaultCustomerAddressInfoShippingAddressInputShouldBeValidValidator: null,
             clearDefaultCustomerAddressInfoShippingAddressInputShouldBeValidValidator: null,

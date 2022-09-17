@@ -18,6 +18,11 @@ public sealed class CustomerFactory
     private readonly IChangeCustomerAddressInputShouldBeValidValidator _changeCustomerAddressInputShouldBeValidValidator;
 
     private readonly ICustomerAddressInfoFactory _customerAddressInfoFactory;
+    private readonly IChangeDefaultCustomerAddressInfoShippingAddressInputFactory _changeDefaultCustomerAddressInfoShippingAddressInputFactory;
+    private readonly IClearDefaultCustomerAddressInfoShippingAddressInputFactory _clearDefaultCustomerAddressInfoShippingAddressInputFactory;
+    private readonly IAddNewCustomerAddressInfoCustomerAddressInputFactory _addNewCustomerAddressInfoCustomerAddressInputFactory;
+    private readonly IRemoveCustomerAddressInfoCustomerAddressInputFactory _removeCustomerAddressInfoCustomerAddressInputFactory;
+    private readonly IChangeCustomerAddressInfoCustomerAddressInputFactory _changeCustomerAddressInfoCustomerAddressInputFactory;
 
     // Constructors
     public CustomerFactory(
@@ -29,7 +34,12 @@ public sealed class CustomerFactory
         IClearCustomerDefaultShippingAddressInputShouldBeValidValidator clearCustomerDefaultShippingAddressInputShouldBeValidValidator,
         IRemoveCustomerAddressInputShouldBeValidValidator removeCustomerAddressInputShouldBeValidValidator,
         IChangeCustomerAddressInputShouldBeValidValidator changeCustomerAddressInputShouldBeValidValidator,
-        ICustomerAddressInfoFactory customerAddressInfoFactory
+        ICustomerAddressInfoFactory customerAddressInfoFactory,
+        IChangeDefaultCustomerAddressInfoShippingAddressInputFactory changeDefaultCustomerAddressInfoShippingAddressInputFactory,
+        IClearDefaultCustomerAddressInfoShippingAddressInputFactory clearDefaultCustomerAddressInfoShippingAddressInputFactory,
+        IAddNewCustomerAddressInfoCustomerAddressInputFactory addNewCustomerAddressInfoCustomerAddressInputFactory,
+        IRemoveCustomerAddressInfoCustomerAddressInputFactory removeCustomerAddressInfoCustomerAddressInputFactory,
+        IChangeCustomerAddressInfoCustomerAddressInputFactory changeCustomerAddressInfoCustomerAddressInputFactory
     )
     {
         _customerRegisterNewInputShouldBeValidValidator = customerRegisterNewInputShouldBeValidValidator;
@@ -42,6 +52,11 @@ public sealed class CustomerFactory
         _changeCustomerAddressInputShouldBeValidValidator = changeCustomerAddressInputShouldBeValidValidator;
 
         _customerAddressInfoFactory = customerAddressInfoFactory;
+        _changeDefaultCustomerAddressInfoShippingAddressInputFactory = changeDefaultCustomerAddressInfoShippingAddressInputFactory;
+        _clearDefaultCustomerAddressInfoShippingAddressInputFactory = clearDefaultCustomerAddressInfoShippingAddressInputFactory;
+        _addNewCustomerAddressInfoCustomerAddressInputFactory = addNewCustomerAddressInfoCustomerAddressInputFactory;
+        _removeCustomerAddressInfoCustomerAddressInputFactory = removeCustomerAddressInfoCustomerAddressInputFactory;
+        _changeCustomerAddressInfoCustomerAddressInputFactory = changeCustomerAddressInfoCustomerAddressInputFactory;
     }
 
     // Public Methods
@@ -56,7 +71,12 @@ public sealed class CustomerFactory
             _clearCustomerDefaultShippingAddressInputShouldBeValidValidator,
             _removeCustomerAddressInputShouldBeValidValidator,
             _changeCustomerAddressInputShouldBeValidValidator,
-            _customerAddressInfoFactory
+            _customerAddressInfoFactory,
+            _changeDefaultCustomerAddressInfoShippingAddressInputFactory,
+            _clearDefaultCustomerAddressInfoShippingAddressInputFactory,
+            _addNewCustomerAddressInfoCustomerAddressInputFactory,
+            _removeCustomerAddressInfoCustomerAddressInputFactory,
+            _changeCustomerAddressInfoCustomerAddressInputFactory
         );
     }
 }

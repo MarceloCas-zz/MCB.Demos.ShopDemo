@@ -21,6 +21,7 @@ public sealed class CustomerAddressInfo
     // Factories
     private readonly ICustomerAddressFactory _customerAddressFactory;
     private readonly IRegisterNewCustomerAddressInputFactory _registerNewCustomerAddressInputFactory;
+    private readonly IChangeCustomerFullAddressInfoInputFactory _changeCustomerFullAddressInfoInputFactory;
 
     // Validators
     private readonly IRegisterNewCustomerAddressInfoInputShouldBeValidValidator _registerNewCustomerAddressInfoInputShouldBeValidValidator;
@@ -35,6 +36,7 @@ public sealed class CustomerAddressInfo
     public CustomerAddressInfo(
         ICustomerAddressFactory customerAddressFactory,
         IRegisterNewCustomerAddressInputFactory registerNewCustomerAddressInputShouldBeValidFactory,
+        IChangeCustomerFullAddressInfoInputFactory changeCustomerFullAddressInfoInputFactory,
         IRegisterNewCustomerAddressInfoInputShouldBeValidValidator registerNewCustomerAddressInfoInputShouldBeValidValidator,
         IChangeDefaultCustomerAddressInfoShippingAddressInputShouldBeValidValidator changeDefaultCustomerAddressInfoShippingAddressInputShouldBeValidValidator,
         IClearDefaultCustomerAddressInfoShippingAddressInputShouldBeValidValidator clearDefaultCustomerAddressInfoShippingAddressInputShouldBeValidValidator,
@@ -46,6 +48,7 @@ public sealed class CustomerAddressInfo
     {
         _customerAddressFactory = customerAddressFactory;
         _registerNewCustomerAddressInputFactory = registerNewCustomerAddressInputShouldBeValidFactory;
+        _changeCustomerFullAddressInfoInputFactory = changeCustomerFullAddressInfoInputFactory;
         _registerNewCustomerAddressInfoInputShouldBeValidValidator = registerNewCustomerAddressInfoInputShouldBeValidValidator;
         _changeDefaultCustomerAddressInfoShippingAddressInputShouldBeValidValidator = changeDefaultCustomerAddressInfoShippingAddressInputShouldBeValidValidator;
         _clearDefaultCustomerAddressInfoShippingAddressInputShouldBeValidValidator = clearDefaultCustomerAddressInfoShippingAddressInputShouldBeValidValidator;
@@ -167,14 +170,7 @@ public sealed class CustomerAddressInfo
         var customerAddress = _customerAddressCollection.FirstOrDefault(q => q.Id == input.CustomerAddressId);
 
         // Process
-        // TODO: Create factory
-        customerAddress.ChangeCustomerFullAddressInfo(new CustomerAddresses.Inputs.ChangeCustomerFullAddressInfoInput(
-            input.TenantId,
-            input.CustomerAddressType, 
-            input.AddressValueObject, 
-            input.ExecutionUser,
-            input.SourcePlatform
-        ));
+        customerAddress.ChangeCustomerFullAddressInfo(_changeCustomerFullAddressInfoInputFactory.Create(input));
         RegisterModificationInternal<CustomerAddressInfo>(input.ExecutionUser, input.SourcePlatform);
 
         // Return
@@ -219,6 +215,7 @@ public sealed class CustomerAddressInfo
     protected override DomainEntityBase CreateInstanceForCloneInternal() => new CustomerAddressInfo(
         _customerAddressFactory,
         _registerNewCustomerAddressInputFactory,
+        _changeCustomerFullAddressInfoInputFactory,
         _registerNewCustomerAddressInfoInputShouldBeValidValidator,
         _changeDefaultCustomerAddressInfoShippingAddressInputShouldBeValidValidator,
         _clearDefaultCustomerAddressInfoShippingAddressInputShouldBeValidValidator,

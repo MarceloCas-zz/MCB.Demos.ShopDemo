@@ -35,6 +35,11 @@ public sealed class Customer
 
     // Factories
     private readonly ICustomerAddressInfoFactory _customerAddressInfoFactory;
+    private readonly IChangeDefaultCustomerAddressInfoShippingAddressInputFactory _changeDefaultCustomerAddressInfoShippingAddressInputFactory;
+    private readonly IClearDefaultCustomerAddressInfoShippingAddressInputFactory _clearDefaultCustomerAddressInfoShippingAddressInputFactory;
+    private readonly IAddNewCustomerAddressInfoCustomerAddressInputFactory _addNewCustomerAddressInfoCustomerAddressInputFactory;
+    private readonly IRemoveCustomerAddressInfoCustomerAddressInputFactory _removeCustomerAddressInfoCustomerAddressInputFactory;
+    private readonly IChangeCustomerAddressInfoCustomerAddressInputFactory _changeCustomerAddressInfoCustomerAddressInputFactory;
 
     // Constructors
     public Customer(
@@ -46,7 +51,12 @@ public sealed class Customer
         IClearCustomerDefaultShippingAddressInputShouldBeValidValidator clearCustomerDefaultShippingAddressInputShouldBeValidValidator,
         IRemoveCustomerAddressInputShouldBeValidValidator removeCustomerAddressInputShouldBeValidValidator,
         IChangeCustomerAddressInputShouldBeValidValidator changeCustomerAddressInputShouldBeValidValidator,
-        ICustomerAddressInfoFactory customerAddressInfoFactory
+        ICustomerAddressInfoFactory customerAddressInfoFactory,
+        IChangeDefaultCustomerAddressInfoShippingAddressInputFactory changeDefaultCustomerAddressInfoShippingAddressInputFactory,
+        IClearDefaultCustomerAddressInfoShippingAddressInputFactory clearDefaultCustomerAddressInfoShippingAddressInputFactory,
+        IAddNewCustomerAddressInfoCustomerAddressInputFactory addNewCustomerAddressInfoCustomerAddressInputFactory,
+        IRemoveCustomerAddressInfoCustomerAddressInputFactory removeCustomerAddressInfoCustomerAddressInputFactory,
+        IChangeCustomerAddressInfoCustomerAddressInputFactory changeCustomerAddressInfoCustomerAddressInputFactory
     )
     {
         FirstName = string.Empty;
@@ -62,6 +72,12 @@ public sealed class Customer
         _changeCustomerAddressInputShouldBeValidValidator = changeCustomerAddressInputShouldBeValidValidator;
 
         _customerAddressInfoFactory = customerAddressInfoFactory;
+        _changeDefaultCustomerAddressInfoShippingAddressInputFactory = changeDefaultCustomerAddressInfoShippingAddressInputFactory;
+        _clearDefaultCustomerAddressInfoShippingAddressInputFactory = clearDefaultCustomerAddressInfoShippingAddressInputFactory;
+        _addNewCustomerAddressInfoCustomerAddressInputFactory = addNewCustomerAddressInfoCustomerAddressInputFactory;
+        _removeCustomerAddressInfoCustomerAddressInputFactory = removeCustomerAddressInfoCustomerAddressInputFactory;
+        _changeCustomerAddressInfoCustomerAddressInputFactory = changeCustomerAddressInfoCustomerAddressInputFactory;
+
         _customerAddressInfo = customerAddressInfoFactory.Create();
     }
 
@@ -105,14 +121,8 @@ public sealed class Customer
             return default;
         
         // Process
-        // TODO: Create factory
         var newDefaultShippingAddress = _customerAddressInfo.ChangeDefaultCustomerAddressInfoShippingAddress(
-            new CustomerAddressesInfo.Inputs.ChangeDefaultCustomerAddressInfoShippingAddressInput(
-                TenantId,
-                input.CustomerAddressId, 
-                input.ExecutionUser, 
-                input.SourcePlatform
-            )
+            _changeDefaultCustomerAddressInfoShippingAddressInputFactory.Create(input)
         );
         RegisterModificationInternal<Customer>(input.ExecutionUser, input.SourcePlatform);
 
@@ -126,12 +136,9 @@ public sealed class Customer
             return default;
 
         // Process
-        // TODO: Create factory
-        _customerAddressInfo.ClearDefaultCustomerAddressInfoShippingAddress(new CustomerAddressesInfo.Inputs.ClearDefaultCustomerAddressInfoShippingAddressInput(
-            TenantId,
-            input.ExecutionUser, 
-            input.SourcePlatform
-        ));
+        _customerAddressInfo.ClearDefaultCustomerAddressInfoShippingAddress(
+            _clearDefaultCustomerAddressInfoShippingAddressInputFactory.Create(input)
+        );
         RegisterModificationInternal<Customer>(input.ExecutionUser, input.SourcePlatform);
 
         // Return
@@ -145,15 +152,8 @@ public sealed class Customer
             return default;
 
         // Process Customer Address
-        // TODO: Create factory
         var addedCustomerAddress = _customerAddressInfo.AddNewCustomerAddressInfoCustomerAddress(
-            new CustomerAddressesInfo.Inputs.AddNewCustomerAddressInfoCustomerAddressInput(
-                TenantId,
-                input.CustomerAddressType,
-                input.AddressValueObject,
-                input.ExecutionUser,
-                input.SourcePlatform
-            )
+            _addNewCustomerAddressInfoCustomerAddressInputFactory.Create(input)
         );
 
         // Validate After Customer Address Process
@@ -176,13 +176,9 @@ public sealed class Customer
             return default;
 
         // Process
-        // TODO: Create factory
-        var removedCustomerAddress = _customerAddressInfo.RemoveCustomerAddressInfoCustomerAddress(new CustomerAddressesInfo.Inputs.RemoveCustomerAddressInfoCustomerAddressInput(
-            TenantId,
-            input.CustomerAddressId, 
-            input.ExecutionUser, 
-            input.SourcePlatform
-        ));
+        var removedCustomerAddress = _customerAddressInfo.RemoveCustomerAddressInfoCustomerAddress(
+            _removeCustomerAddressInfoCustomerAddressInputFactory.Create(input)
+        );
         RegisterModificationInternal<Customer>(input.ExecutionUser, input.SourcePlatform);
 
         // Return
@@ -195,15 +191,9 @@ public sealed class Customer
             return default;
 
         // Process
-        // TODO: Create factory
-        var changedCustomerAddress = _customerAddressInfo.ChangeCustomerAddressInfoCustomerAddress(new CustomerAddressesInfo.Inputs.ChangeCustomerAddressInfoCustomerAddressInput(
-            TenantId,
-            input.CustomerAddressId,
-            input.CustomerAddressType,
-            input.AddressValueObject,
-            input.ExecutionUser,
-            input.SourcePlatform
-        ));
+        var changedCustomerAddress = _customerAddressInfo.ChangeCustomerAddressInfoCustomerAddress(
+            _changeCustomerAddressInfoCustomerAddressInputFactory.Create(input)
+        );
         RegisterModificationInternal<Customer>(input.ExecutionUser, input.SourcePlatform);
 
         // Return
@@ -230,7 +220,12 @@ public sealed class Customer
             _clearCustomerDefaultShippingAddressInputShouldBeValidValidator,
             _removeCustomerAddressInputShouldBeValidValidator,
             _changeCustomerAddressInputShouldBeValidValidator,
-            _customerAddressInfoFactory
+            _customerAddressInfoFactory,
+            _changeDefaultCustomerAddressInfoShippingAddressInputFactory,
+            _clearDefaultCustomerAddressInfoShippingAddressInputFactory,
+            _addNewCustomerAddressInfoCustomerAddressInputFactory,
+            _removeCustomerAddressInfoCustomerAddressInputFactory,
+            _changeCustomerAddressInfoCustomerAddressInputFactory
         );
 
     // Private Methods
