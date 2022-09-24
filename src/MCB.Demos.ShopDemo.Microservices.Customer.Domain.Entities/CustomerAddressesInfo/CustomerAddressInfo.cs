@@ -181,10 +181,10 @@ public sealed class CustomerAddressInfo
     {
         // Process
         var customerAddressInfo = DeepCloneInternal<CustomerAddressInfo>()
-            .SetCustomerAddressCollection(_customerAddressCollection);
+            .SetCustomerAddressCollection(CustomerAddressCollection);
 
         if (_defaultShippingAddress != null)
-            customerAddressInfo.SetDefaultShippingAddress(_defaultShippingAddress);
+            customerAddressInfo.SetDefaultShippingAddress(DefaultShippingAddress);
 
         // Return
         return customerAddressInfo;
