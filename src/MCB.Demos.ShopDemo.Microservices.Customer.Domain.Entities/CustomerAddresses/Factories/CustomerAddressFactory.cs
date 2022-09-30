@@ -1,4 +1,6 @@
-﻿using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.CustomerAddresses.Factories.Interfaces;
+﻿using MCB.Core.Infra.CrossCutting.Abstractions.DateTime;
+using MCB.Core.Infra.CrossCutting.DateTime;
+using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.CustomerAddresses.Factories.Interfaces;
 using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.CustomerAddresses.Validators.Interfaces;
 using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.ValueObjects.AddressValueObjects.Validators.Interfaces;
 
@@ -8,6 +10,7 @@ public sealed class CustomerAddressFactory
     : ICustomerAddressFactory
 {
     // Fields
+    private readonly IDateTimeProvider _dateTimeProvider;
     private readonly IChangeCustomerAddressTypeInputShouldBeValidValidator _changeCustomerAddressTypeValidator;
     private readonly IChangeCustomerAddressInputShouldBeValidValidator _changeCustomerAddressValidator;
     private readonly IChangeCustomerFullAddressInfoInputShouldBeValidValidator _changeCustomerFullAddressInfoValidator;
@@ -16,6 +19,7 @@ public sealed class CustomerAddressFactory
 
     // Constructors
     public CustomerAddressFactory(
+        IDateTimeProvider dateTimeProvider,
         IChangeCustomerAddressTypeInputShouldBeValidValidator changeCustomerAddressTypeValidator,
         IChangeCustomerAddressInputShouldBeValidValidator changeCustomerAddressValidator,
         IChangeCustomerFullAddressInfoInputShouldBeValidValidator changeCustomerFullAddressInfoValidator,
@@ -23,6 +27,7 @@ public sealed class CustomerAddressFactory
         IAddressValueObjectShouldBeValidValidator addressValueObjectShouldBeValidValidator
     )
     {
+        _dateTimeProvider = dateTimeProvider;
         _changeCustomerAddressTypeValidator = changeCustomerAddressTypeValidator;
         _changeCustomerAddressValidator = changeCustomerAddressValidator;
         _changeCustomerFullAddressInfoValidator = changeCustomerFullAddressInfoValidator;
@@ -34,6 +39,7 @@ public sealed class CustomerAddressFactory
     public CustomerAddress Create()
     {
         return new CustomerAddress(
+            _dateTimeProvider,
             _changeCustomerAddressTypeValidator,
             _changeCustomerAddressValidator,
             _changeCustomerFullAddressInfoValidator,

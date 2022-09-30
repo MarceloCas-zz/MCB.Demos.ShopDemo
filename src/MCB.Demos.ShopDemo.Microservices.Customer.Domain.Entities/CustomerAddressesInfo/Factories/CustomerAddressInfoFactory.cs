@@ -1,4 +1,6 @@
-﻿using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.CustomerAddresses.Factories.Interfaces;
+﻿using MCB.Core.Infra.CrossCutting.Abstractions.DateTime;
+using MCB.Core.Infra.CrossCutting.DateTime;
+using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.CustomerAddresses.Factories.Interfaces;
 using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.CustomerAddresses.Validators.Interfaces;
 using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.CustomerAddressesInfo.Factories.Interfaces;
 using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.CustomerAddressesInfo.Validators.Interfaces;
@@ -9,6 +11,7 @@ public sealed class CustomerAddressInfoFactory
     : ICustomerAddressInfoFactory
 {
     // Fields
+    private readonly IDateTimeProvider _dateTimeProvider;
     private readonly ICustomerAddressFactory _customerAddressFactory;
     private readonly IRegisterNewCustomerAddressInputFactory _registerNewCustomerAddressInputFactory;
     private readonly IChangeCustomerFullAddressInfoInputFactory _changeCustomerFullAddressInfoInputFactory;
@@ -25,6 +28,7 @@ public sealed class CustomerAddressInfoFactory
 
     // Constructors
     public CustomerAddressInfoFactory(
+        IDateTimeProvider dateTimeProvider,
         ICustomerAddressFactory customerAddressFactory,
         IRegisterNewCustomerAddressInputFactory registerNewCustomerAddressInputFactory,
         IChangeCustomerFullAddressInfoInputFactory changeCustomerFullAddressInfoInputFactory,
@@ -38,6 +42,7 @@ public sealed class CustomerAddressInfoFactory
         IChangeCustomerAddressInfoCustomerAddressInputShouldBeValidValidator changeCustomerAddressInfoCustomerAddressInputShouldBeValidValidator
     )
     {
+        _dateTimeProvider = dateTimeProvider;
         _customerAddressFactory = customerAddressFactory;
         _registerNewCustomerAddressInputFactory = registerNewCustomerAddressInputFactory;
         _changeCustomerFullAddressInfoInputFactory = changeCustomerFullAddressInfoInputFactory;
@@ -56,6 +61,7 @@ public sealed class CustomerAddressInfoFactory
     public CustomerAddressInfo Create()
     {
         return new CustomerAddressInfo(
+            _dateTimeProvider,
             _customerAddressFactory,
             _registerNewCustomerAddressInputFactory,
             _changeCustomerFullAddressInfoInputFactory,

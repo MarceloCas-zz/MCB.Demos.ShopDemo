@@ -1,4 +1,5 @@
 ﻿using MCB.Core.Domain.Entities.Abstractions;
+using MCB.Core.Infra.CrossCutting.Abstractions.DateTime;
 using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Base;
 using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.CustomerAddresses;
 using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.CustomerAddressesInfo;
@@ -43,6 +44,7 @@ public sealed class Customer
 
     // Constructors
     public Customer(
+        IDateTimeProvider dateTimeProvider,
         IRegisterNewCustomerInputShouldBeValidValidator customerRegisterNewInputShouldBeValidValidator,
         IChangeCustomerNameInputShouldBeValidValidator changeCustomerNameInputShouldBeValidValidator,
         IChangeCustomerBirthDateInputShouldBeValidValidator changeCustomerBirthDateInputShouldBeValidValidator,
@@ -57,7 +59,7 @@ public sealed class Customer
         IAddNewCustomerAddressInfoCustomerAddressInputFactory addNewCustomerAddressInfoCustomerAddressInputFactory,
         IRemoveCustomerAddressInfoCustomerAddressInputFactory removeCustomerAddressInfoCustomerAddressInputFactory,
         IChangeCustomerAddressInfoCustomerAddressInputFactory changeCustomerAddressInfoCustomerAddressInputFactory
-    )
+    ) : base(dateTimeProvider)
     {
         FirstName = string.Empty;
         LastName = string.Empty;
@@ -212,6 +214,7 @@ public sealed class Customer
     // Protected Abstract Methods
     protected override DomainEntityBase CreateInstanceForCloneInternal() =>
         new Customer(
+            DateTimeProvider,
             _customerCustomerRegisterNewInputShouldBeValidValidator,
             _changeCustomerNameInputShouldBeValidValidator,
             _changeCustomerBirthDateInputShouldBeValidValidator,

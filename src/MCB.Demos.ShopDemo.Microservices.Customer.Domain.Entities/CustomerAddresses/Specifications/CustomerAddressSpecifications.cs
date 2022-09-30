@@ -1,4 +1,5 @@
 ﻿using MCB.Core.Domain.Entities.DomainEntitiesBase.Specifications;
+using MCB.Core.Infra.CrossCutting.Abstractions.DateTime;
 using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.CustomerAddresses.Enums;
 using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.CustomerAddresses.Specifications.Interfaces;
 using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.ValueObjects.AddressValueObjects;
@@ -9,6 +10,13 @@ public sealed class CustomerAddressSpecifications
     : DomainEntitySpecifications,
     ICustomerAddressSpecifications
 {
+    // Constructors
+    public CustomerAddressSpecifications(
+        IDateTimeProvider dateTimeProvider
+    ) : base(dateTimeProvider)
+    {
+    }
+
     // Public Methods
     public bool CustomerAddressShouldHaveCustomerAddressType(CustomerAddressType customerAddressType)
     {

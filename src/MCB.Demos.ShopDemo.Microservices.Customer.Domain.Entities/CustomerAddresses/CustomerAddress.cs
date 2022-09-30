@@ -1,4 +1,5 @@
-﻿using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Base;
+﻿using MCB.Core.Infra.CrossCutting.Abstractions.DateTime;
+using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Base;
 using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.CustomerAddresses.Enums;
 using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.CustomerAddresses.Inputs;
 using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.CustomerAddresses.Validators.Interfaces;
@@ -23,12 +24,13 @@ public sealed class CustomerAddress
 
     // Constructors
     public CustomerAddress(
+        IDateTimeProvider dateTimeProvider,
         IChangeCustomerAddressTypeInputShouldBeValidValidator changeCustomerAddressTypeInputShouldBeValidValidator,
         IChangeCustomerAddressInputShouldBeValidValidator changeCustomerAddressInputShouldBeValidValidator,
         IChangeCustomerFullAddressInfoInputShouldBeValidValidator changeCustomerFullAddressInfoInputShouldBeValidValidator,
         IRegisterNewCustomerAddressInputShouldBeValidValidator registerNewCustomerAddressInputShouldBeValidValidator,
         IAddressValueObjectShouldBeValidValidator addressValueObjectShouldBeValidValidator
-    )
+    ) : base(dateTimeProvider)
     {
         _changeCustomerAddressTypeInputShouldBeValidValidator = changeCustomerAddressTypeInputShouldBeValidValidator;
         _changeCustomerAddressInputShouldBeValidValidator = changeCustomerAddressInputShouldBeValidValidator;
@@ -97,6 +99,7 @@ public sealed class CustomerAddress
 
     // Protected Abstract Methods
     protected override DomainEntityBase CreateInstanceForCloneInternal() => new CustomerAddress(
+        DateTimeProvider,
         _changeCustomerAddressTypeInputShouldBeValidValidator,
         _changeCustomerAddressInputShouldBeValidValidator,
         _changeCustomerFullAddressInfoInputShouldBeValidValidator,

@@ -1,4 +1,5 @@
-﻿using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Base;
+﻿using MCB.Core.Infra.CrossCutting.Abstractions.DateTime;
+using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Base;
 using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.CustomerAddresses;
 using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.CustomerAddresses.Factories.Interfaces;
 using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.CustomerAddressesInfo.Factories.Interfaces;
@@ -15,7 +16,7 @@ public sealed class CustomerAddressInfo
     private CustomerAddress _defaultShippingAddress;
 
     // Properties
-    public IEnumerable<CustomerAddress> CustomerAddressCollection => _customerAddressCollection.Select(q => q.DeepClone());
+    public IEnumerable<CustomerAddress> CustomerAddressCollection => _customerAddressCollection.AsReadOnly().Select(q => q.DeepClone());
     public CustomerAddress DefaultShippingAddress => _defaultShippingAddress?.DeepClone();
 
     // Factories
@@ -34,6 +35,7 @@ public sealed class CustomerAddressInfo
 
     // Constructors
     public CustomerAddressInfo(
+        IDateTimeProvider dateTimeProvider,
         ICustomerAddressFactory customerAddressFactory,
         IRegisterNewCustomerAddressInputFactory registerNewCustomerAddressInputShouldBeValidFactory,
         IChangeCustomerFullAddressInfoInputFactory changeCustomerFullAddressInfoInputFactory,
@@ -44,7 +46,7 @@ public sealed class CustomerAddressInfo
         ICustomerAddressInfoShouldHaveCustomerAddressValidator customerAddressInfoShouldHaveCustomerAddressValidator,
         IRemoveCustomerAddressInfoCustomerAddressInputShouldBeValidValidator removeCustomerAddressInfoCustomerAddressInputShouldBeValidValidator,
         IChangeCustomerAddressInfoCustomerAddressInputShouldBeValidValidator changeCustomerAddressInfoCustomerAddressInputShouldBeValidValidator
-    )
+    ) : base(dateTimeProvider)
     {
         _customerAddressFactory = customerAddressFactory;
         _registerNewCustomerAddressInputFactory = registerNewCustomerAddressInputShouldBeValidFactory;
@@ -213,6 +215,7 @@ public sealed class CustomerAddressInfo
 
     // Protected Methods
     protected override DomainEntityBase CreateInstanceForCloneInternal() => new CustomerAddressInfo(
+        DateTimeProvider,
         _customerAddressFactory,
         _registerNewCustomerAddressInputFactory,
         _changeCustomerFullAddressInfoInputFactory,

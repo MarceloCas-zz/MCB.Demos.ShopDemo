@@ -1,18 +1,6 @@
-﻿using MCB.Core.Infra.CrossCutting.DateTime;
-using MCB.Core.Infra.CrossCutting.Enums;
-using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.CustomerAddresses;
-using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.CustomerAddresses.Enums;
-using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.CustomerAddresses.Specifications;
-using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.CustomerAddresses.Validators;
-using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.CustomerAddressesInfo;
-using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.CustomerAddressesInfo.Specifications;
-using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.CustomerAddressesInfo.Validators;
-using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Customers.Specifications;
-using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Customers.Validators;
-using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.ValueObjects.AddressValueObjects;
+﻿using MCB.Core.Infra.CrossCutting.DependencyInjection;
+using MCB.Core.Infra.CrossCutting.DependencyInjection.Abstractions.Interfaces;
 using MCB.Tests.Fixtures;
-using Microsoft.Extensions.DependencyInjection;
-using System;
 using Xunit;
 
 namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Tests.Fixtures;
@@ -27,8 +15,15 @@ public class DefaultFixtureCollection
 public class DefaultFixture
     : FixtureBase
 {
-    // Protected Methods
-    protected override void ConfigureServices(ServiceCollection services)
+    protected override IDependencyInjectionContainer CreateDependencyInjectionContainerInternal()
+    {
+        return new DependencyInjectionContainer();
+    }
+    protected override void ConfigureDependencyInjectionContainerInternal(IDependencyInjectionContainer dependencyInjectionContainer)
+    {
+
+    }
+    protected override void BuildDependencyInjectionContainerInternal(IDependencyInjectionContainer dependencyInjectionContainer)
     {
 
     }

@@ -1,4 +1,5 @@
 ﻿using MCB.Core.Domain.Entities.DomainEntitiesBase.Specifications;
+using MCB.Core.Infra.CrossCutting.Abstractions.DateTime;
 using MCB.Core.Infra.CrossCutting.DateTime;
 using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Customers.Specifications.Interfaces;
 
@@ -8,6 +9,13 @@ public sealed class CustomerSpecifications
     : DomainEntitySpecifications,
     ICustomerSpecifications
 {
+    // Constructors
+    public CustomerSpecifications(
+        IDateTimeProvider dateTimeProvider
+    ) : base(dateTimeProvider)
+    {
+    }
+
     // Public Methods
     public bool CustomerShouldHaveFirstName(string firstName)
     {

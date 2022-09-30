@@ -1,4 +1,5 @@
 ﻿using MCB.Core.Domain.Entities.DomainEntitiesBase.Specifications;
+using MCB.Core.Infra.CrossCutting.Abstractions.DateTime;
 using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.CustomerAddresses;
 using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.CustomerAddressesInfo.Specifications.Interfaces;
 
@@ -8,6 +9,13 @@ public sealed class CustomerAddressInfoSpecifications
     : DomainEntitySpecifications,
     ICustomerAddressInfoSpecifications
 {
+    // Constructors
+    public CustomerAddressInfoSpecifications(
+        IDateTimeProvider dateTimeProvider
+    ) : base(dateTimeProvider)
+    {
+    }
+
     // Public Methods
     public bool CustomerAddressInfoShouldHaveDefaultShippingAddress(CustomerAddress defaultShippingAddress)
     {

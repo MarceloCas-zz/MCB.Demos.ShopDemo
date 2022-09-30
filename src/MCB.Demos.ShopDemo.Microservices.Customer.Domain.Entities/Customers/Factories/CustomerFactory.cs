@@ -1,4 +1,6 @@
-﻿using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.CustomerAddressesInfo.Factories.Interfaces;
+﻿using MCB.Core.Infra.CrossCutting.Abstractions.DateTime;
+using MCB.Core.Infra.CrossCutting.DateTime;
+using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.CustomerAddressesInfo.Factories.Interfaces;
 using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Customers.Factories.Interfaces;
 using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Customers.Validators.Interfaces;
 
@@ -8,6 +10,7 @@ public sealed class CustomerFactory
     : ICustomerFactory
 {
     // Fields
+    private readonly IDateTimeProvider _dateTimeProvider;
     private readonly IRegisterNewCustomerInputShouldBeValidValidator _customerRegisterNewInputShouldBeValidValidator;
     private readonly IChangeCustomerNameInputShouldBeValidValidator _changeCustomerNameInputShouldBeValidValidator;
     private readonly IChangeCustomerBirthDateInputShouldBeValidValidator _changeCustomerBirthDateInputShouldBeValidValidator;
@@ -26,6 +29,7 @@ public sealed class CustomerFactory
 
     // Constructors
     public CustomerFactory(
+        IDateTimeProvider dateTimeProvider,
         IRegisterNewCustomerInputShouldBeValidValidator customerRegisterNewInputShouldBeValidValidator,
         IChangeCustomerNameInputShouldBeValidValidator changeCustomerNameInputShouldBeValidValidator,
         IChangeCustomerBirthDateInputShouldBeValidValidator changeCustomerBirthDateInputShouldBeValidValidator,
@@ -42,6 +46,7 @@ public sealed class CustomerFactory
         IChangeCustomerAddressInfoCustomerAddressInputFactory changeCustomerAddressInfoCustomerAddressInputFactory
     )
     {
+        _dateTimeProvider = dateTimeProvider;
         _customerRegisterNewInputShouldBeValidValidator = customerRegisterNewInputShouldBeValidValidator;
         _changeCustomerNameInputShouldBeValidValidator = changeCustomerNameInputShouldBeValidValidator;
         _changeCustomerBirthDateInputShouldBeValidValidator = changeCustomerBirthDateInputShouldBeValidValidator;
@@ -63,6 +68,7 @@ public sealed class CustomerFactory
     public Customer Create()
     {
         return new Customer(
+            _dateTimeProvider,
             _customerRegisterNewInputShouldBeValidValidator,
             _changeCustomerNameInputShouldBeValidValidator,
             _changeCustomerBirthDateInputShouldBeValidValidator,
