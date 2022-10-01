@@ -10,7 +10,7 @@ public sealed class ChangeCustomerFullAddressInfoInputFactory
     // Public Methods
     public ChangeCustomerFullAddressInfoInput Create(ChangeCustomerAddressInfoCustomerAddressInput parameter)
     {
-        return new CustomerAddresses.Inputs.ChangeCustomerFullAddressInfoInput(
+        return new ChangeCustomerFullAddressInfoInput(
             parameter.TenantId,
             parameter.CustomerAddressType,
             parameter.AddressValueObject,

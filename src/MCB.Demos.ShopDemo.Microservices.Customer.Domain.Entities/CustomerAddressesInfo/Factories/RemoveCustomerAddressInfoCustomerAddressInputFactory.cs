@@ -10,7 +10,7 @@ public sealed class RemoveCustomerAddressInfoCustomerAddressInputFactory
     // Public Methods
     public RemoveCustomerAddressInfoCustomerAddressInput Create(RemoveCustomerAddressInput parameter)
     {
-        return new CustomerAddressesInfo.Inputs.RemoveCustomerAddressInfoCustomerAddressInput(
+        return new RemoveCustomerAddressInfoCustomerAddressInput(
             parameter.TenantId,
             parameter.CustomerAddressId,
             parameter.ExecutionUser,
