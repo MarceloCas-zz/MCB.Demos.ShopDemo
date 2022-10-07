@@ -5,6 +5,7 @@ using MCB.Demos.ShopDemo.Microservices.Customer.Domain.DomainServices.Customers.
 using MCB.Demos.ShopDemo.Microservices.Customer.Domain.DomainServices.Customers.Interfaces;
 using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Customers.Factories.Interfaces;
 using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Customers.Inputs;
+using MCB.Demos.ShopDemo.Microservices.Customer.Infra.CrossCutting.Notifications.Interfaces;
 
 namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.DomainServices.Customers
 {
@@ -17,10 +18,11 @@ namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.DomainServices.Custom
 
         // Constructors
         internal CustomerDomainService(
+            INotificationPublisher notificationPublisher,
             IAdapter adapter,
             ICustomerDomainRepository customerDomainEntityRepository,
             ICustomerFactory customerFactory
-        ) : base(adapter, customerDomainEntityRepository)
+        ) : base(notificationPublisher, adapter, customerDomainEntityRepository)
         {
             _customerFactory = customerFactory;
         }
