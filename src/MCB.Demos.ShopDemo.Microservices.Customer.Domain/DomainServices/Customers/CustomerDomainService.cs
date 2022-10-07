@@ -34,28 +34,22 @@ namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.DomainServices.Custom
             // Validate is necessary to check if proposed customer not exists in repository
 
             // Process
-            var customer = _customerFactory.Create();
-            customer.RegisterNewCustomer(Adapter.Adapt<RegisterNewCustomerDomainServiceInput, RegisterNewCustomerInput>(input));
+            var customer = _customerFactory
+                .Create()
+                .RegisterNewCustomer(Adapter.Adapt<RegisterNewCustomerDomainServiceInput, RegisterNewCustomerInput>(input));
 
-            // Validate Process
-            if(!customer.ValidationInfo.IsValid)
-            {
-                // Send notifications
+            // Validate domain entity after process
+            if(!await ValidateDomainEntityAndSendNotificationsAsync(customer, cancellationToken))
                 return false;
-            }
 
             // Persist
-            var persistenceResult = await DomainEntityRepository.AddAsync(customer, cancellationToken);
-            if(!persistenceResult)
-            {
-                // Send notifications
+            if(!await DomainEntityRepository.AddAsync(customer, cancellationToken))
                 return false;
-            }
 
             // Send domain event
 
             // Return
-            return persistenceResult;
+            return true;
         }
     }
 }
