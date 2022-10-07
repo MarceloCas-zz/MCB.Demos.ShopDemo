@@ -1,8 +1,8 @@
 ﻿using MCB.Core.Domain.Entities.Abstractions;
 
-namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Repositories.Base
+namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.DomainRepositories.Base.Abstractions
 {
-    public interface IDomainEntityRepository<TAggregationRoot>
+    public interface IDomainRepository<TAggregationRoot>
         where TAggregationRoot : IAggregationRoot
     {
         Task<bool> AddAsync(TAggregationRoot aggregationRoot, CancellationToken cancellationToken);
