@@ -8,7 +8,7 @@ internal class NotificationSubscriber
     : INotificationSubscriber
 {
     // Fields
-    private readonly ConcurrentBag<Notification> _notificationCollection;
+    private readonly ConcurrentQueue<Notification> _notificationCollection;
 
     // Properties
     public IEnumerable<Notification> NotificationCollection => _notificationCollection.AsEnumerable();
@@ -16,13 +16,13 @@ internal class NotificationSubscriber
     // Constructors
     internal NotificationSubscriber()
     {
-        _notificationCollection = new ConcurrentBag<Notification>();
+        _notificationCollection = new ConcurrentQueue<Notification>();
     }
 
     // Public Methods
     public Task HandlerAsync(Notification subject, CancellationToken cancellationToken)
     {
-        _notificationCollection.Add(subject);
+        _notificationCollection.Enqueue(subject);
         return Task.CompletedTask;
     }
 }
