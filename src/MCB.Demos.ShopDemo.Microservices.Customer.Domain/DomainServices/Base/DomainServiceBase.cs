@@ -3,6 +3,7 @@ using MCB.Core.Domain.Entities.DomainEntitiesBase;
 using MCB.Core.Infra.CrossCutting.DesignPatterns.Abstractions.Adapter;
 using MCB.Core.Infra.CrossCutting.DesignPatterns.Validator.Abstractions.Models;
 using MCB.Demos.ShopDemo.Microservices.Customer.Domain.DomainRepositories.Base.Abstractions;
+using MCB.Demos.ShopDemo.Microservices.Customer.Infra.CrossCutting.DomainEvents.Interfaces;
 using MCB.Demos.ShopDemo.Microservices.Customer.Infra.CrossCutting.Notifications.Interfaces;
 using MCB.Demos.ShopDemo.Microservices.Customer.Infra.CrossCutting.Notifications.Models;
 
@@ -13,17 +14,20 @@ namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.DomainServices.Base
     {
         // Properties
         protected INotificationPublisher NotificationPublisher { get; }
+        protected IDomainEventPublisher DomainEventPublisher { get; }
         protected IAdapter Adapter { get; }
         protected IDomainRepository<TAggregationRoot> DomainEntityRepository { get; }
 
         // Constructors
         protected DomainServiceBase(
             INotificationPublisher notificationPublisher,
+            IDomainEventPublisher domainEventPublisher,
             IAdapter adapter,
             IDomainRepository<TAggregationRoot> domainEntityRepository
         )
         {
             NotificationPublisher = notificationPublisher;
+            DomainEventPublisher = domainEventPublisher;
             Adapter = adapter;
             DomainEntityRepository = domainEntityRepository;
         }

@@ -18,4 +18,8 @@
 		<ProjectReference Include="..\MCB.Demos.ShopDemo.Microservices.Customer.Infra.CrossCutting\MCB.Demos.ShopDemo.Microservices.Customer.Infra.CrossCutting.csproj" />
 	</ItemGroup>
 
+	<ItemGroup>
+	  <Folder Include="DomainEvents\" />
+	</ItemGroup>
+
 </Project>
