@@ -8,7 +8,7 @@ namespace MCB.Demos.ShopDemo.Microservices.Customer.Infra.CrossCutting.DomainEve
         : IDomainEventSubscriber
     {
         // Fields
-        private readonly ConcurrentBag<DomainEventBase> _domainEventCollection;
+        private readonly ConcurrentQueue<DomainEventBase> _domainEventCollection;
 
         // Properties
         public IEnumerable<DomainEventBase> DomainEventCollection => _domainEventCollection.AsEnumerable();
@@ -16,13 +16,13 @@ namespace MCB.Demos.ShopDemo.Microservices.Customer.Infra.CrossCutting.DomainEve
         // Constructors
         internal DomainEventSubscriber()
         {
-            _domainEventCollection = new ConcurrentBag<DomainEventBase>();
+            _domainEventCollection = new ConcurrentQueue<DomainEventBase>();
         }
 
         // Public Methods
         public Task HandlerAsync(DomainEventBase subject, CancellationToken cancellationToken)
         {
-            _domainEventCollection.Add(subject);
+            _domainEventCollection.Enqueue(subject);
             return Task.CompletedTask;
         }
     }
