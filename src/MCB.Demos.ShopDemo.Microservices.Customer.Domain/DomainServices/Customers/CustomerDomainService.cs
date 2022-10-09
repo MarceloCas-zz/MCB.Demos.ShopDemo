@@ -3,6 +3,7 @@ using MCB.Demos.ShopDemo.Microservices.Customer.Domain.DomainRepositories.Interf
 using MCB.Demos.ShopDemo.Microservices.Customer.Domain.DomainServices.Base;
 using MCB.Demos.ShopDemo.Microservices.Customer.Domain.DomainServices.Customers.Inputs;
 using MCB.Demos.ShopDemo.Microservices.Customer.Domain.DomainServices.Customers.Interfaces;
+using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Customers.Events.CustomerHasBeenRegistered.Factories.Interfaces;
 using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Customers.Factories.Interfaces;
 using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Customers.Inputs;
 using MCB.Demos.ShopDemo.Microservices.Customer.Infra.CrossCutting.DomainEvents.Interfaces;
@@ -16,6 +17,7 @@ namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.DomainServices.Custom
     {
         // Fields
         private readonly ICustomerFactory _customerFactory;
+        private readonly ICustomerHasBeenRegisteredDomainEventFactory _customerHasBeenRegisteredDomainEventFactory;
 
         // Constructors
         internal CustomerDomainService(
@@ -23,10 +25,12 @@ namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.DomainServices.Custom
             IDomainEventPublisher domainEventPublisher,
             IAdapter adapter,
             ICustomerDomainRepository customerDomainEntityRepository,
-            ICustomerFactory customerFactory
+            ICustomerFactory customerFactory,
+            ICustomerHasBeenRegisteredDomainEventFactory customerHasBeenRegisteredDomainEventFactory
         ) : base(notificationPublisher, domainEventPublisher, adapter, customerDomainEntityRepository)
         {
             _customerFactory = customerFactory;
+            _customerHasBeenRegisteredDomainEventFactory = customerHasBeenRegisteredDomainEventFactory;
         }
 
         // Public Methods
@@ -49,6 +53,10 @@ namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.DomainServices.Custom
                 return false;
 
             // Send domain event
+            await DomainEventPublisher.PublishDomainEventAsync(
+                _customerHasBeenRegisteredDomainEventFactory.Create(customer),
+                cancellationToken
+            );
 
             // Return
             return true;

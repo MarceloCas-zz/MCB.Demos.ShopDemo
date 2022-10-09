@@ -18,4 +18,8 @@
 	  <PackageReference Include="FluentValidation" Version="11.2.2" />
 	</ItemGroup>
 
+	<ItemGroup>
+	  <ProjectReference Include="..\MCB.Demos.ShopDemo.Microservices.Customer.Infra.CrossCutting\MCB.Demos.ShopDemo.Microservices.Customer.Infra.CrossCutting.csproj" />
+	</ItemGroup>
+
 </Project>
