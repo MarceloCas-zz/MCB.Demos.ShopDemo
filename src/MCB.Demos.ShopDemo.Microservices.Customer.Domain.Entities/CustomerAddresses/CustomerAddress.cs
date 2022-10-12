@@ -3,8 +3,8 @@ using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Base;
 using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.CustomerAddresses.Enums;
 using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.CustomerAddresses.Inputs;
 using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.CustomerAddresses.Validators.Interfaces;
-using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.ValueObjects.AddressValueObjects;
-using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.ValueObjects.AddressValueObjects.Validators.Interfaces;
+using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.ValueObjects.Address;
+using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.ValueObjects.Address.Validators.Interfaces;
 
 namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.CustomerAddresses;
 

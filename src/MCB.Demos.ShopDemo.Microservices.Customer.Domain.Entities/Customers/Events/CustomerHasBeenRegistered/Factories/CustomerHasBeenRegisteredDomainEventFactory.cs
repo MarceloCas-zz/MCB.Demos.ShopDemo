@@ -1,5 +1,4 @@
 ﻿using MCB.Core.Infra.CrossCutting.Abstractions.DateTime;
-using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Customers.Events.CustomerHasBeenRegistered;
 using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Customers.Events.CustomerHasBeenRegistered.Factories.Interfaces;
 using MCB.Demos.ShopDemo.Microservices.Customer.Infra.CrossCutting.DomainEvents.Factories;
 

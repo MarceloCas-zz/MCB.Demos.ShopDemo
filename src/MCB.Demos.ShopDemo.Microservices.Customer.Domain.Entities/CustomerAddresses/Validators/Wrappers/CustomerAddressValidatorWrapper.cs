@@ -2,7 +2,7 @@
 using MCB.Core.Infra.CrossCutting.DesignPatterns.Validator;
 using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.CustomerAddresses.Enums;
 using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.CustomerAddresses.Specifications.Interfaces;
-using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.ValueObjects.AddressValueObjects;
+using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.ValueObjects.Address;
 using System.Linq.Expressions;
 
 namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.CustomerAddresses.Validators.Wrappers;

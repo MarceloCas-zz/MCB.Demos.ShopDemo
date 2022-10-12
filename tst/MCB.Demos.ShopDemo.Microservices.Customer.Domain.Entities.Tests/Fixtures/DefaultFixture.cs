@@ -2,7 +2,7 @@
 using MCB.Core.Domain.Entities.DomainEntitiesBase.Inputs;
 using MCB.Core.Infra.CrossCutting.DependencyInjection;
 using MCB.Core.Infra.CrossCutting.DependencyInjection.Abstractions.Interfaces;
-using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.ValueObjects.AddressValueObjects;
+using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.ValueObjects.Address;
 using MCB.Tests.Fixtures;
 using Xunit;
 

@@ -1,9 +1,9 @@
-﻿using MCB.Core.Domain.Entities.DomainEntitiesBase.Inputs;
+﻿using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Services.Base.Inputs;
 
-namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Customers.Inputs;
+namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Services.Customers.Inputs;
 
-public sealed record RegisterNewCustomerInput
-    : InputBase
+public record RegisterNewCustomerServiceInput
+    : ServiceInputBase
 {
     // Properties
     public string FirstName { get; }
@@ -11,8 +11,7 @@ public sealed record RegisterNewCustomerInput
     public DateOnly BirthDate { get; }
     public string Email { get; }
 
-    // Constructors
-    public RegisterNewCustomerInput(
+    public RegisterNewCustomerServiceInput(
         Guid tenantId,
         string firstName,
         string lastName,

@@ -2,6 +2,8 @@
 using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.CustomerAddressesInfo.Factories.Interfaces;
 using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Customers.Factories.Interfaces;
 using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Customers.Validators.Interfaces;
+using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.ValueObjects.Email.Validators;
+using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.ValueObjects.Email.Validators.Interfaces;
 
 namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Customers.Factories;
 
@@ -18,6 +20,7 @@ public sealed class CustomerFactory
     private readonly IClearCustomerDefaultShippingAddressInputShouldBeValidValidator _clearCustomerDefaultShippingAddressInputShouldBeValidValidator;
     private readonly IRemoveCustomerAddressInputShouldBeValidValidator _removeCustomerAddressInputShouldBeValidValidator;
     private readonly IChangeCustomerAddressInputShouldBeValidValidator _changeCustomerAddressInputShouldBeValidValidator;
+    private readonly IEmailValueObjectShouldBeValidValidator _emailValueObjectShouldBeValidValidator;
 
     private readonly ICustomerAddressInfoFactory _customerAddressInfoFactory;
     private readonly IChangeDefaultCustomerAddressInfoShippingAddressInputFactory _changeDefaultCustomerAddressInfoShippingAddressInputFactory;
@@ -37,6 +40,7 @@ public sealed class CustomerFactory
         IClearCustomerDefaultShippingAddressInputShouldBeValidValidator clearCustomerDefaultShippingAddressInputShouldBeValidValidator,
         IRemoveCustomerAddressInputShouldBeValidValidator removeCustomerAddressInputShouldBeValidValidator,
         IChangeCustomerAddressInputShouldBeValidValidator changeCustomerAddressInputShouldBeValidValidator,
+        IEmailValueObjectShouldBeValidValidator emailValueObjectShouldBeValidValidator,
         ICustomerAddressInfoFactory customerAddressInfoFactory,
         IChangeDefaultCustomerAddressInfoShippingAddressInputFactory changeDefaultCustomerAddressInfoShippingAddressInputFactory,
         IClearDefaultCustomerAddressInfoShippingAddressInputFactory clearDefaultCustomerAddressInfoShippingAddressInputFactory,
@@ -54,6 +58,7 @@ public sealed class CustomerFactory
         _clearCustomerDefaultShippingAddressInputShouldBeValidValidator = clearCustomerDefaultShippingAddressInputShouldBeValidValidator;
         _removeCustomerAddressInputShouldBeValidValidator = removeCustomerAddressInputShouldBeValidValidator;
         _changeCustomerAddressInputShouldBeValidValidator = changeCustomerAddressInputShouldBeValidValidator;
+        _emailValueObjectShouldBeValidValidator = emailValueObjectShouldBeValidValidator;
 
         _customerAddressInfoFactory = customerAddressInfoFactory;
         _changeDefaultCustomerAddressInfoShippingAddressInputFactory = changeDefaultCustomerAddressInfoShippingAddressInputFactory;
@@ -76,6 +81,7 @@ public sealed class CustomerFactory
             _clearCustomerDefaultShippingAddressInputShouldBeValidValidator,
             _removeCustomerAddressInputShouldBeValidValidator,
             _changeCustomerAddressInputShouldBeValidValidator,
+            _emailValueObjectShouldBeValidValidator,
             _customerAddressInfoFactory,
             _changeDefaultCustomerAddressInfoShippingAddressInputFactory,
             _clearDefaultCustomerAddressInfoShippingAddressInputFactory,

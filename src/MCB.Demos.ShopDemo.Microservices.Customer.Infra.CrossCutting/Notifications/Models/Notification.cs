@@ -10,9 +10,9 @@ public record Notification
     public string Description { get; }
 
     // Constructors
-    public Notification(NotificationType notificationTypeMyProperty, string code, string description)
+    public Notification(NotificationType notificationType, string code, string description)
     {
-        NotificationTypeMyProperty = notificationTypeMyProperty;
+        NotificationTypeMyProperty = notificationType;
         Code = code;
         Description = description;
     }

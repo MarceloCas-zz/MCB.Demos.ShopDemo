@@ -17,10 +17,14 @@ using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Customers.Specif
 using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Customers.Specifications.Interfaces;
 using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Customers.Validators;
 using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Customers.Validators.Interfaces;
-using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.ValueObjects.AddressValueObjects.Specifications;
-using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.ValueObjects.AddressValueObjects.Specifications.Interfaces;
-using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.ValueObjects.AddressValueObjects.Validators;
-using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.ValueObjects.AddressValueObjects.Validators.Interfaces;
+using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.ValueObjects.Address.Specifications;
+using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.ValueObjects.Address.Specifications.Interfaces;
+using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.ValueObjects.Address.Validators;
+using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.ValueObjects.Address.Validators.Interfaces;
+using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.ValueObjects.Email.Specifications;
+using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.ValueObjects.Email.Specifications.Interfaces;
+using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.ValueObjects.Email.Validators;
+using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.ValueObjects.Email.Validators.Interfaces;
 
 namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.DependencyInjection;
 
@@ -33,6 +37,7 @@ public static class Bootstrapper
         ConfigureDependencyInjectionForCustomerAddressInfo(dependencyInjectionContainer);
         ConfigureDependencyInjectionForCustomer(dependencyInjectionContainer);
         ConfigureDependencyInjectionForAddressValueObjects(dependencyInjectionContainer);
+        ConfigureDependencyInjectionForEmailValueObjects(dependencyInjectionContainer);
     }
 
     // Private Methods
@@ -99,5 +104,13 @@ public static class Bootstrapper
 
         // Validators
         dependencyInjectionContainer.RegisterSingleton<IAddressValueObjectShouldBeValidValidator, AddressValueObjectShouldBeValidValidator>();
+    }
+    private static void ConfigureDependencyInjectionForEmailValueObjects(IDependencyInjectionContainer dependencyInjectionContainer)
+    {
+        // Specifications
+        dependencyInjectionContainer.RegisterSingleton<IEmailValueObjectSpecifications, EmailValueObjectSpecifications>();
+
+        // Validators
+        dependencyInjectionContainer.RegisterSingleton<IEmailValueObjectShouldBeValidValidator, EmailValueObjectShouldBeValidValidator>();
     }
 }

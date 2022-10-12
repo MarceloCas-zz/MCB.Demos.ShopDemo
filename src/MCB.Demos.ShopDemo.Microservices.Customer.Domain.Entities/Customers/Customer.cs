@@ -6,6 +6,9 @@ using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.CustomerAddresse
 using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.CustomerAddressesInfo.Factories.Interfaces;
 using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Customers.Inputs;
 using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Customers.Validators.Interfaces;
+using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.ValueObjects.Email;
+using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.ValueObjects.Email.Validators;
+using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.ValueObjects.Email.Validators.Interfaces;
 
 namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Customers;
 
@@ -20,6 +23,7 @@ public sealed class Customer
     public string FirstName { get; private set; }
     public string LastName { get; private set; }
     public DateOnly BirthDate { get; private set; }
+    public EmailValueObject Email { get; private set; }
 
     // Navigation Properties
     public CustomerAddressInfo CustomerAddressInfo => _customerAddressInfo.DeepClone();
@@ -33,6 +37,7 @@ public sealed class Customer
     private readonly IClearCustomerDefaultShippingAddressInputShouldBeValidValidator _clearCustomerDefaultShippingAddressInputShouldBeValidValidator;
     private readonly IRemoveCustomerAddressInputShouldBeValidValidator _removeCustomerAddressInputShouldBeValidValidator;
     private readonly IChangeCustomerAddressInputShouldBeValidValidator _changeCustomerAddressInputShouldBeValidValidator;
+    private readonly IEmailValueObjectShouldBeValidValidator _emailValueObjectShouldBeValidValidator;
 
     // Factories
     private readonly ICustomerAddressInfoFactory _customerAddressInfoFactory;
@@ -53,6 +58,7 @@ public sealed class Customer
         IClearCustomerDefaultShippingAddressInputShouldBeValidValidator clearCustomerDefaultShippingAddressInputShouldBeValidValidator,
         IRemoveCustomerAddressInputShouldBeValidValidator removeCustomerAddressInputShouldBeValidValidator,
         IChangeCustomerAddressInputShouldBeValidValidator changeCustomerAddressInputShouldBeValidValidator,
+        IEmailValueObjectShouldBeValidValidator emailValueObjectShouldBeValidValidator,
         ICustomerAddressInfoFactory customerAddressInfoFactory,
         IChangeDefaultCustomerAddressInfoShippingAddressInputFactory changeDefaultCustomerAddressInfoShippingAddressInputFactory,
         IClearDefaultCustomerAddressInfoShippingAddressInputFactory clearDefaultCustomerAddressInfoShippingAddressInputFactory,
@@ -72,6 +78,7 @@ public sealed class Customer
         _clearCustomerDefaultShippingAddressInputShouldBeValidValidator = clearCustomerDefaultShippingAddressInputShouldBeValidValidator;
         _removeCustomerAddressInputShouldBeValidValidator = removeCustomerAddressInputShouldBeValidValidator;
         _changeCustomerAddressInputShouldBeValidValidator = changeCustomerAddressInputShouldBeValidValidator;
+        _emailValueObjectShouldBeValidValidator = emailValueObjectShouldBeValidValidator;
 
         _customerAddressInfoFactory = customerAddressInfoFactory;
         _changeDefaultCustomerAddressInfoShippingAddressInputFactory = changeDefaultCustomerAddressInfoShippingAddressInputFactory;
@@ -87,12 +94,14 @@ public sealed class Customer
     public Customer RegisterNewCustomer(RegisterNewCustomerInput input)
     {
         // Validate
-        if (!Validate(() => _customerCustomerRegisterNewInputShouldBeValidValidator.Validate(input)))
+        if (!Validate(() => _customerCustomerRegisterNewInputShouldBeValidValidator.Validate(input)) || 
+            !Validate(() => _emailValueObjectShouldBeValidValidator.Validate(input.Email)))
             return this;
 
         // Process and Return
         return SetName(input.FirstName, input.LastName)
             .SetBirthDate(input.BirthDate)
+            .SetEmail(input.Email)
             .RegisterNewInternal<Customer>(input.TenantId, input.ExecutionUser, input.SourcePlatform);
     }
     public Customer ChangeCustomerName(ChangeCustomerNameInput input)
@@ -223,6 +232,7 @@ public sealed class Customer
             _clearCustomerDefaultShippingAddressInputShouldBeValidValidator,
             _removeCustomerAddressInputShouldBeValidValidator,
             _changeCustomerAddressInputShouldBeValidValidator,
+            _emailValueObjectShouldBeValidValidator,
             _customerAddressInfoFactory,
             _changeDefaultCustomerAddressInfoShippingAddressInputFactory,
             _clearDefaultCustomerAddressInfoShippingAddressInputFactory,
@@ -248,6 +258,11 @@ public sealed class Customer
     private Customer SetCustomerAddressInfo(CustomerAddressInfo customerAddressInfo)
     {
         _customerAddressInfo = customerAddressInfo;
+        return this;
+    }
+    private Customer SetEmail(string email)
+    {
+        Email = email;
         return this;
     }
 }
