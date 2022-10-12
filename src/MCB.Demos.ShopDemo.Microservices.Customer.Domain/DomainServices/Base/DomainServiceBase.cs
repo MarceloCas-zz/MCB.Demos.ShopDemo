@@ -7,38 +7,37 @@ using MCB.Demos.ShopDemo.Microservices.Customer.Infra.CrossCutting.DomainEvents.
 using MCB.Demos.ShopDemo.Microservices.Customer.Infra.CrossCutting.Notifications.Interfaces;
 using MCB.Demos.ShopDemo.Microservices.Customer.Infra.CrossCutting.Notifications.Models;
 
-namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.DomainServices.Base
+namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.DomainServices.Base;
+
+public abstract class DomainServiceBase<TAggregationRoot>
+    where TAggregationRoot : IAggregationRoot
 {
-    public abstract class DomainServiceBase<TAggregationRoot>
-        where TAggregationRoot : IAggregationRoot
+    // Properties
+    protected INotificationPublisher NotificationPublisher { get; }
+    protected IDomainEventPublisher DomainEventPublisher { get; }
+    protected IAdapter Adapter { get; }
+    protected IDomainRepository<TAggregationRoot> DomainEntityRepository { get; }
+
+    // Constructors
+    protected DomainServiceBase(
+        INotificationPublisher notificationPublisher,
+        IDomainEventPublisher domainEventPublisher,
+        IAdapter adapter,
+        IDomainRepository<TAggregationRoot> domainEntityRepository
+    )
     {
-        // Properties
-        protected INotificationPublisher NotificationPublisher { get; }
-        protected IDomainEventPublisher DomainEventPublisher { get; }
-        protected IAdapter Adapter { get; }
-        protected IDomainRepository<TAggregationRoot> DomainEntityRepository { get; }
+        NotificationPublisher = notificationPublisher;
+        DomainEventPublisher = domainEventPublisher;
+        Adapter = adapter;
+        DomainEntityRepository = domainEntityRepository;
+    }
 
-        // Constructors
-        protected DomainServiceBase(
-            INotificationPublisher notificationPublisher,
-            IDomainEventPublisher domainEventPublisher,
-            IAdapter adapter,
-            IDomainRepository<TAggregationRoot> domainEntityRepository
-        )
-        {
-            NotificationPublisher = notificationPublisher;
-            DomainEventPublisher = domainEventPublisher;
-            Adapter = adapter;
-            DomainEntityRepository = domainEntityRepository;
-        }
+    // Protected Methods
+    protected async Task<bool> ValidateDomainEntityAndSendNotificationsAsync(DomainEntityBase domainEntityBase, CancellationToken cancellationToken)
+    {
+        foreach (var validationMessage in domainEntityBase.ValidationInfo.ValidationMessageCollection)
+            await NotificationPublisher.PublishNotificationAsync(Adapter.Adapt<ValidationMessage, Notification>(validationMessage), cancellationToken);
 
-        // Protected Methods
-        protected async Task<bool> ValidateDomainEntityAndSendNotificationsAsync(DomainEntityBase domainEntityBase, CancellationToken cancellationToken)
-        {
-            foreach (var validationMessage in domainEntityBase.ValidationInfo.ValidationMessageCollection)
-                await NotificationPublisher.PublishNotificationAsync(Adapter.Adapt<ValidationMessage, Notification>(validationMessage), cancellationToken);
-
-            return domainEntityBase.ValidationInfo.IsValid;
-        }
+        return domainEntityBase.ValidationInfo.IsValid;
     }
 }

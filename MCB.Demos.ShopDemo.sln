@@ -49,7 +49,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "1 - Customers", "1 - Custom
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "3 - Domain", "3 - Domain", "{FBBEF82B-2169-4A07-85B3-A15AE557B61C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Tests", "tst\MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Tests\MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Tests.csproj", "{1EAE239F-C3B0-4E17-B747-EF0ECB30CCE1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Tests", "tst\MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Tests\MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Tests.csproj", "{1EAE239F-C3B0-4E17-B747-EF0ECB30CCE1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

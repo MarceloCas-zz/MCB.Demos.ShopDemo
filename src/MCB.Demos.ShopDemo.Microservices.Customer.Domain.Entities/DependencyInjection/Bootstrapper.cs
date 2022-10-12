@@ -22,83 +22,82 @@ using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.ValueObjects.Add
 using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.ValueObjects.AddressValueObjects.Validators;
 using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.ValueObjects.AddressValueObjects.Validators.Interfaces;
 
-namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.DependencyInjection
+namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.DependencyInjection;
+
+public static class Bootstrapper
 {
-    public static class Bootstrapper
+    // Public Methods
+    public static void ConfigureDependencyInjection(IDependencyInjectionContainer dependencyInjectionContainer)
     {
-        // Public Methods
-        public static void ConfigureDependencyInjection(IDependencyInjectionContainer dependencyInjectionContainer)
-        {
-            ConfigureDependencyInjectionForCustomerAddress(dependencyInjectionContainer);
-            ConfigureDependencyInjectionForCustomerAddressInfo(dependencyInjectionContainer);
-            ConfigureDependencyInjectionForCustomer(dependencyInjectionContainer);
-            ConfigureDependencyInjectionForAddressValueObjects(dependencyInjectionContainer);
-        }
+        ConfigureDependencyInjectionForCustomerAddress(dependencyInjectionContainer);
+        ConfigureDependencyInjectionForCustomerAddressInfo(dependencyInjectionContainer);
+        ConfigureDependencyInjectionForCustomer(dependencyInjectionContainer);
+        ConfigureDependencyInjectionForAddressValueObjects(dependencyInjectionContainer);
+    }
 
-        // Private Methods
-        private static void ConfigureDependencyInjectionForCustomerAddress(IDependencyInjectionContainer dependencyInjectionContainer)
-        {
-            // Factories
-            dependencyInjectionContainer.RegisterSingleton<IChangeCustomerFullAddressInfoInputFactory, ChangeCustomerFullAddressInfoInputFactory>();
-            dependencyInjectionContainer.RegisterSingleton<ICustomerAddressFactory, CustomerAddressFactory>();
+    // Private Methods
+    private static void ConfigureDependencyInjectionForCustomerAddress(IDependencyInjectionContainer dependencyInjectionContainer)
+    {
+        // Factories
+        dependencyInjectionContainer.RegisterSingleton<IChangeCustomerFullAddressInfoInputFactory, ChangeCustomerFullAddressInfoInputFactory>();
+        dependencyInjectionContainer.RegisterSingleton<ICustomerAddressFactory, CustomerAddressFactory>();
 
-            // Specifications
-            dependencyInjectionContainer.RegisterSingleton<ICustomerAddressSpecifications, CustomerAddressSpecifications>();
+        // Specifications
+        dependencyInjectionContainer.RegisterSingleton<ICustomerAddressSpecifications, CustomerAddressSpecifications>();
 
-            // Validators
-            dependencyInjectionContainer.RegisterSingleton<CustomerAddresses.Validators.Interfaces.IChangeCustomerAddressInputShouldBeValidValidator, CustomerAddresses.Validators.ChangeCustomerAddressInputShouldBeValidValidator>();
-            dependencyInjectionContainer.RegisterSingleton<IChangeCustomerAddressTypeInputShouldBeValidValidator, ChangeCustomerAddressTypeInputShouldBeValidValidator>();
-            dependencyInjectionContainer.RegisterSingleton<IChangeCustomerFullAddressInfoInputShouldBeValidValidator, ChangeCustomerFullAddressInfoInputShouldBeValidValidator>();
-            dependencyInjectionContainer.RegisterSingleton<ICustomerAddressShouldBeValidValidator, CustomerAddressShouldBeValidValidator>();
-            dependencyInjectionContainer.RegisterSingleton<IRegisterNewCustomerAddressInputShouldBeValidValidator, RegisterNewCustomerAddressInputShouldBeValidValidator>();
-        }
-        private static void ConfigureDependencyInjectionForCustomerAddressInfo(IDependencyInjectionContainer dependencyInjectionContainer)
-        {
-            // Factories
-            dependencyInjectionContainer.RegisterSingleton<IAddNewCustomerAddressInfoCustomerAddressInputFactory, AddNewCustomerAddressInfoCustomerAddressInputFactory>();
-            dependencyInjectionContainer.RegisterSingleton<IChangeCustomerAddressInfoCustomerAddressInputFactory, ChangeCustomerAddressInfoCustomerAddressInputFactory>();
-            dependencyInjectionContainer.RegisterSingleton<IChangeDefaultCustomerAddressInfoShippingAddressInputFactory, ChangeDefaultCustomerAddressInfoShippingAddressInputFactory>();
-            dependencyInjectionContainer.RegisterSingleton<IClearDefaultCustomerAddressInfoShippingAddressInputFactory, ClearDefaultCustomerAddressInfoShippingAddressInputFactory>();
-            dependencyInjectionContainer.RegisterSingleton<ICustomerAddressInfoFactory, CustomerAddressInfoFactory>();
-            dependencyInjectionContainer.RegisterSingleton<IRegisterNewCustomerAddressInputFactory, RegisterNewCustomerAddressInputFactory>();
-            dependencyInjectionContainer.RegisterSingleton<IRemoveCustomerAddressInfoCustomerAddressInputFactory, RemoveCustomerAddressInfoCustomerAddressInputFactory>();
+        // Validators
+        dependencyInjectionContainer.RegisterSingleton<CustomerAddresses.Validators.Interfaces.IChangeCustomerAddressInputShouldBeValidValidator, CustomerAddresses.Validators.ChangeCustomerAddressInputShouldBeValidValidator>();
+        dependencyInjectionContainer.RegisterSingleton<IChangeCustomerAddressTypeInputShouldBeValidValidator, ChangeCustomerAddressTypeInputShouldBeValidValidator>();
+        dependencyInjectionContainer.RegisterSingleton<IChangeCustomerFullAddressInfoInputShouldBeValidValidator, ChangeCustomerFullAddressInfoInputShouldBeValidValidator>();
+        dependencyInjectionContainer.RegisterSingleton<ICustomerAddressShouldBeValidValidator, CustomerAddressShouldBeValidValidator>();
+        dependencyInjectionContainer.RegisterSingleton<IRegisterNewCustomerAddressInputShouldBeValidValidator, RegisterNewCustomerAddressInputShouldBeValidValidator>();
+    }
+    private static void ConfigureDependencyInjectionForCustomerAddressInfo(IDependencyInjectionContainer dependencyInjectionContainer)
+    {
+        // Factories
+        dependencyInjectionContainer.RegisterSingleton<IAddNewCustomerAddressInfoCustomerAddressInputFactory, AddNewCustomerAddressInfoCustomerAddressInputFactory>();
+        dependencyInjectionContainer.RegisterSingleton<IChangeCustomerAddressInfoCustomerAddressInputFactory, ChangeCustomerAddressInfoCustomerAddressInputFactory>();
+        dependencyInjectionContainer.RegisterSingleton<IChangeDefaultCustomerAddressInfoShippingAddressInputFactory, ChangeDefaultCustomerAddressInfoShippingAddressInputFactory>();
+        dependencyInjectionContainer.RegisterSingleton<IClearDefaultCustomerAddressInfoShippingAddressInputFactory, ClearDefaultCustomerAddressInfoShippingAddressInputFactory>();
+        dependencyInjectionContainer.RegisterSingleton<ICustomerAddressInfoFactory, CustomerAddressInfoFactory>();
+        dependencyInjectionContainer.RegisterSingleton<IRegisterNewCustomerAddressInputFactory, RegisterNewCustomerAddressInputFactory>();
+        dependencyInjectionContainer.RegisterSingleton<IRemoveCustomerAddressInfoCustomerAddressInputFactory, RemoveCustomerAddressInfoCustomerAddressInputFactory>();
 
-            // Specifications
-            dependencyInjectionContainer.RegisterSingleton<ICustomerAddressInfoSpecifications, CustomerAddressInfoSpecifications>();
+        // Specifications
+        dependencyInjectionContainer.RegisterSingleton<ICustomerAddressInfoSpecifications, CustomerAddressInfoSpecifications>();
 
-            // Validators
-            dependencyInjectionContainer.RegisterSingleton<IAddNewCustomerAddressInfoCustomerAddressInputShouldBeValidValidator, AddNewCustomerAddressInfoCustomerAddressInputShouldBeValidValidator>();
-            dependencyInjectionContainer.RegisterSingleton<IChangeCustomerAddressInfoCustomerAddressInputShouldBeValidValidator, ChangeCustomerAddressInfoCustomerAddressInputShouldBeValidValidator>();
-            dependencyInjectionContainer.RegisterSingleton<IChangeDefaultCustomerAddressInfoShippingAddressInputShouldBeValidValidator, ChangeDefaultCustomerAddressInfoShippingAddressInputShouldBeValidValidator>();
-            dependencyInjectionContainer.RegisterSingleton<IClearDefaultCustomerAddressInfoShippingAddressInputShouldBeValidValidator, ClearDefaultCustomerAddressInfoShippingAddressInputShouldBeValidValidator>();
-            dependencyInjectionContainer.RegisterSingleton<ICustomerAddressInfoShouldHaveCustomerAddressValidator, CustomerAddressInfoShouldHaveCustomerAddressValidator>();
-            dependencyInjectionContainer.RegisterSingleton<IRegisterNewCustomerAddressInfoInputShouldBeValidValidator, RegisterNewCustomerAddressInfoInputShouldBeValidValidator>();
-            dependencyInjectionContainer.RegisterSingleton<IRemoveCustomerAddressInfoCustomerAddressInputShouldBeValidValidator, RemoveCustomerAddressInfoCustomerAddressInputShouldBeValidValidator>();
-        }
-        private static void ConfigureDependencyInjectionForCustomer(IDependencyInjectionContainer dependencyInjectionContainer)
-        {
-            // Factories
-            dependencyInjectionContainer.RegisterSingleton<ICustomerFactory, CustomerFactory>();
+        // Validators
+        dependencyInjectionContainer.RegisterSingleton<IAddNewCustomerAddressInfoCustomerAddressInputShouldBeValidValidator, AddNewCustomerAddressInfoCustomerAddressInputShouldBeValidValidator>();
+        dependencyInjectionContainer.RegisterSingleton<IChangeCustomerAddressInfoCustomerAddressInputShouldBeValidValidator, ChangeCustomerAddressInfoCustomerAddressInputShouldBeValidValidator>();
+        dependencyInjectionContainer.RegisterSingleton<IChangeDefaultCustomerAddressInfoShippingAddressInputShouldBeValidValidator, ChangeDefaultCustomerAddressInfoShippingAddressInputShouldBeValidValidator>();
+        dependencyInjectionContainer.RegisterSingleton<IClearDefaultCustomerAddressInfoShippingAddressInputShouldBeValidValidator, ClearDefaultCustomerAddressInfoShippingAddressInputShouldBeValidValidator>();
+        dependencyInjectionContainer.RegisterSingleton<ICustomerAddressInfoShouldHaveCustomerAddressValidator, CustomerAddressInfoShouldHaveCustomerAddressValidator>();
+        dependencyInjectionContainer.RegisterSingleton<IRegisterNewCustomerAddressInfoInputShouldBeValidValidator, RegisterNewCustomerAddressInfoInputShouldBeValidValidator>();
+        dependencyInjectionContainer.RegisterSingleton<IRemoveCustomerAddressInfoCustomerAddressInputShouldBeValidValidator, RemoveCustomerAddressInfoCustomerAddressInputShouldBeValidValidator>();
+    }
+    private static void ConfigureDependencyInjectionForCustomer(IDependencyInjectionContainer dependencyInjectionContainer)
+    {
+        // Factories
+        dependencyInjectionContainer.RegisterSingleton<ICustomerFactory, CustomerFactory>();
 
-            // Specifications
-            dependencyInjectionContainer.RegisterSingleton<ICustomerSpecifications, CustomerSpecifications>();
+        // Specifications
+        dependencyInjectionContainer.RegisterSingleton<ICustomerSpecifications, CustomerSpecifications>();
 
-            // Validators
-            dependencyInjectionContainer.RegisterSingleton<IAddNewCustomerAddressInputShouldBeValidValidator, AddNewCustomerAddressInputShouldBeValidValidator>();
-            dependencyInjectionContainer.RegisterSingleton<Customers.Validators.Interfaces.IChangeCustomerAddressInputShouldBeValidValidator, Customers.Validators.ChangeCustomerAddressInputShouldBeValidValidator>();
-            dependencyInjectionContainer.RegisterSingleton<IChangeCustomerDefaultShippingAddressInputShouldBeValidValidator, ChangeCustomerDefaultShippingAddressInputShouldBeValidValidator>();
-            dependencyInjectionContainer.RegisterSingleton<IChangeCustomerNameInputShouldBeValidValidator, ChangeCustomerNameInputShouldBeValidValidator>();
-            dependencyInjectionContainer.RegisterSingleton<IClearCustomerDefaultShippingAddressInputShouldBeValidValidator, ClearCustomerDefaultShippingAddressInputShouldBeValidValidator>();
-            dependencyInjectionContainer.RegisterSingleton<IRegisterNewCustomerInputShouldBeValidValidator, RegisterNewCustomerInputShouldBeValidValidator>();
-            dependencyInjectionContainer.RegisterSingleton<IRemoveCustomerAddressInputShouldBeValidValidator, RemoveCustomerAddressInputShouldBeValidValidator>();
-        }
-        private static void ConfigureDependencyInjectionForAddressValueObjects(IDependencyInjectionContainer dependencyInjectionContainer)
-        {
-            // Specifications
-            dependencyInjectionContainer.RegisterSingleton<IAddressValueObjectSpecifications, AddressValueObjectSpecifications>();
+        // Validators
+        dependencyInjectionContainer.RegisterSingleton<IAddNewCustomerAddressInputShouldBeValidValidator, AddNewCustomerAddressInputShouldBeValidValidator>();
+        dependencyInjectionContainer.RegisterSingleton<Customers.Validators.Interfaces.IChangeCustomerAddressInputShouldBeValidValidator, Customers.Validators.ChangeCustomerAddressInputShouldBeValidValidator>();
+        dependencyInjectionContainer.RegisterSingleton<IChangeCustomerDefaultShippingAddressInputShouldBeValidValidator, ChangeCustomerDefaultShippingAddressInputShouldBeValidValidator>();
+        dependencyInjectionContainer.RegisterSingleton<IChangeCustomerNameInputShouldBeValidValidator, ChangeCustomerNameInputShouldBeValidValidator>();
+        dependencyInjectionContainer.RegisterSingleton<IClearCustomerDefaultShippingAddressInputShouldBeValidValidator, ClearCustomerDefaultShippingAddressInputShouldBeValidValidator>();
+        dependencyInjectionContainer.RegisterSingleton<IRegisterNewCustomerInputShouldBeValidValidator, RegisterNewCustomerInputShouldBeValidValidator>();
+        dependencyInjectionContainer.RegisterSingleton<IRemoveCustomerAddressInputShouldBeValidValidator, RemoveCustomerAddressInputShouldBeValidValidator>();
+    }
+    private static void ConfigureDependencyInjectionForAddressValueObjects(IDependencyInjectionContainer dependencyInjectionContainer)
+    {
+        // Specifications
+        dependencyInjectionContainer.RegisterSingleton<IAddressValueObjectSpecifications, AddressValueObjectSpecifications>();
 
-            // Validators
-            dependencyInjectionContainer.RegisterSingleton<IAddressValueObjectShouldBeValidValidator, AddressValueObjectShouldBeValidValidator>();
-        }
+        // Validators
+        dependencyInjectionContainer.RegisterSingleton<IAddressValueObjectShouldBeValidValidator, AddressValueObjectShouldBeValidValidator>();
     }
 }

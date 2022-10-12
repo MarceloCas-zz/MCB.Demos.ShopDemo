@@ -8,49 +8,48 @@ using System;
 using Xunit;
 using Xunit.Abstractions;
 
-namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Tests.CustomerAddressesTests.FactoriesTests
+namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Tests.CustomerAddressesTests.FactoriesTests;
+
+[Collection(nameof(DefaultFixture))]
+public class CustomerAddressFactoryTest
+    : TestBase
 {
-    [Collection(nameof(DefaultFixture))]
-    public class CustomerAddressFactoryTest
-        : TestBase
+    // Fields
+    private readonly DefaultFixture _defaultFixture;
+
+    // Constructors
+    public CustomerAddressFactoryTest(
+        ITestOutputHelper testOutputHelper,
+        DefaultFixture defaultFixture
+    ) : base(testOutputHelper)
     {
-        // Fields
-        private readonly DefaultFixture _defaultFixture;
+        _defaultFixture = defaultFixture;
+    }
 
-        // Constructors
-        public CustomerAddressFactoryTest(
-            ITestOutputHelper testOutputHelper,
-            DefaultFixture defaultFixture
-        ) : base(testOutputHelper)
-        {
-            _defaultFixture = defaultFixture;
-        }
+    // Protected Methods
+    protected override IDateTimeProvider CreateDateTimeProvider(DateTimeOffset currentDate)
+    {
+        var dateTimeProvider = new DateTimeProvider();
 
-        // Protected Methods
-        protected override IDateTimeProvider CreateDateTimeProvider(DateTimeOffset currentDate)
-        {
-            var dateTimeProvider = new DateTimeProvider();
+        dateTimeProvider.ChangeGetDateCustomFunction(
+            () => new DateTimeOffset(year: 2000, month: 1, day: 1, hour: 12, minute: 0, second: 0, offset: TimeSpan.Zero)
+        );
 
-            dateTimeProvider.ChangeGetDateCustomFunction(
-                () => new DateTimeOffset(year: 2000, month: 1, day: 1, hour: 12, minute: 0, second: 0, offset: TimeSpan.Zero)
-            );
+        return dateTimeProvider;
+    }
 
-            return dateTimeProvider;
-        }
+    // Public Methods
+    [Fact]
+    public void CustomerAddressFactory_Should_Create_New_CustomerAddress()
+    {
+        // Arrange
+        var dependencyInjectionContainer = _defaultFixture.CreateNewDependencyInjectionContainer();
+        var customerAddressFactory = dependencyInjectionContainer.Resolve<ICustomerAddressFactory>();
 
-        // Public Methods
-        [Fact]
-        public void CustomerAddressFactory_Should_Create_New_CustomerAddress()
-        {
-            // Arrange
-            var dependencyInjectionContainer = _defaultFixture.CreateNewDependencyInjectionContainer();
-            var customerAddressFactory = dependencyInjectionContainer.Resolve<ICustomerAddressFactory>();
+        // Act
+        var customerAddress = customerAddressFactory.Create();
 
-            // Act
-            var customerAddress = customerAddressFactory.Create();
-
-            // Assert
-            customerAddress.Should().NotBeNull();
-        }
+        // Assert
+        customerAddress.Should().NotBeNull();
     }
 }

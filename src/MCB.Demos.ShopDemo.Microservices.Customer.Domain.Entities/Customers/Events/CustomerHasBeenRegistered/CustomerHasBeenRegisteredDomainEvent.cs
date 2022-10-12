@@ -1,17 +1,16 @@
-﻿using MCB.Core.Infra.CrossCutting.Abstractions.DateTime;
-using MCB.Demos.ShopDemo.Microservices.Customer.Infra.CrossCutting.DomainEvents.Models.Base;
+﻿using MCB.Demos.ShopDemo.Microservices.Customer.Infra.CrossCutting.DomainEvents.Models.Base;
 
-namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Customers.Events.CustomerHasBeenRegistered
+namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Customers.Events.CustomerHasBeenRegistered;
+
+public record CustomerHasBeenRegisteredDomainEvent
+    : DomainEventBase
 {
-    public record CustomerHasBeenRegisteredDomainEvent
-        : DomainEventBase
+    public CustomerHasBeenRegisteredDomainEvent(
+        Guid id,
+        DateTimeOffset timestamp,
+        string domainEventType,
+        Customer customer
+    ) : base(id, timestamp, domainEventType, customer)
     {
-        // Constructors
-        public CustomerHasBeenRegisteredDomainEvent(
-            IDateTimeProvider dateTimeProvider,
-            Customer customer
-        ) : base(dateTimeProvider, customer)
-        {
-        }
     }
 }
