@@ -7,7 +7,7 @@ using System.Linq.Expressions;
 
 namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.CustomerAddresses.Validators.Wrappers;
 
-public static class CustomerAddressValidatorWrapper
+internal static class CustomerAddressValidatorWrapper
 {
     public static void AddCustomerAddressShouldHaveCustomerAddressType<TInput, TProperty>(
         ICustomerAddressSpecifications customerAddressSpecifications,
