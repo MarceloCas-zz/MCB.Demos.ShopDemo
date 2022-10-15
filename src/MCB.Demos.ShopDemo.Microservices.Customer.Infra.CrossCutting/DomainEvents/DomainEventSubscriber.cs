@@ -25,4 +25,17 @@ internal class DomainEventSubscriber
         _domainEventCollection.Enqueue(subject);
         return Task.CompletedTask;
     }
+    public bool TryDequeue(out DomainEventBase? domainEvent)
+    {
+        if (_domainEventCollection.TryDequeue(out DomainEventBase? domainEventBase))
+        {
+            domainEvent = domainEventBase;
+            return true;
+        }
+        else
+        {
+            domainEvent = null;
+            return false;
+        }
+    }
 }
