@@ -53,7 +53,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MCB.Demos.ShopDemo.Microser
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "5 - Messages", "5 - Messages", "{70ED14B3-AC1A-4692-82D9-E28F52168781}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MCB.Demos.ShopDemo.Microservices.Customer.Messages.Internal", "src\MCB.Demos.ShopDemo.Microservices.Customer.Messages.Internal\MCB.Demos.ShopDemo.Microservices.Customer.Messages.Internal.csproj", "{3171C0E4-13A8-454E-9E6F-67A4240181AE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MCB.Demos.ShopDemo.Microservices.Customer.Messages.Internal", "src\MCB.Demos.ShopDemo.Microservices.Customer.Messages.Internal\MCB.Demos.ShopDemo.Microservices.Customer.Messages.Internal.csproj", "{3171C0E4-13A8-454E-9E6F-67A4240181AE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
