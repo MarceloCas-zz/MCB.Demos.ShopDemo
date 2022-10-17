@@ -1,4 +1,4 @@
-﻿using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Repositories.Base.Abstractions;
+﻿using MCB.Core.Domain.Abstractions.Repositories;
 
 namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Repositories.Interfaces;
 

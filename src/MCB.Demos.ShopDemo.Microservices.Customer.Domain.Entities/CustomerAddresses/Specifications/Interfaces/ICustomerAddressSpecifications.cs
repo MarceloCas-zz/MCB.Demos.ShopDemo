@@ -1,5 +1,5 @@
 ﻿using FluentValidation;
-using MCB.Core.Domain.Entities.Abstractions.Specifications.Interfaces;
+using MCB.Core.Domain.Entities.Abstractions.Specifications;
 using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.CustomerAddresses.Enums;
 using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.ValueObjects.Address;
 
