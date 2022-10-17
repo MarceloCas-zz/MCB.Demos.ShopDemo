@@ -1,4 +1,4 @@
-﻿using MCB.Demos.ShopDemo.Microservices.Customer.Infra.CrossCutting.DomainEvents.Models.Base;
+﻿using MCB.Core.Domain.Entities.DomainEntitiesBase.Events;
 
 namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Customers.Events.CustomerHasBeenRegistered;
 

@@ -1,7 +1,6 @@
-﻿using MCB.Core.Infra.CrossCutting.DesignPatterns.Abstractions.Adapter;
+﻿using MCB.Core.Domain.Abstractions.DomainEvents;
+using MCB.Core.Infra.CrossCutting.DesignPatterns.Abstractions.Adapter;
 using MCB.Demos.ShopDemo.Microservices.Customer.Application.UseCases.Base.Input;
-using MCB.Demos.ShopDemo.Microservices.Customer.Infra.CrossCutting.DomainEvents.Interfaces;
-using MCB.Demos.ShopDemo.Microservices.Customer.Infra.CrossCutting.DomainEvents.Models.Base;
 
 namespace MCB.Demos.ShopDemo.Microservices.Customer.Application.UseCases.Base;
 
@@ -40,7 +39,7 @@ public abstract class UseCaseBase<TInput>
     // Private Methods
     private async Task<bool> PublishDomainEventsToExternalBusAsync(CancellationToken cancellationToken)
     {
-        while (_domainEventSubscriber.TryDequeue(out DomainEventBase? domainEventBase))
+        foreach (var domainEventBase in _domainEventSubscriber.DomainEventCollection)
         {
             if (domainEventBase is null)
                 continue;

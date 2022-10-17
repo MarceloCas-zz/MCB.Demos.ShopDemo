@@ -1,10 +1,10 @@
-﻿using MCB.Core.Infra.CrossCutting.DesignPatterns.Abstractions.Adapter;
+﻿using MCB.Core.Domain.Abstractions.DomainEvents;
+using MCB.Core.Infra.CrossCutting.DesignPatterns.Abstractions.Adapter;
 using MCB.Demos.ShopDemo.Microservices.Customer.Application.UseCases.Base;
 using MCB.Demos.ShopDemo.Microservices.Customer.Application.UseCases.RegisterNewCustomer.Inputs;
 using MCB.Demos.ShopDemo.Microservices.Customer.Application.UseCases.RegisterNewCustomer.Interfaces;
 using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Services.Customers.Inputs;
 using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Services.Customers.Interfaces;
-using MCB.Demos.ShopDemo.Microservices.Customer.Infra.CrossCutting.DomainEvents.Interfaces;
 
 namespace MCB.Demos.ShopDemo.Microservices.Customer.Application.UseCases.RegisterNewCustomer;
 

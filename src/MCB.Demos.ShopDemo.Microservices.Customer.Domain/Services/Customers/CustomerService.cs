@@ -1,4 +1,5 @@
-﻿using MCB.Core.Infra.CrossCutting.DesignPatterns.Abstractions.Adapter;
+﻿using MCB.Core.Domain.Abstractions.DomainEvents;
+using MCB.Core.Infra.CrossCutting.DesignPatterns.Abstractions.Adapter;
 using MCB.Core.Infra.CrossCutting.DesignPatterns.Abstractions.Notifications;
 using MCB.Core.Infra.CrossCutting.DesignPatterns.Abstractions.Notifications.Models;
 using MCB.Core.Infra.CrossCutting.DesignPatterns.Abstractions.Notifications.Models.Enums;
@@ -9,7 +10,6 @@ using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Repositories.Interfaces;
 using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Services.Base;
 using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Services.Customers.Inputs;
 using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Services.Customers.Interfaces;
-using MCB.Demos.ShopDemo.Microservices.Customer.Infra.CrossCutting.DomainEvents.Interfaces;
 
 namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Services.Customers;
 
