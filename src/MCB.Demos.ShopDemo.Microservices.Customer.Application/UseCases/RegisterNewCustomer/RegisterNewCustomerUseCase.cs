@@ -19,10 +19,9 @@ internal class RegisterNewCustomerUseCase
     // Constructors
     internal RegisterNewCustomerUseCase(
         IDomainEventSubscriber domainEventSubscriber,
-        IProtobufSerializer protobufSerializer,
         IAdapter adapter,
         ICustomerService customerService
-    ) : base(domainEventSubscriber, protobufSerializer, adapter)
+    ) : base(domainEventSubscriber, adapter)
     {
         _customerService = customerService;
     }

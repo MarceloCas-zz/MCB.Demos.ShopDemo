@@ -1,7 +1,11 @@
-﻿using MCB.Core.Domain.Abstractions.DomainEvents;
+﻿using Mapster;
+using MCB.Core.Domain.Abstractions.DomainEvents;
 using MCB.Core.Infra.CrossCutting.Abstractions.Serialization;
 using MCB.Core.Infra.CrossCutting.DesignPatterns.Abstractions.Adapter;
 using MCB.Demos.ShopDemo.Microservices.Customer.Application.UseCases.Base.Input;
+using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Customers.Events.CustomerHasBeenRegistered;
+using MCB.Demos.ShopDemo.Microservices.Customer.Messages.Internal.Base;
+using MCB.Demos.ShopDemo.Microservices.Customer.Messages.Internal.V1.Events.CustomerHasBeenRegistered;
 
 namespace MCB.Demos.ShopDemo.Microservices.Customer.Application.UseCases.Base;
 
@@ -11,7 +15,6 @@ public abstract class UseCaseBase<TInput>
 {
     // Fields
     private readonly IDomainEventSubscriber _domainEventSubscriber;
-    private readonly IProtobufSerializer _protobufSerializer;
 
     // Properties
     protected IAdapter Adapter { get; }
@@ -19,12 +22,10 @@ public abstract class UseCaseBase<TInput>
     // Constructors
     protected UseCaseBase(
         IDomainEventSubscriber domainEventSubscriber,
-        IProtobufSerializer protobufSerializer,
         IAdapter adapter
     )
     {
         _domainEventSubscriber = domainEventSubscriber;
-        _protobufSerializer = protobufSerializer;
         Adapter = adapter;
     }
 
@@ -48,6 +49,10 @@ public abstract class UseCaseBase<TInput>
             if (domainEventBase is null)
                 continue;
 
+            var externalEvent = default(EventBase);
+
+            if(domainEventBase is CustomerHasBeenRegisteredDomainEvent customerHasBeenRegisteredDomainEvent)
+                externalEvent = Adapter.Adapt<CustomerHasBeenRegisteredDomainEvent, CustomerHasBeenRegisteredEvent>(customerHasBeenRegisteredDomainEvent);
         }
 
         await Task.Delay(1);
