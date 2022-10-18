@@ -13,6 +13,7 @@
 		<ProjectReference Include="..\MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities\MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.csproj" />
 		<ProjectReference Include="..\MCB.Demos.ShopDemo.Microservices.Customer.Domain\MCB.Demos.ShopDemo.Microservices.Customer.Domain.csproj" />
 		<ProjectReference Include="..\MCB.Demos.ShopDemo.Microservices.Customer.Infra.CrossCutting\MCB.Demos.ShopDemo.Microservices.Customer.Infra.CrossCutting.csproj" />
+		<ProjectReference Include="..\MCB.Demos.ShopDemo.Microservices.Customer.Infra.Data.UnitOfWork\MCB.Demos.ShopDemo.Microservices.Customer.Infra.Data.UnitOfWork.csproj" />
 		<ProjectReference Include="..\MCB.Demos.ShopDemo.Microservices.Customer.Messages.Internal\MCB.Demos.ShopDemo.Microservices.Customer.Messages.Internal.csproj" />
 	</ItemGroup>
 
