@@ -1,17 +1,58 @@
+using MCB.Demos.ShopDemo.Microservices.Customer.Services.Grpc.HealthCheck;
 using MCB.Demos.ShopDemo.Microservices.Customer.Services.Grpc.Services;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Additional configuration is required to successfully run gRPC on macOS.
-// For instructions on how to configure Kestrel and gRPC clients on macOS, visit https://go.microsoft.com/fwlink/?linkid=2099682
+#region Configure Services
 
-// Add services to the container.
 builder.Services.AddGrpc();
+builder.Services.AddControllers();
+builder.Services.AddApiVersioning(options =>
+{
+    options.AssumeDefaultVersionWhenUnspecified = true;
+    options.DefaultApiVersion = new ApiVersion(majorVersion: 1, minorVersion: 0);
+    options.ReportApiVersions = true;
+});
+builder.Services.AddVersionedApiExplorer(options =>
+{
+    options.GroupNameFormat = "'v'VVV";
+    options.SubstituteApiVersionInUrl = true;
+});
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen(options =>
+{
+    options.SwaggerDoc("v1", new OpenApiInfo
+    {
+        Version = "v1",
+        Title = "MCB.Demos.ShopDemo.Microservices.Customer",
+        Description = "API Microservices Customer",
+        Contact = new OpenApiContact() { 
+            Name = "Marcelo Castelo Branco", 
+            Email = "marcelo.castelo@outlook.com", 
+            Url = new Uri("https://www.linkedin.com/in/marcelocastelobranco/")
+        }
+    });
+});
+builder.Services.AddHealthChecks().AddCheck<DefaultHealthCheck>("Default");
+
+#endregion
+
+#region Configure Pipeline
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
 app.MapGrpcService<GreeterService>();
-app.MapGet("/", () => "Communication with gRPC endpoints must be made through a gRPC client. To learn how to create a client, visit: https://go.microsoft.com/fwlink/?linkid=2086909");
+app.UseSwagger();
+app.UseSwaggerUI(options =>
+{
+    options.SwaggerEndpoint("/swagger/v1/swagger.json", "v1");
+});
+app.UseHttpsRedirection();
+app.MapControllers();
+app.MapHealthChecks("/health"); 
+
+#endregion
 
 app.Run();
