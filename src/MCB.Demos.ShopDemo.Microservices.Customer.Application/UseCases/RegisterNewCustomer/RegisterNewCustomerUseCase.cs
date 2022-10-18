@@ -1,6 +1,6 @@
 ﻿using MCB.Core.Domain.Abstractions.DomainEvents;
-using MCB.Core.Infra.CrossCutting.Abstractions.Serialization;
 using MCB.Core.Infra.CrossCutting.DesignPatterns.Abstractions.Adapter;
+using MCB.Demos.ShopDemo.Microservices.Customer.Application.Factories.Interfaces;
 using MCB.Demos.ShopDemo.Microservices.Customer.Application.UseCases.Base;
 using MCB.Demos.ShopDemo.Microservices.Customer.Application.UseCases.RegisterNewCustomer.Inputs;
 using MCB.Demos.ShopDemo.Microservices.Customer.Application.UseCases.RegisterNewCustomer.Interfaces;
@@ -19,9 +19,10 @@ internal class RegisterNewCustomerUseCase
     // Constructors
     internal RegisterNewCustomerUseCase(
         IDomainEventSubscriber domainEventSubscriber,
+        IExternalEventFactory externalEventFactory,
         IAdapter adapter,
         ICustomerService customerService
-    ) : base(domainEventSubscriber, adapter)
+    ) : base(domainEventSubscriber, externalEventFactory, adapter)
     {
         _customerService = customerService;
     }

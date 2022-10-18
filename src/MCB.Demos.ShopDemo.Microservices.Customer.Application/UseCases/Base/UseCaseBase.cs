@@ -1,20 +1,17 @@
-﻿using Mapster;
-using MCB.Core.Domain.Abstractions.DomainEvents;
-using MCB.Core.Infra.CrossCutting.Abstractions.Serialization;
+﻿using MCB.Core.Domain.Abstractions.DomainEvents;
 using MCB.Core.Infra.CrossCutting.DesignPatterns.Abstractions.Adapter;
+using MCB.Demos.ShopDemo.Microservices.Customer.Application.Factories.Interfaces;
 using MCB.Demos.ShopDemo.Microservices.Customer.Application.UseCases.Base.Input;
-using MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Customers.Events.CustomerHasBeenRegistered;
-using MCB.Demos.ShopDemo.Microservices.Customer.Messages.Internal.Base;
-using MCB.Demos.ShopDemo.Microservices.Customer.Messages.Internal.V1.Events.CustomerHasBeenRegistered;
 
 namespace MCB.Demos.ShopDemo.Microservices.Customer.Application.UseCases.Base;
 
-public abstract class UseCaseBase<TInput>
+internal abstract class UseCaseBase<TInput>
     : IUseCase<TInput>
     where TInput : UseCaseInputBase
 {
     // Fields
     private readonly IDomainEventSubscriber _domainEventSubscriber;
+    private readonly IExternalEventFactory _externalEventFactory;
 
     // Properties
     protected IAdapter Adapter { get; }
@@ -22,10 +19,12 @@ public abstract class UseCaseBase<TInput>
     // Constructors
     protected UseCaseBase(
         IDomainEventSubscriber domainEventSubscriber,
+        IExternalEventFactory externalEventFactory,
         IAdapter adapter
     )
     {
         _domainEventSubscriber = domainEventSubscriber;
+        _externalEventFactory = externalEventFactory;
         Adapter = adapter;
     }
 
@@ -49,10 +48,7 @@ public abstract class UseCaseBase<TInput>
             if (domainEventBase is null)
                 continue;
 
-            var externalEvent = default(EventBase);
-
-            if(domainEventBase is CustomerHasBeenRegisteredDomainEvent customerHasBeenRegisteredDomainEvent)
-                externalEvent = Adapter.Adapt<CustomerHasBeenRegisteredDomainEvent, CustomerHasBeenRegisteredEvent>(customerHasBeenRegisteredDomainEvent);
+            var externalEvent = _externalEventFactory.Create((Adapter, domainEventBase));
         }
 
         await Task.Delay(1);
