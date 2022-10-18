@@ -14,7 +14,7 @@ public sealed record AddNewCustomerAddressInput
     // Constructors
     public AddNewCustomerAddressInput(
         Guid tenantId,
-        CustomerAddressType customerAddressType, 
+        CustomerAddressType customerAddressType,
         AddressValueObject addressValueObject,
         string executionUser,
         string sourcePlatform

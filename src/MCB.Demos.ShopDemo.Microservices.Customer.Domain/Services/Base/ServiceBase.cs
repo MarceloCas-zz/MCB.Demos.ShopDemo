@@ -60,7 +60,7 @@ public abstract class ServiceBase<TAggregationRoot>
                     AggregationRootShouldExistsInRepositoryNotificationType,
                     AggregationRootShouldExistsInRepositoryErrorCode,
                     AggregationRootShouldExistsInRepositoryMessage
-                ), 
+                ),
                 cancellationToken
             );
 

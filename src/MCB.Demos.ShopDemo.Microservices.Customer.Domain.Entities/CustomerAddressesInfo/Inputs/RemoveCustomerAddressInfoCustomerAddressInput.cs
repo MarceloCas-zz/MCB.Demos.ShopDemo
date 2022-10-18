@@ -12,7 +12,7 @@ public sealed record RemoveCustomerAddressInfoCustomerAddressInput
     public RemoveCustomerAddressInfoCustomerAddressInput(
         Guid tenantId,
         Guid customerAddressId,
-        string executionUser, 
+        string executionUser,
         string sourcePlatform
     ) : base(tenantId, executionUser, sourcePlatform)
     {

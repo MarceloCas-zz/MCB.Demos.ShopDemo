@@ -93,7 +93,7 @@ public sealed class Customer
     public Customer RegisterNewCustomer(RegisterNewCustomerInput input)
     {
         // Validate
-        if (!Validate(() => _customerCustomerRegisterNewInputShouldBeValidValidator.Validate(input)) || 
+        if (!Validate(() => _customerCustomerRegisterNewInputShouldBeValidValidator.Validate(input)) ||
             !Validate(() => _emailValueObjectShouldBeValidValidator.Validate(input.Email)))
             return this;
 
@@ -108,7 +108,7 @@ public sealed class Customer
         // Validate
         if (!Validate(() => _changeCustomerNameInputShouldBeValidValidator.Validate(input)))
             return this;
-        
+
         // Process and Return
         return SetName(input.FirstName, input.LastName)
             .RegisterModificationInternal<Customer>(input.ExecutionUser, input.SourcePlatform);
@@ -129,7 +129,7 @@ public sealed class Customer
         // Validate
         if (!Validate(() => _changeCustomerDefaultShippingAddressInputShouldBeValidValidator.Validate(input)))
             return default;
-        
+
         // Process
         var newDefaultShippingAddress = _customerAddressInfo.ChangeDefaultCustomerAddressInfoShippingAddress(
             _changeDefaultCustomerAddressInfoShippingAddressInputFactory.Create(input)

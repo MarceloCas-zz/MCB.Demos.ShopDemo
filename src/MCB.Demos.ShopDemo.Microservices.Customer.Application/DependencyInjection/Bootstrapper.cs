@@ -4,7 +4,7 @@ using MCB.Demos.ShopDemo.Microservices.Customer.Application.Factories.Interfaces
 using MCB.Demos.ShopDemo.Microservices.Customer.Application.UseCases.RegisterNewCustomer;
 using MCB.Demos.ShopDemo.Microservices.Customer.Application.UseCases.RegisterNewCustomer.Interfaces;
 
-namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.DependencyInjection;
+namespace MCB.Demos.ShopDemo.Microservices.Customer.Application.DependencyInjection;
 
 public static class Bootstrapper
 {

@@ -2,10 +2,12 @@ using MCB.Demos.ShopDemo.Microservices.Customer.Services.Grpc.HealthCheck;
 using MCB.Demos.ShopDemo.Microservices.Customer.Services.Grpc.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.OpenApi.Models;
+using MCB.Demos.ShopDemo.Microservices.Customer.Services.Grpc.DependencyInjection;
 
 var builder = WebApplication.CreateBuilder(args);
 
 #region Configure Services
+Bootstrapper.ConfigureDependencyInjection(builder.Services);
 
 builder.Services.AddGrpc();
 builder.Services.AddControllers();

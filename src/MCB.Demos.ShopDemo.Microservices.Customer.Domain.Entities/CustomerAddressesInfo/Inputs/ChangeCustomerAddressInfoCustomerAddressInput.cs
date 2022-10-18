@@ -18,7 +18,7 @@ public sealed record ChangeCustomerAddressInfoCustomerAddressInput
         Guid customerAddressId,
         CustomerAddressType customerAddressType,
         AddressValueObject addressValueObject,
-        string executionUser, 
+        string executionUser,
         string sourcePlatform
     ) : base(tenantId, executionUser, sourcePlatform)
     {

@@ -13,7 +13,7 @@ public sealed record ChangeCustomerAddressTypeInput
     public ChangeCustomerAddressTypeInput(
         Guid tenantId,
         CustomerAddressType customerAddressType,
-        string executionUser, 
+        string executionUser,
         string sourcePlatform
     ) : base(tenantId, executionUser, sourcePlatform)
     {

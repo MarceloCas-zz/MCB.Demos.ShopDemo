@@ -23,7 +23,7 @@
 	<ItemGroup>
 		<ProjectReference Include="..\MCB.Demos.ShopDemo.Microservices.Customer.Application\MCB.Demos.ShopDemo.Microservices.Customer.Application.csproj" />
 		<ProjectReference Include="..\MCB.Demos.ShopDemo.Microservices.Customer.Infra.CrossCutting\MCB.Demos.ShopDemo.Microservices.Customer.Infra.CrossCutting.csproj" />
-		<ProjectReference Include="..\MCB.Demos.ShopDemo.Microservices.Customer.Services.Grpc.IoC\MCB.Demos.ShopDemo.Microservices.Customer.Services.Grpc.IoC.csproj" />
+		<ProjectReference Include="..\MCB.Demos.ShopDemo.Microservices.Customer.Services.Grpc.DependencyInjection\MCB.Demos.ShopDemo.Microservices.Customer.Services.Grpc.DependencyInjection.csproj" />
 	</ItemGroup>
 
 </Project>

@@ -5,7 +5,7 @@ namespace MCB.Demos.ShopDemo.Microservices.Customer.Domain.Entities.Base;
 public abstract class DomainEntityBase
     : Core.Domain.Entities.DomainEntitiesBase.DomainEntityBase
 {
-    protected DomainEntityBase(IDateTimeProvider dateTimeProvider) 
+    protected DomainEntityBase(IDateTimeProvider dateTimeProvider)
         : base(dateTimeProvider)
     {
     }

@@ -8,7 +8,7 @@ public sealed record AddNewCustomerAddressInfoCustomerAddressInput
     : InputBase
 {
     // Properties
-    public CustomerAddressType CustomerAddressType { get; } 
+    public CustomerAddressType CustomerAddressType { get; }
     public AddressValueObject AddressValueObject { get; }
 
     // Public Methods
@@ -16,7 +16,7 @@ public sealed record AddNewCustomerAddressInfoCustomerAddressInput
         Guid tenantId,
         CustomerAddressType customerAddressType,
         AddressValueObject addressValueObject,
-        string executionUser, 
+        string executionUser,
         string sourcePlatform
     ) : base(tenantId, executionUser, sourcePlatform)
     {

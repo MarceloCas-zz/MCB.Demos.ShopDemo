@@ -68,7 +68,7 @@ public sealed class CustomerAddressInfo
             return this;
 
         // Register new customer address
-        var customerAddress = 
+        var customerAddress =
             _customerAddressFactory
             .Create()
             .RegisterNewCustomerAddress(_registerNewCustomerAddressInputFactory.Create(input));
